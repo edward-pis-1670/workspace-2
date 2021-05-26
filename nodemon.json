@@ -1,0 +1,4 @@
+{
+  "verbose": true,
+  "ignore": ["client/*.js","public/*","uploads/*","extensioncode/*"]
+}

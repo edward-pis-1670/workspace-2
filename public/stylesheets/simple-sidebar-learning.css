@@ -1,0 +1,152 @@
+/*!
+ * Start Bootstrap - Simple Sidebar (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+ body {
+    overflow-x: hidden;
+ }
+
+/* Toggle Styles */
+
+#wrapper {
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+
+#sidebar-wrapper {
+    float: left;
+    z-index: 999;
+    background-color: #1c262f;
+    width: 40%;
+    height: 200px;
+    padding: 0px;
+    list-style: none; 
+    overflow: auto;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#sidebar-wrapper::-webkit-scrollbar-thumb {
+    background: #2e3d49;
+    border-radius: 12px;
+    border: 1px solid #1c262f;
+}
+#sidebar-wrapper::-webkit-scrollbar {
+    background: #1c262f;
+    width: 12px;
+    height: 12px;
+}
+#sidebar-wrapper::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+#page-content-wrapper{
+    margin-left: 40%;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+#page-content-wrapper > video {
+    height: 200px;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 0px;
+}
+#wrapper.toggled #page-content-wrapper {
+    margin-left: 0px;
+}
+#wrapper.toggled #page-content-wrapper > video {
+    height: auto;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    top: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: white;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: white;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #999999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+      width: 20%;
+    height: 400px;
+  }
+  #page-content-wrapper {
+      margin-left: 20%;
+  }
+  #page-content-wrapper > video {
+      height: 400px;
+  }
+}
+
+@media (min-width: 992px) {
+  #sidebar-wrapper {
+    height: 500px;
+  }
+  #page-content-wrapper >video {
+      height: 500px;
+  }
+}
+@media (min-width: 1200px) {
+  #sidebar-wrapper {
+    height: 600px;
+  }
+  #page-content-wrapper > video{
+      height: 600px;
+  }
+}
