@@ -42027,10 +42027,10 @@
 /* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -42078,435 +42078,462 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Navbar = function (_React$Component) {
-	    _inherits(Navbar, _React$Component);
+	  _inherits(Navbar, _React$Component);
 
-	    function Navbar(props) {
-	        _classCallCheck(this, Navbar);
+	  function Navbar(props) {
+	    _classCallCheck(this, Navbar);
 
-	        var _this = _possibleConstructorReturn(this, (Navbar.__proto__ || Object.getPrototypeOf(Navbar)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Navbar.__proto__ || Object.getPrototypeOf(Navbar)).call(this, props));
 
-	        _this.state = {
-	            coursename: ''
-	        };
-	        return _this;
+	    _this.state = {
+	      coursename: ""
+	    };
+	    return _this;
+	  }
+
+	  _createClass(Navbar, [{
+	    key: "getUserInfo",
+	    value: function getUserInfo() {
+	      var _this2 = this;
+
+	      $.get("http://localhost:5000/users/me", function (data, status) {
+	        if (data.code == 200) {
+	          _this2.props.dispatch((0, _actions.setUser)(data.user));
+	        } else {
+	          _this2.props.dispatch((0, _actions.setUser)({}));
+	        }
+	      });
 	    }
+	  }, {
+	    key: "onClickLogout",
+	    value: function onClickLogout() {
+	      var _this3 = this;
 
-	    _createClass(Navbar, [{
-	        key: 'getUserInfo',
-	        value: function getUserInfo() {
-	            var _this2 = this;
+	      (0, _auth.logout)(function (data, status) {
+	        localStorage.removeItem("token");
+	        if (data.code == 200) {
+	          _this3.props.dispatch((0, _actions.setUser)({}));
+	          _this3.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          _reactRouter.browserHistory.push("/");
+	        }
+	      });
+	    }
+	  }, {
+	    key: "componentWillMount",
+	    value: function componentWillMount() {
+	      this.getUserInfo();
+	    }
+	  }, {
+	    key: "showFormLogin",
+	    value: function showFormLogin() {
+	      this.props.dispatch((0, _actions.showModal)(1));
+	    }
+	  }, {
+	    key: "showFormSignup",
+	    value: function showFormSignup() {
+	      this.props.dispatch((0, _actions.showModal)(2));
+	    }
+	  }, {
+	    key: "showFormForgotPassword",
+	    value: function showFormForgotPassword() {
+	      this.props.dispatch((0, _actions.showModal)(3));
+	    }
+	  }, {
+	    key: "onSubmitSearch",
+	    value: function onSubmitSearch(e) {
+	      e.preventDefault();
+	      _reactRouter.browserHistory.push("/courses/search?name=" + this.state.coursename);
+	      this.setState({ coursename: "" });
+	    }
+	  }, {
+	    key: "handleCourseName",
+	    value: function handleCourseName(e) {
+	      this.setState({ coursename: e.target.value });
+	    }
+	  }, {
+	    key: "markAllAsRead",
+	    value: function markAllAsRead() {
+	      $.get("/api/user/mark-all-read-noti", function (data, status) {});
+	      this.props.dispatch((0, _actions.markAllAsRead)());
+	    }
+	  }, {
+	    key: "markAsRead",
+	    value: function markAsRead(e, noti) {
+	      e.preventDefault();
+	      if (!noti.seen) {
+	        $.post("/api/user/mark-read-noti", { id: noti._id });
+	        this.props.dispatch((0, _actions.markRead)(noti._id));
+	      }
+	    }
+	  }, {
+	    key: "onClickNoti",
+	    value: function onClickNoti(e, noti) {
+	      this.markAsRead(e, noti);
+	      _reactRouter.browserHistory.push(noti.url);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this4 = this;
 
-	            $.get('/api/user/getuserinfo', function (data, status) {
-	                if (data.code == 200) {
-	                    _this2.props.dispatch((0, _actions.setUser)(data.user));
-	                } else {
-	                    _this2.props.dispatch((0, _actions.setUser)({}));
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'onClickLogout',
-	        value: function onClickLogout() {
-	            var _this3 = this;
-
-	            (0, _auth.logout)(function (data, status) {
-	                if (data.code == 200) {
-	                    _this3.props.dispatch((0, _actions.setUser)({}));
-	                    _this3.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    _reactRouter.browserHistory.push('/');
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            this.getUserInfo();
-	        }
-	    }, {
-	        key: 'showFormLogin',
-	        value: function showFormLogin() {
-	            this.props.dispatch((0, _actions.showModal)(1));
-	        }
-	    }, {
-	        key: 'showFormSignup',
-	        value: function showFormSignup() {
-	            this.props.dispatch((0, _actions.showModal)(2));
-	        }
-	    }, {
-	        key: 'showFormForgotPassword',
-	        value: function showFormForgotPassword() {
-	            this.props.dispatch((0, _actions.showModal)(3));
-	        }
-	    }, {
-	        key: 'onSubmitSearch',
-	        value: function onSubmitSearch(e) {
-	            e.preventDefault();
-	            _reactRouter.browserHistory.push('/courses/search?name=' + this.state.coursename);
-	            this.setState({ coursename: '' });
-	        }
-	    }, {
-	        key: 'handleCourseName',
-	        value: function handleCourseName(e) {
-	            this.setState({ coursename: e.target.value });
-	        }
-	    }, {
-	        key: 'markAllAsRead',
-	        value: function markAllAsRead() {
-	            $.get('/api/user/mark-all-read-noti', function (data, status) {});
-	            this.props.dispatch((0, _actions.markAllAsRead)());
-	        }
-	    }, {
-	        key: 'markAsRead',
-	        value: function markAsRead(e, noti) {
-	            e.preventDefault();
-	            if (!noti.seen) {
-	                $.post('/api/user/mark-read-noti', { id: noti._id });
-	                this.props.dispatch((0, _actions.markRead)(noti._id));
-	            }
-	        }
-	    }, {
-	        key: 'onClickNoti',
-	        value: function onClickNoti(e, noti) {
-	            this.markAsRead(e, noti);
-	            _reactRouter.browserHistory.push(noti.url);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this4 = this;
-
-	            var navbarRight = void 0;
-	            var formLogin = void 0,
-	                formSignup = void 0,
-	                formForgotPassword = void 0;
-	            var notiCount = this.props.notis && this.props.notis.length > 0 ? this.props.notis.map(function (o) {
-	                return o.seen ? 0 : 1;
-	            }).reduce(function (a, b) {
-	                return a + b;
-	            }, 0) : 0;
-	            if (this.props.username == '') {
-	                navbarRight = _react2.default.createElement(
-	                    'ul',
-	                    { className: 'nav navbar-nav navbar-right' },
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { onClick: this.showFormLogin.bind(this) },
-	                            _react2.default.createElement('span', { className: 'glyphicon glyphicon-log-in' }),
-	                            ' ',
-	                            'Login'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { onClick: this.showFormSignup.bind(this) },
-	                            _react2.default.createElement('span', { className: 'glyphicon glyphicon-registration-mark' }),
-	                            ' ',
-	                            'Sign Up'
-	                        )
-	                    )
-	                );
-	                formLogin = _react2.default.createElement(_formLogin2.default, { ref: 'formLogin',
-	                    onClickSignup: this.showFormSignup.bind(this),
-	                    onClickForgotPassword: this.showFormForgotPassword.bind(this) });
-	                formSignup = _react2.default.createElement(_formSignup2.default, { ref: 'formSignup',
-	                    onClickLogin: this.showFormLogin.bind(this) });
-	                formForgotPassword = _react2.default.createElement(_formForgotpassword2.default, { ref: 'formForgotPassword',
-	                    onClickLogin: this.showFormLogin.bind(this) });
-	            } else {
-	                navbarRight = _react2.default.createElement(
-	                    'ul',
-	                    { className: 'nav navbar-nav navbar-right' },
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/instructor' },
-	                            _react2.default.createElement('span', { className: 'glyphicon glyphicon-pencil' }),
-	                            ' ',
-	                            'Instructor'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/mycourses/learning' },
-	                            _react2.default.createElement('span', { className: 'glyphicon glyphicon-list-alt' }),
-	                            ' ',
-	                            'Learning'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            null,
-	                            _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'bell' }),
-	                            notiCount > 0 ? _react2.default.createElement(
-	                                'span',
-	                                { className: 'badge noti-count' },
-	                                notiCount
-	                            ) : ''
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'noti-dropdown' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'noti-title' },
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    null,
-	                                    'Notifications'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { onClick: function onClick() {
-	                                            _this4.markAllAsRead();
-	                                        } },
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { className: 'read-all' },
-	                                        'Mark all as read'
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'noti-content' },
-	                                this.props.notis.length != 0 ? this.props.notis.map(function (noti, index) {
-	                                    return _react2.default.createElement(
-	                                        'div',
-	                                        { className: 'noti-item' + (noti.seen ? '' : ' seen'), key: index },
-	                                        _react2.default.createElement(
-	                                            _reactBootstrap.Row,
-	                                            { className: 'relative' },
-	                                            _react2.default.createElement(
-	                                                _reactRouter.Link,
-	                                                { onClick: function onClick(e) {
-	                                                        _this4.onClickNoti(e, noti);
-	                                                    } },
-	                                                _react2.default.createElement(
-	                                                    _reactBootstrap.Col,
-	                                                    { xs: 2 },
-	                                                    _react2.default.createElement('img', { src: '/api/resource/images?src=' + noti.from.photo + '&w=50&h=50' })
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    _reactBootstrap.Col,
-	                                                    { xs: 9 },
-	                                                    _react2.default.createElement(
-	                                                        'p',
-	                                                        { className: 'noti-message' },
-	                                                        noti.title,
-	                                                        ':',
-	                                                        _react2.default.createElement(
-	                                                            'span',
-	                                                            null,
-	                                                            noti.message
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'p',
-	                                                        { className: 'noti-time' },
-	                                                        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'calendar' }),
-	                                                        new Date(noti.createdAt).toLocaleString()
-	                                                    )
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                _reactBootstrap.Col,
-	                                                { xs: 1, className: 'mark-as-read' },
-	                                                _react2.default.createElement('span', { onClick: function onClick(e) {
-	                                                        _this4.markAsRead(e, noti);
-	                                                    }, className: !noti.seen ? 'green' : '' })
-	                                            )
-	                                        )
-	                                    );
-	                                }) : _react2.default.createElement(
-	                                    'p',
-	                                    { className: 'text-center' },
-	                                    'No notifications.'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'noti-footer' },
-	                                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'eye-open' }),
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: '/notifications' },
-	                                    ' ',
-	                                    'See all'
-	                                )
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        { className: 'dropdown' },
-	                        _react2.default.createElement(
-	                            'a',
-	                            { className: 'dropdown-toggle', 'data-toggle': 'dropdown' },
-	                            _react2.default.createElement('span', { className: 'glyphicon glyphicon-user' }),
-	                            ' ',
-	                            _react2.default.createElement('span', { className: 'caret' })
-	                        ),
-	                        _react2.default.createElement(
-	                            'ul',
-	                            { className: 'dropdown-menu' },
-	                            this.props.isAdmin ? _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: '/admin/users' },
-	                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-king' }),
-	                                    ' ',
-	                                    'Admin Page'
-	                                )
-	                            ) : '',
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: '/user/edit-profile' },
-	                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-user' }),
-	                                    ' ',
-	                                    'My Profile'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: '/mycourses/wishlist' },
-	                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-heart-empty' }),
-	                                    ' ',
-	                                    'My Wishlist'
-	                                )
-	                            ),
-	                            _react2.default.createElement('li', { className: 'divider' }),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { onClick: this.onClickLogout.bind(this) },
-	                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-log-out' }),
-	                                    ' ',
-	                                    'Logout'
-	                                )
-	                            )
-	                        )
-	                    )
-	                );
-	            }
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                formLogin,
-	                formSignup,
-	                formForgotPassword,
+	      var navbarRight = void 0;
+	      var formLogin = void 0,
+	          formSignup = void 0,
+	          formForgotPassword = void 0;
+	      var notiCount = this.props.notis && this.props.notis.length > 0 ? this.props.notis.map(function (o) {
+	        return o.seen ? 0 : 1;
+	      }).reduce(function (a, b) {
+	        return a + b;
+	      }, 0) : 0;
+	      if (this.props.username == "") {
+	        navbarRight = _react2.default.createElement(
+	          "ul",
+	          { className: "nav navbar-nav navbar-right" },
+	          _react2.default.createElement(
+	            "li",
+	            null,
+	            _react2.default.createElement(
+	              "a",
+	              { onClick: this.showFormLogin.bind(this) },
+	              _react2.default.createElement("span", { className: "glyphicon glyphicon-log-in" }),
+	              " Login"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "li",
+	            null,
+	            _react2.default.createElement(
+	              "a",
+	              { onClick: this.showFormSignup.bind(this) },
+	              _react2.default.createElement("span", { className: "glyphicon glyphicon-registration-mark" }),
+	              " ",
+	              "Sign Up"
+	            )
+	          )
+	        );
+	        formLogin = _react2.default.createElement(_formLogin2.default, {
+	          ref: "formLogin",
+	          onClickSignup: this.showFormSignup.bind(this),
+	          onClickForgotPassword: this.showFormForgotPassword.bind(this)
+	        });
+	        formSignup = _react2.default.createElement(_formSignup2.default, {
+	          ref: "formSignup",
+	          onClickLogin: this.showFormLogin.bind(this)
+	        });
+	        formForgotPassword = _react2.default.createElement(_formForgotpassword2.default, {
+	          ref: "formForgotPassword",
+	          onClickLogin: this.showFormLogin.bind(this)
+	        });
+	      } else {
+	        navbarRight = _react2.default.createElement(
+	          "ul",
+	          { className: "nav navbar-nav navbar-right" },
+	          _react2.default.createElement(
+	            "li",
+	            null,
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: "/instructor" },
+	              _react2.default.createElement("span", { className: "glyphicon glyphicon-pencil" }),
+	              " Instructor"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "li",
+	            null,
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: "/mycourses/learning" },
+	              _react2.default.createElement("span", { className: "glyphicon glyphicon-list-alt" }),
+	              " Learning"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "li",
+	            null,
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              null,
+	              _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "bell" }),
+	              notiCount > 0 ? _react2.default.createElement(
+	                "span",
+	                { className: "badge noti-count" },
+	                notiCount
+	              ) : ""
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "noti-dropdown" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "noti-title" },
 	                _react2.default.createElement(
-	                    'nav',
-	                    { className: 'navbar-main navbar navbar-default', role: 'navigation' },
+	                  "span",
+	                  null,
+	                  "Notifications"
+	                ),
+	                _react2.default.createElement(
+	                  "a",
+	                  {
+	                    onClick: function onClick() {
+	                      _this4.markAllAsRead();
+	                    }
+	                  },
+	                  _react2.default.createElement(
+	                    "span",
+	                    { className: "read-all" },
+	                    "Mark all as read"
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "noti-content" },
+	                this.props.notis && this.props.notis.length != 0 ? this.props.notis.map(function (noti, index) {
+	                  return _react2.default.createElement(
+	                    "div",
+	                    {
+	                      className: "noti-item" + (noti.seen ? "" : " seen"),
+	                      key: index
+	                    },
 	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'container-fluid' },
+	                      _reactBootstrap.Row,
+	                      { className: "relative" },
+	                      _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        {
+	                          onClick: function onClick(e) {
+	                            _this4.onClickNoti(e, noti);
+	                          }
+	                        },
 	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'navbar-header' },
-	                            _react2.default.createElement(
-	                                'button',
-	                                { type: 'button', className: 'navbar-toggle', 'data-toggle': 'collapse', 'data-target': '.navbar-ex1-collapse' },
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'sr-only' },
-	                                    'Toggle navigation'
-	                                ),
-	                                _react2.default.createElement('span', { className: 'icon-bar' }),
-	                                _react2.default.createElement('span', { className: 'icon-bar' }),
-	                                _react2.default.createElement('span', { className: 'icon-bar' })
-	                            ),
-	                            _react2.default.createElement(
-	                                _reactRouter.Link,
-	                                { to: '/courses', className: 'navbar-brand center-block' },
-	                                'Academy'
-	                            )
+	                          _reactBootstrap.Col,
+	                          { xs: 2 },
+	                          _react2.default.createElement("img", {
+	                            src: "/api/resource/images?src=" + noti.from.photo + "&w=50&h=50"
+	                          })
 	                        ),
 	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'collapse navbar-collapse navbar-ex1-collapse' },
+	                          _reactBootstrap.Col,
+	                          { xs: 9 },
+	                          _react2.default.createElement(
+	                            "p",
+	                            { className: "noti-message" },
+	                            noti.title,
+	                            ":",
 	                            _react2.default.createElement(
-	                                'ul',
-	                                { className: 'nav navbar-nav' },
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        _reactRouter.Link,
-	                                        { onClick: function onClick() {
-	                                                $("#wrapper").toggleClass("toggled");
-	                                            } },
-	                                        'Browse',
-	                                        ' ',
-	                                        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'list' })
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'form',
-	                                { onSubmit: this.onSubmitSearch.bind(this), className: 'navbar-form navbar-left' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'input-group' },
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { className: 'input-group-btn' },
-	                                        _react2.default.createElement(
-	                                            'button',
-	                                            { className: 'btn btn-secondary btn-success', type: 'submit' },
-	                                            _react2.default.createElement('span', { className: 'glyphicon glyphicon-search' })
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement('input', { value: this.state.coursename,
-	                                        type: 'text', className: 'form-control', onChange: this.handleCourseName.bind(this),
-	                                        placeholder: 'Search for Courses' })
-	                                )
-	                            ),
-	                            navbarRight
+	                              "span",
+	                              null,
+	                              noti.message
+	                            )
+	                          ),
+	                          _react2.default.createElement(
+	                            "p",
+	                            { className: "noti-time" },
+	                            _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "calendar" }),
+	                            new Date(noti.createdAt).toLocaleString()
+	                          )
 	                        )
+	                      ),
+	                      _react2.default.createElement(
+	                        _reactBootstrap.Col,
+	                        { xs: 1, className: "mark-as-read" },
+	                        _react2.default.createElement("span", {
+	                          onClick: function onClick(e) {
+	                            _this4.markAsRead(e, noti);
+	                          },
+	                          className: !noti.seen ? "green" : ""
+	                        })
+	                      )
 	                    )
+	                  );
+	                }) : _react2.default.createElement(
+	                  "p",
+	                  { className: "text-center" },
+	                  "No notifications."
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "noti-footer" },
+	                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "eye-open" }),
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: "/notifications" },
+	                  " See all"
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "li",
+	            { className: "dropdown" },
+	            _react2.default.createElement(
+	              "a",
+	              { className: "dropdown-toggle", "data-toggle": "dropdown" },
+	              _react2.default.createElement("span", { className: "glyphicon glyphicon-user" }),
+	              " ",
+	              _react2.default.createElement("span", { className: "caret" })
+	            ),
+	            _react2.default.createElement(
+	              "ul",
+	              { className: "dropdown-menu" },
+	              this.props.isAdmin ? _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: "/admin/users" },
+	                  _react2.default.createElement("span", { className: "glyphicon glyphicon-king" }),
+	                  " Admin Page"
+	                )
+	              ) : "",
+	              _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: "/user/edit-profile" },
+	                  _react2.default.createElement("span", { className: "glyphicon glyphicon-user" }),
+	                  " My Profile"
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: "/mycourses/wishlist" },
+	                  _react2.default.createElement("span", { className: "glyphicon glyphicon-heart-empty" }),
+	                  " My Wishlist"
+	                )
+	              ),
+	              _react2.default.createElement("li", { className: "divider" }),
+	              _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                  "a",
+	                  { onClick: this.onClickLogout.bind(this) },
+	                  _react2.default.createElement("span", { className: "glyphicon glyphicon-log-out" }),
+	                  " Logout"
+	                )
+	              )
+	            )
+	          )
+	        );
+	      }
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        formLogin,
+	        formSignup,
+	        formForgotPassword,
+	        _react2.default.createElement(
+	          "nav",
+	          { className: "navbar-main navbar navbar-default", role: "navigation" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "container-fluid" },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "navbar-header" },
+	              _react2.default.createElement(
+	                "button",
+	                {
+	                  type: "button",
+	                  className: "navbar-toggle",
+	                  "data-toggle": "collapse",
+	                  "data-target": ".navbar-ex1-collapse"
+	                },
+	                _react2.default.createElement(
+	                  "span",
+	                  { className: "sr-only" },
+	                  "Toggle navigation"
 	                ),
-	                this.props.children
-	            );
-	        }
-	    }]);
+	                _react2.default.createElement("span", { className: "icon-bar" }),
+	                _react2.default.createElement("span", { className: "icon-bar" }),
+	                _react2.default.createElement("span", { className: "icon-bar" })
+	              ),
+	              _react2.default.createElement(
+	                _reactRouter.Link,
+	                { to: "/courses", className: "navbar-brand center-block" },
+	                "Academy"
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "collapse navbar-collapse navbar-ex1-collapse" },
+	              _react2.default.createElement(
+	                "ul",
+	                { className: "nav navbar-nav" },
+	                _react2.default.createElement(
+	                  "li",
+	                  null,
+	                  _react2.default.createElement(
+	                    _reactRouter.Link,
+	                    {
+	                      onClick: function onClick() {
+	                        $("#wrapper").toggleClass("toggled");
+	                      }
+	                    },
+	                    "Browse ",
+	                    _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "list" })
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "form",
+	                {
+	                  onSubmit: this.onSubmitSearch.bind(this),
+	                  className: "navbar-form navbar-left"
+	                },
+	                _react2.default.createElement(
+	                  "div",
+	                  { className: "input-group" },
+	                  _react2.default.createElement(
+	                    "span",
+	                    { className: "input-group-btn" },
+	                    _react2.default.createElement(
+	                      "button",
+	                      {
+	                        className: "btn btn-secondary btn-success",
+	                        type: "submit"
+	                      },
+	                      _react2.default.createElement("span", { className: "glyphicon glyphicon-search" })
+	                    )
+	                  ),
+	                  _react2.default.createElement("input", {
+	                    value: this.state.coursename,
+	                    type: "text",
+	                    className: "form-control",
+	                    onChange: this.handleCourseName.bind(this),
+	                    placeholder: "Search for Courses"
+	                  })
+	                )
+	              ),
+	              navbarRight
+	            )
+	          )
+	        ),
+	        this.props.children
+	      );
+	    }
+	  }]);
 
-	    return Navbar;
+	  return Navbar;
 	}(_react2.default.Component);
 
 	function mapStateToProps(state) {
-	    if (state.hasOwnProperty('user') && state.user.hasOwnProperty('username')) {
-	        return {
-	            username: state.user.username,
-	            notis: state.user.notis,
-	            isAdmin: state.user.role == 1
-	        };
-	    } else {
-	        return { username: '' };
-	    }
+	  if (state.hasOwnProperty("user") && state.user.hasOwnProperty("username")) {
+	    return {
+	      username: state.user.username,
+	      notis: state.user.notis,
+	      isAdmin: state.user.role == 1
+	    };
+	  } else {
+	    return { username: "" };
+	  }
 	}
 
 	// export default connect()(Navbar)
@@ -42516,10 +42543,10 @@
 /* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -42547,229 +42574,265 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var FormLogin = function (_React$Component) {
-	    _inherits(FormLogin, _React$Component);
+	  _inherits(FormLogin, _React$Component);
 
-	    function FormLogin(props) {
-	        _classCallCheck(this, FormLogin);
+	  function FormLogin(props) {
+	    _classCallCheck(this, FormLogin);
 
-	        var _this = _possibleConstructorReturn(this, (FormLogin.__proto__ || Object.getPrototypeOf(FormLogin)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (FormLogin.__proto__ || Object.getPrototypeOf(FormLogin)).call(this, props));
 
-	        _this.state = {
-	            email: '',
-	            password: '',
-	            isSubmitting: false,
-	            message: ''
-	        };
-	        return _this;
+	    _this.state = {
+	      email: "",
+	      password: "",
+	      isSubmitting: false,
+	      message: ""
+	    };
+	    return _this;
+	  }
+
+	  _createClass(FormLogin, [{
+	    key: "handleEmail",
+	    value: function handleEmail(e) {
+	      this.setState({ email: e.target.value });
 	    }
+	  }, {
+	    key: "handlePassword",
+	    value: function handlePassword(e) {
+	      this.setState({ password: e.target.value });
+	    }
+	  }, {
+	    key: "onEnter",
+	    value: function onEnter() {
+	      this.setState({ email: "", password: "" });
+	    }
+	  }, {
+	    key: "onHide",
+	    value: function onHide() {
+	      this.props.dispatch((0, _actions.showModal)(0));
+	    }
+	  }, {
+	    key: "onClickSignup",
+	    value: function onClickSignup() {
+	      this.props.dispatch((0, _actions.showModal)(2));
+	    }
+	  }, {
+	    key: "onClickForgotPassword",
+	    value: function onClickForgotPassword() {
+	      this.props.dispatch((0, _actions.showModal)(3));
+	    }
+	  }, {
+	    key: "onSubmit",
+	    value: function onSubmit(e) {
+	      var _this2 = this;
 
-	    _createClass(FormLogin, [{
-	        key: 'handleEmail',
-	        value: function handleEmail(e) {
-	            this.setState({ email: e.target.value });
+	      e.preventDefault();
+	      this.setState({ isSubmitting: true });
+	      (0, _auth.login)({
+	        email: this.state.email,
+	        password: this.state.password
+	      }, function (data, status) {
+	        if (data.code == 200) {
+	          localStorage.setItem("token", data.token);
+	          _this2.props.dispatch((0, _actions.showModal)(0));
+	          _this2.props.dispatch((0, _actions.setUser)(data.user));
+	          _reactRouter.browserHistory.push("/courses");
+	        } else {
+	          _this2.setState({ message: data.message, isSubmitting: false });
+	          var alertlogin = $(".alert:first");
+	          alertlogin.show(500, function () {
+	            setTimeout(function () {
+	              alertlogin.hide(500);
+	            }, 3000);
+	          });
 	        }
-	    }, {
-	        key: 'handlePassword',
-	        value: function handlePassword(e) {
-	            this.setState({ password: e.target.value });
-	        }
-	    }, {
-	        key: 'onEnter',
-	        value: function onEnter() {
-	            this.setState({ email: '', password: '' });
-	        }
-	    }, {
-	        key: 'onHide',
-	        value: function onHide() {
-	            this.props.dispatch((0, _actions.showModal)(0));
-	        }
-	    }, {
-	        key: 'onClickSignup',
-	        value: function onClickSignup() {
-	            this.props.dispatch((0, _actions.showModal)(2));
-	        }
-	    }, {
-	        key: 'onClickForgotPassword',
-	        value: function onClickForgotPassword() {
-	            this.props.dispatch((0, _actions.showModal)(3));
-	        }
-	    }, {
-	        key: 'onSubmit',
-	        value: function onSubmit(e) {
-	            var _this2 = this;
-
-	            e.preventDefault();
-	            this.setState({ isSubmitting: true });
-	            (0, _auth.login)({
-	                email: this.state.email,
-	                password: this.state.password
-	            }, function (data, status) {
-	                if (data.code == 200) {
-	                    _this2.props.dispatch((0, _actions.showModal)(0));
-	                    _this2.props.dispatch((0, _actions.setUser)(data.user));
-	                    _reactRouter.browserHistory.push('/courses');
-	                } else {
-	                    _this2.setState({ message: data.message, isSubmitting: false });
-	                    var alertlogin = $(".alert:first");
-	                    alertlogin.show(500, function () {
-	                        setTimeout(function () {
-	                            alertlogin.hide(500);
-	                        }, 3000);
-	                    });
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                _reactBootstrap.Modal,
-	                { bsSize: 'large', show: this.props.hasOwnProperty('showModalId') && this.props.showModalId == 1,
-	                    onHide: this.onHide.bind(this), onEnter: this.onEnter.bind(this) },
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _reactBootstrap.Modal,
+	        {
+	          bsSize: "large",
+	          show: this.props.hasOwnProperty("showModalId") && this.props.showModalId == 1,
+	          onHide: this.onHide.bind(this),
+	          onEnter: this.onEnter.bind(this)
+	        },
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Header,
+	          { closeButton: true },
+	          _react2.default.createElement(
+	            _reactBootstrap.Modal.Title,
+	            { className: "text-center h3" },
+	            "Login to your Academy account!"
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Body,
+	          { style: { overflow: "auto" } },
+	          _react2.default.createElement(
+	            "div",
+	            {
+	              className: "alert alert-danger text-center",
+	              role: "alert",
+	              style: { display: "none", marginBottom: 0 }
+	            },
+	            this.state.message,
+	            " "
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "col-xs-6 col-sm-6 col-md-6 col-lg-6" },
+	            _react2.default.createElement(
+	              "h4",
+	              { className: "text-center" },
+	              "Login with social accounts"
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "a",
+	                {
+	                  href: "/authentication/auth/facebook",
+	                  className: "btn btn-block btn-social btn-lg btn-facebook"
+	                },
+	                _react2.default.createElement("i", { className: "fa fa-facebook" }),
+	                "Log in with Facebook"
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "a",
+	                {
+	                  href: "/authentication/auth/google",
+	                  className: "btn btn-block btn-social btn-lg btn-google"
+	                },
+	                _react2.default.createElement("i", { className: "fa fa-google" }),
+	                "Log in with Google+"
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "col-xs-6 col-sm-6 col-md-6 col-lg-6" },
+	            _react2.default.createElement(
+	              "h4",
+	              { className: "text-center" },
+	              "Login with your email"
+	            ),
+	            _react2.default.createElement(
+	              "form",
+	              {
+	                className: "form-horizontal",
+	                onSubmit: this.onSubmit.bind(this)
+	              },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "form-group form-group-lg" },
 	                _react2.default.createElement(
-	                    _reactBootstrap.Modal.Header,
-	                    { closeButton: true },
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Modal.Title,
-	                        { className: 'text-center h3' },
-	                        'Login to your Academy account!'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    _reactBootstrap.Modal.Body,
-	                    { style: { overflow: 'auto' } },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'alert alert-danger text-center', role: 'alert', style: { display: 'none', marginBottom: 0 } },
-	                        this.state.message,
-	                        ' '
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-xs-6 col-sm-6 col-md-6 col-lg-6' },
-	                        _react2.default.createElement(
-	                            'h4',
-	                            { className: 'text-center' },
-	                            'Login with social accounts'
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'a',
-	                                { href: '/authentication/auth/facebook', className: 'btn btn-block btn-social btn-lg btn-facebook' },
-	                                _react2.default.createElement('i', { className: 'fa fa-facebook' }),
-	                                'Log in with Facebook'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'a',
-	                                { href: '/authentication/auth/google', className: 'btn btn-block btn-social btn-lg btn-google' },
-	                                _react2.default.createElement('i', { className: 'fa fa-google' }),
-	                                'Log in with Google+'
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-xs-6 col-sm-6 col-md-6 col-lg-6' },
-	                        _react2.default.createElement(
-	                            'h4',
-	                            { className: 'text-center' },
-	                            'Login with your email'
-	                        ),
-	                        _react2.default.createElement(
-	                            'form',
-	                            { className: 'form-horizontal', onSubmit: this.onSubmit.bind(this) },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-group form-group-lg' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'input-group col-sm-offset-1 col-sm-10' },
-	                                    _react2.default.createElement('span', { className: 'input-group-addon glyphicon glyphicon-envelope' }),
-	                                    _react2.default.createElement('input', { type: 'email', required: true, className: 'form-control', placeholder: 'Email', name: 'email',
-	                                        onChange: this.handleEmail.bind(this), disabled: this.state.isSubmitting })
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-group form-group-lg' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'input-group col-sm-offset-1 col-sm-10' },
-	                                    _react2.default.createElement('span', { className: 'input-group-addon glyphicon glyphicon-lock' }),
-	                                    _react2.default.createElement('input', { type: 'password', maxLength: '20', minLength: '6', required: true, className: 'form-control',
-	                                        placeholder: 'Password', name: 'password', onChange: this.handlePassword.bind(this),
-	                                        disabled: this.state.isSubmitting })
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-group' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col-sm-offset-1 col-sm-10' },
-	                                    _react2.default.createElement(
-	                                        'button',
-	                                        { type: 'submit', disabled: this.state.isSubmitting,
-	                                            className: 'btn btn-success btn-lg btn-block' },
-	                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-ok' }),
-	                                        ' ',
-	                                        'Login'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'h5',
-	                                        { className: 'text-center' },
-	                                        'or',
-	                                        _react2.default.createElement(
-	                                            'strong',
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { onClick: this.onClickForgotPassword.bind(this) },
-	                                                ' Forgot Password'
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            )
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    _reactBootstrap.Modal.Footer,
-	                    null,
-	                    _react2.default.createElement(
-	                        'h5',
-	                        { className: 'text-center' },
-	                        'Don\'t have an account?',
-	                        _react2.default.createElement(
-	                            'strong',
-	                            null,
-	                            _react2.default.createElement(
-	                                'a',
-	                                { onClick: this.onClickSignup.bind(this), title: '' },
-	                                ' ',
-	                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-registration-mark' }),
-	                                ' ',
-	                                'Sign up'
-	                            )
-	                        )
-	                    )
+	                  "div",
+	                  { className: "input-group col-sm-offset-1 col-sm-10" },
+	                  _react2.default.createElement("span", { className: "input-group-addon glyphicon glyphicon-envelope" }),
+	                  _react2.default.createElement("input", {
+	                    type: "email",
+	                    required: true,
+	                    className: "form-control",
+	                    placeholder: "Email",
+	                    name: "email",
+	                    onChange: this.handleEmail.bind(this),
+	                    disabled: this.state.isSubmitting
+	                  })
 	                )
-	            );
-	        }
-	    }]);
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "form-group form-group-lg" },
+	                _react2.default.createElement(
+	                  "div",
+	                  { className: "input-group col-sm-offset-1 col-sm-10" },
+	                  _react2.default.createElement("span", { className: "input-group-addon glyphicon glyphicon-lock" }),
+	                  _react2.default.createElement("input", {
+	                    type: "password",
+	                    maxLength: "20",
+	                    minLength: "6",
+	                    required: true,
+	                    className: "form-control",
+	                    placeholder: "Password",
+	                    name: "password",
+	                    onChange: this.handlePassword.bind(this),
+	                    disabled: this.state.isSubmitting
+	                  })
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "form-group" },
+	                _react2.default.createElement(
+	                  "div",
+	                  { className: "col-sm-offset-1 col-sm-10" },
+	                  _react2.default.createElement(
+	                    "button",
+	                    {
+	                      type: "submit",
+	                      disabled: this.state.isSubmitting,
+	                      className: "btn btn-success btn-lg btn-block"
+	                    },
+	                    _react2.default.createElement("span", { className: "glyphicon glyphicon-ok" }),
+	                    " Login"
+	                  ),
+	                  _react2.default.createElement(
+	                    "h5",
+	                    { className: "text-center" },
+	                    "or",
+	                    _react2.default.createElement(
+	                      "strong",
+	                      null,
+	                      _react2.default.createElement(
+	                        "a",
+	                        { onClick: this.onClickForgotPassword.bind(this) },
+	                        " ",
+	                        "Forgot Password"
+	                      )
+	                    )
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Footer,
+	          null,
+	          _react2.default.createElement(
+	            "h5",
+	            { className: "text-center" },
+	            "Don't have an account?",
+	            _react2.default.createElement(
+	              "strong",
+	              null,
+	              _react2.default.createElement(
+	                "a",
+	                { onClick: this.onClickSignup.bind(this), title: "" },
+	                " ",
+	                _react2.default.createElement("span", { className: "glyphicon glyphicon-registration-mark" }),
+	                " ",
+	                "Sign up"
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	    return FormLogin;
+	  return FormLogin;
 	}(_react2.default.Component);
 
 	function mapStateToProps(state) {
-	    return { showModalId: state.showModalId };
+	  return { showModalId: state.showModalId };
 	}
 
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(FormLogin);
@@ -69179,25 +69242,36 @@
 /* 560 */
 /***/ (function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	$.ajaxSetup({
+	  beforeSend: function beforeSend(xhr, settings) {
+	    if (localStorage.getItem("token")) {
+	      xhr.setRequestHeader("authorization", "Bearer " + localStorage.getItem("token"));
+	    }
+	  }
+	});
+
 	var login = exports.login = function login(data, callback) {
-	  $.post('/authentication/login', data, callback);
+	  // $.post("/authentication/login", data, callback);
+	  $.post("http://localhost:5000/auth/login", data, callback);
 	};
 
 	var signup = exports.signup = function signup(data, callback) {
-	  $.post('/authentication/signup', data, callback);
+	  // $.post("/authentication/signup", data, callback);
+	  $.post("http://localhost:5000/auth/register", data, callback);
 	};
 
 	var forgotPassword = exports.forgotPassword = function forgotPassword(data, callback) {
-	  $.post('/authentication/forgotpassword', data, callback);
+	  $.post("/authentication/forgotpassword", data, callback);
 	};
 
 	var logout = exports.logout = function logout(callback) {
-	  $.get('/authentication/logout', callback);
+	  // $.get("/authentication/logout", callback);
+	  $.get("http://localhost:5000/auth/logout", callback);
 	};
 
 /***/ }),
@@ -105753,10 +105827,12 @@
 	        value: function componentDidMount() {
 	            var _this3 = this;
 
-	            if (!this.props.getMyCourses) $.get('/api/user/get-all-mycourses', function (courses) {
-	                _this3.props.dispatch((0, _actions.getAllMyCourses)(JSON.parse(courses)));
-	                _this3.props.dispatch((0, _actions.setGetMyCourses)(true));
-	            });
+	            if (!this.props.getMyCourses)
+	                // $.get('/api/user/get-all-mycourses', (courses) => {
+	                $.get('http://localhost:5000/users/get-all-my-courses', function (courses) {
+	                    _this3.props.dispatch((0, _actions.getAllMyCourses)(JSON.parse(courses)));
+	                    _this3.props.dispatch((0, _actions.setGetMyCourses)(true));
+	                });
 	        }
 	    }, {
 	        key: 'showModal',
@@ -105770,7 +105846,9 @@
 
 	            e.preventDefault();
 	            this.refs.modalCreateCourse.setState({ isSubmitting: true });
-	            $.post('api/user/createcourse', { coursename: this.refs.modalCreateCourse.state.coursename }, function (data, status) {
+	            $.post(
+	            // 'api/user/createcourse',
+	            'http://localhost:5000/users/create-course', { coursename: this.refs.modalCreateCourse.state.coursename }, function (data, status) {
 	                if (data.code == 1001) {
 	                    _this4.props.dispatch((0, _actions.setUser)({}));
 	                    _this4.props.dispatch((0, _actions.setGetMyCourses)(false));
@@ -108297,7 +108375,9 @@
 	        });
 	      } else {
 	        this.setState({ isSubmitting: true });
-	        $.post("/api/user/take-a-course", {
+	        $.post(
+	        // "/api/user/take-a-course",
+	        "http://localhost:5000/users/take-a-course", {
 	          courseid: courseid
 	        }, function (data, status) {
 	          if (data.code == 1001) {
@@ -108737,7 +108817,7 @@
 	              }
 	            },
 	            _react2.default.createElement("span", { className: "glyphicon glyphicon-shopping-cart" }),
-	            " Take This Course"
+	            "Take This Course"
 	          ),
 	          _react2.default.createElement("hr", { style: { borderColor: "silver" } }),
 	          _react2.default.createElement(
@@ -111592,7 +111672,8 @@
 	                });
 	                $.ajax({
 	                    method: "POST",
-	                    url: '/api/user/learning',
+	                    // url: '/api/user/learning',
+	                    url: 'http://localhost:5000/users/learning',
 	                    data: nextProps.location.query,
 	                    success: function success(data, status) {
 	                        if (data.code == 1001) {
@@ -111625,7 +111706,8 @@
 
 	            $.ajax({
 	                method: "POST",
-	                url: '/api/user/learning',
+	                // url: '/api/user/learning',
+	                url: 'http://localhost:5000/users/learning',
 	                data: this.props.location.query,
 	                success: function success(data, status) {
 	                    if (data.code == 1001) {

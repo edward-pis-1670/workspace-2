@@ -45,7 +45,8 @@ class ModalPurchase extends React.Component {
     } else {
       this.setState({ isSubmitting: true });
       $.post(
-        "/api/user/take-a-course",
+        // "/api/user/take-a-course",
+        "http://localhost:5000/users/take-a-course",
         {
           courseid: courseid,
         },
@@ -283,7 +284,7 @@ class ViewCourse extends React.Component {
         if (data.code == 200) {
           this.props.dispatch(addViewCourse(data.course));
           var header = $("#navbar-info-course");
-          var top =  header.position().top + 47 ;
+          var top = header.position().top + 47;
           $(window).scroll(function () {
             var scroll = $(window).scrollTop();
             if (scroll >= top) {
@@ -403,8 +404,7 @@ class ViewCourse extends React.Component {
                 this.onClickTakeThisCourse(this.props.params.id);
               }}
             >
-              <span className="glyphicon glyphicon-shopping-cart"></span> Take
-              This Course
+              <span className="glyphicon glyphicon-shopping-cart"></span>Take This Course
             </button>
           )}
           <hr style={{ borderColor: "silver" }} />
@@ -528,9 +528,11 @@ class ViewCourse extends React.Component {
                     </strong>
                     <div style={{ fontSize: "16px", marginTop: "10px" }}>
                       <ul>
-                        {this.props.course.needtoknow?this.props.course.needtoknow.map((item, index) => {
-                          return <li key={index}>{item}</li>;
-                        }):null}
+                        {this.props.course.needtoknow
+                          ? this.props.course.needtoknow.map((item, index) => {
+                              return <li key={index}>{item}</li>;
+                            })
+                          : null}
                       </ul>
                     </div>
                     <strong style={{ color: "#5bc0de" }}>
@@ -538,9 +540,11 @@ class ViewCourse extends React.Component {
                     </strong>
                     <div style={{ fontSize: "16px", marginTop: "10px" }}>
                       <ul>
-                        {this.props.course.willableto?this.props.course.willableto.map((item, index) => {
-                          return <li key={index}>{item}</li>;
-                        }):null}
+                        {this.props.course.willableto
+                          ? this.props.course.willableto.map((item, index) => {
+                              return <li key={index}>{item}</li>;
+                            })
+                          : null}
                       </ul>
                     </div>
                     <strong style={{ color: "#5bc0de" }}>
@@ -548,9 +552,13 @@ class ViewCourse extends React.Component {
                     </strong>
                     <div style={{ fontSize: "16px", marginTop: "10px" }}>
                       <ul>
-                        {this.props.course.targetstudent?this.props.course.targetstudent.map((item, index) => {
-                          return <li key={index}>{item}</li>;
-                        }):null}
+                        {this.props.course.targetstudent
+                          ? this.props.course.targetstudent.map(
+                              (item, index) => {
+                                return <li key={index}>{item}</li>;
+                              }
+                            )
+                          : null}
                       </ul>
                     </div>
                   </div>
@@ -626,13 +634,15 @@ class ViewCourse extends React.Component {
                       </strong>
                     </p>
                   </Col>
-                  {this.state.coursesRelatedLecturer?this.state.coursesRelatedLecturer.map((course, index) => {
-                    return (
-                      <Col xs={12} key={index}>
-                        <Course popoverPlacement="left" course={course} />
-                      </Col>
-                    );
-                  }):null}
+                  {this.state.coursesRelatedLecturer
+                    ? this.state.coursesRelatedLecturer.map((course, index) => {
+                        return (
+                          <Col xs={12} key={index}>
+                            <Course popoverPlacement="left" course={course} />
+                          </Col>
+                        );
+                      })
+                    : null}
                 </Row>
               </Col>
             </div>
@@ -815,54 +825,59 @@ class ViewCourse extends React.Component {
                     </span>
                   </Col>
                   <Col xs={9} md={10}>
-                    {this.state.reviews?this.state.reviews.map((review, index) => {
-                      return (
-                        <div className="info-rate" key={index}>
-                          <img
-                            className="avatar-rate"
-                            src={
-                              "/api/resource/images?src=" +
-                              review.user.photo +
-                              "&w=50&h=50"
-                            }
-                          />
-                          <div
-                            style={{
-                              display: "inline-block",
-                              verticalAlign: "middle",
-                            }}
-                          >
-                            <Link
-                              to={"/view-user/" + review.user._id}
-                              className="username-rate"
-                            >
-                              {review.user.username}
-                            </Link>
-                            <Glyphicon
-                              style={{ marginLeft: "10px" }}
-                              glyph="calendar"
-                            />
-                            <span>
-                              {" " +
-                                new Date(review.createdAt).toLocaleString()}
-                            </span>
-                          </div>
-                          <div>
-                            <span className="course-rate">
+                    {this.state.reviews
+                      ? this.state.reviews.map((review, index) => {
+                          return (
+                            <div className="info-rate" key={index}>
+                              <img
+                                className="avatar-rate"
+                                src={
+                                  "/api/resource/images?src=" +
+                                  review.user.photo +
+                                  "&w=50&h=50"
+                                }
+                              />
+                              <div
+                                style={{
+                                  display: "inline-block",
+                                  verticalAlign: "middle",
+                                }}
+                              >
+                                <Link
+                                  to={"/view-user/" + review.user._id}
+                                  className="username-rate"
+                                >
+                                  {review.user.username}
+                                </Link>
+                                <Glyphicon
+                                  style={{ marginLeft: "10px" }}
+                                  glyph="calendar"
+                                />
+                                <span>
+                                  {" " +
+                                    new Date(review.createdAt).toLocaleString()}
+                                </span>
+                              </div>
+                              <div>
+                                <span className="course-rate">
+                                  <span
+                                    style={{ width: review.star * 20 + "%" }}
+                                  ></span>
+                                </span>
+                              </div>
                               <span
-                                style={{ width: review.star * 20 + "%" }}
+                                dangerouslySetInnerHTML={{
+                                  __html: review.content.replace(
+                                    /\n/g,
+                                    "<br/>"
+                                  ),
+                                }}
+                                className="content-rate"
                               ></span>
-                            </span>
-                          </div>
-                          <span
-                            dangerouslySetInnerHTML={{
-                              __html: review.content.replace(/\n/g, "<br/>"),
-                            }}
-                            className="content-rate"
-                          ></span>
-                        </div>
-                      );
-                    }):null}
+                            </div>
+                          );
+                        })
+                      : null}
                     <div className="text-center">
                       <ul className="pagination">
                         <li>

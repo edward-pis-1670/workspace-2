@@ -30,7 +30,8 @@ class Learning extends React.Component {
             })
             $.ajax({
                 method: "POST",
-                url: '/api/user/learning',
+                // url: '/api/user/learning',
+                url: 'http://localhost:5000/users/learning',
                 data: nextProps.location.query,
                 success: (data, status) => {
                     if (data.code == 1001) {
@@ -59,7 +60,8 @@ class Learning extends React.Component {
     componentDidMount() {
         $.ajax({
             method: "POST",
-            url: '/api/user/learning',
+            // url: '/api/user/learning',
+            url: 'http://localhost:5000/users/learning',
             data: this.props.location.query,
             success: (data, status) => {
                 if (data.code == 1001) {
