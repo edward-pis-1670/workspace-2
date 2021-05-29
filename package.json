@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --inspect ./bin/www --history-api-fallback"
+    "start": "nodemon ./bin/www --history-api-fallback"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
