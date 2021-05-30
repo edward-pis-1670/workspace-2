@@ -9,7 +9,8 @@ class ManageCourse extends React.Component {
 
     componentDidMount() {
         if (!this.props.course) {
-            $.post('/api/user/get-course',
+            // $.post('/api/user/get-course',
+            $.post('http://localhost:5000/users/get-course',
                 { courseid: this.props.params.id },
                 (data, status) => {
                     if (data.code == 200) {
@@ -20,7 +21,8 @@ class ManageCourse extends React.Component {
     }
     componentWillReceiveProps(nextProps) {
         if (this.props.params.id != nextProps.params.id) {
-            $.post('/api/user/get-course',
+            // $.post('/api/user/get-course',
+            $.post('http://localhost:5000/users/get-course',
                 { courseid: nextProps.params.id },
                 (data, status) => {
                     if (data.code == 200) {
@@ -30,7 +32,8 @@ class ManageCourse extends React.Component {
         }
     }
     onClickPublish() {
-        $.post('/api/user/publish-course',
+        // $.post('/api/user/publish-course',
+        $.post('http://localhost:5000/users/publish-course',
             {
                 courseid: this.props.params.id
             },

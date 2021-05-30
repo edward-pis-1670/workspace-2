@@ -14,7 +14,8 @@ class ManageCourseDangerZone extends React.Component {
     onClickDeleteCourse(e) {
         e.preventDefault()
         this.setState({ isSubmitting: true })
-        $.post('/api/user/delete-course',
+        // $.post('/api/user/delete-course',
+        $.post('http://localhost:5000/users/delete-course',
             {
                 courseid: this.props.params.id
             }, (data, status) => {

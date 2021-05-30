@@ -106472,7 +106472,8 @@
 	            var _this2 = this;
 
 	            if (!this.props.course) {
-	                $.post('/api/user/get-course', { courseid: this.props.params.id }, function (data, status) {
+	                // $.post('/api/user/get-course',
+	                $.post('http://localhost:5000/users/get-course', { courseid: this.props.params.id }, function (data, status) {
 	                    if (data.code == 200) {
 	                        _this2.props.dispatch((0, _actions.setCourse)(data.course));
 	                    }
@@ -106485,7 +106486,8 @@
 	            var _this3 = this;
 
 	            if (this.props.params.id != nextProps.params.id) {
-	                $.post('/api/user/get-course', { courseid: nextProps.params.id }, function (data, status) {
+	                // $.post('/api/user/get-course',
+	                $.post('http://localhost:5000/users/get-course', { courseid: nextProps.params.id }, function (data, status) {
 	                    if (data.code == 200) {
 	                        _this3.props.dispatch((0, _actions.setCourse)(data.course));
 	                    }
@@ -106497,7 +106499,8 @@
 	        value: function onClickPublish() {
 	            var _this4 = this;
 
-	            $.post('/api/user/publish-course', {
+	            // $.post('/api/user/publish-course',
+	            $.post('http://localhost:5000/users/publish-course', {
 	                courseid: this.props.params.id
 	            }, function (data, status) {
 	                if (data.code == 1001) {
@@ -106724,7 +106727,8 @@
 	            var _this2 = this;
 
 	            if (!this.props.needtoknow) {
-	                $.post('/api/user/get-course-goals', { courseid: this.props.params.id }, function (data, status) {
+	                // $.post('/api/user/get-course-goals',
+	                $.post('http://localhost:5000/users/get-goals-course', { courseid: this.props.params.id }, function (data, status) {
 	                    if (data.code == 200) {
 	                        console.log(data);
 	                        _this2.props.dispatch((0, _actions.setCourseGoals)(data.course));
@@ -106829,7 +106833,9 @@
 
 	            e.preventDefault();
 	            this.setState({ isSubmitting: true });
-	            $.post('/api/user/set-course-goals', {
+	            $.post(
+	            // '/api/user/set-course-goals',
+	            'http://localhost:5000/users/set-goals-course', {
 	                courseid: this.props.params.id,
 	                needtoknow: this.state.needtoknow,
 	                targetstudent: this.state.targetstudent,
@@ -107135,7 +107141,8 @@
 	                _this2.setState({ course_description: e.editor.getData() });
 	            });
 	            if (!this.props.course_description) {
-	                $.post('/api/user/get-course-description', { courseid: this.props.params.id }, function (data, status) {
+	                // $.post('/api/user/get-course-description',
+	                $.post('http://localhost:5000/users/get-description-course', { courseid: this.props.params.id }, function (data, status) {
 	                    if (data.code == 200) {
 	                        _this2.props.dispatch((0, _actions.setCourseDescription)(data.course));
 	                        _this2.setState({
@@ -107248,7 +107255,8 @@
 	            fd.append('coverphoto', this.state.file);
 	            $.ajax({
 	                method: "POST",
-	                url: '/api/user/set-course-description',
+	                // url: '/api/user/set-course-description',
+	                url: 'http://localhost:5000/users/set-description-course',
 	                data: fd,
 	                processData: false,
 	                contentType: false,
@@ -107598,7 +107606,9 @@
 
 	            e.preventDefault();
 	            this.setState({ isSubmitting: true });
-	            $.post('/api/user/set-course-price', {
+	            $.post(
+	            // '/api/user/set-course-price',
+	            'http://localhost:5000/users/set-price-course', {
 	                courseid: this.props.params.id,
 	                cost: this.state.cost
 	            }, function (data, status) {
@@ -107844,7 +107854,8 @@
 	            var _this3 = this;
 
 	            if (!this.props.lectures) {
-	                $.post('/api/user/get-course-lectures', { courseid: this.props.params.id }, function (data, status) {
+	                // $.post('/api/user/get-course-lectures',
+	                $.post('http://localhost:5000/users/get-lectures-course', { courseid: this.props.params.id }, function (data, status) {
 	                    if (data.code == 200) {
 	                        _this3.props.dispatch((0, _actions.setCourseLectures)(data.course));
 	                    }
@@ -107858,7 +107869,8 @@
 
 	            e.preventDefault();
 	            this.refs.modalAddLecture.setState({ isSubmitting: true });
-	            $.post('/api/user/add-course-lecture', {
+	            // $.post('/api/user/add-course-lecture',
+	            $.post('http://localhost:5000/users/add-video-lecture', {
 	                courseid: this.props.params.id,
 	                name: this.refs.modalAddLecture.state.lecturename
 	            }, function (data, status) {
@@ -107945,7 +107957,8 @@
 	            fd.append('lectureid', lectureid);
 	            $.ajax({
 	                method: "POST",
-	                url: "/api/user/upload-video-lecture",
+	                // url: "/api/user/upload-video-lecture",
+	                url: "http://localhost:5000/users/upload-video-lecture",
 	                data: fd,
 	                processData: false,
 	                contentType: false,
@@ -108214,7 +108227,8 @@
 
 	            e.preventDefault();
 	            this.setState({ isSubmitting: true });
-	            $.post('/api/user/delete-course', {
+	            // $.post('/api/user/delete-course',
+	            $.post('http://localhost:5000/users/delete-course', {
 	                courseid: this.props.params.id
 	            }, function (data, status) {
 	                if (data.code == 1001) {
@@ -112120,7 +112134,8 @@
 	                });
 	                $.ajax({
 	                    method: "POST",
-	                    url: '/api/user/wishlist',
+	                    // url: '/api/user/wishlist',
+	                    url: 'http://localhost:5000/users/wishlist',
 	                    data: nextProps.location.query,
 	                    success: function success(data, status) {
 	                        if (data.code == 1001) {
@@ -112153,7 +112168,7 @@
 
 	            $.ajax({
 	                method: "POST",
-	                url: '/api/user/wishlist',
+	                url: 'http://localhost:5000/users/wishlist',
 	                data: this.props.location.query,
 	                success: function success(data, status) {
 	                    if (data.code == 1001) {

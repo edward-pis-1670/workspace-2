@@ -68,7 +68,8 @@ class ManageCourseLecture extends React.Component {
     }
     componentDidMount() {
         if (!this.props.lectures) {
-            $.post('/api/user/get-course-lectures',
+            // $.post('/api/user/get-course-lectures',
+            $.post('http://localhost:5000/users/get-lectures-course',
                 { courseid: this.props.params.id },
                 (data, status) => {
                     if (data.code == 200) {
@@ -81,7 +82,8 @@ class ManageCourseLecture extends React.Component {
     onSubmitAddLecture(e) {
         e.preventDefault()
         this.refs.modalAddLecture.setState({ isSubmitting: true })
-        $.post('/api/user/add-course-lecture',
+        // $.post('/api/user/add-course-lecture',
+        $.post('http://localhost:5000/users/add-video-lecture',
             {
                 courseid: this.props.params.id,
                 name: this.refs.modalAddLecture.state.lecturename
@@ -159,7 +161,8 @@ class ManageCourseLecture extends React.Component {
         fd.append('lectureid', lectureid)
         $.ajax({
             method: "POST",
-            url: "/api/user/upload-video-lecture",
+            // url: "/api/user/upload-video-lecture",
+            url: "http://localhost:5000/users/upload-video-lecture",
             data: fd,
             processData: false,
             contentType: false,

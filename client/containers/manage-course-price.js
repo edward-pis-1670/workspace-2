@@ -22,7 +22,8 @@ class ManageCoursePrice extends React.Component {
         e.preventDefault()
         this.setState({ isSubmitting: true })
         $.post(
-            '/api/user/set-course-price',
+            // '/api/user/set-course-price',
+            'http://localhost:5000/users/set-price-course',
             {
                 courseid: this.props.params.id,
                 cost: this.state.cost

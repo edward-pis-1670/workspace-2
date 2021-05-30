@@ -38,16 +38,16 @@ router.post('/view-user', (req, res, next) => {
         })
 })
 
-router.get('/*', (req, res, next) => {
-    if (!req.isAuthenticated())
-        return res.send({ code: 1001, message: 'Account is not logged in' });
-    next()
-})
-router.post('/*', (req, res, next) => {
-    if (!req.isAuthenticated())
-        return res.send({ code: 1001, message: 'Account is not logged in' });
-    next()
-})
+// router.get('/*', (req, res, next) => {
+//     if (!req.isAuthenticated())
+//         return res.send({ code: 1001, message: 'Account is not logged in' });
+//     next()
+// })
+// router.post('/*', (req, res, next) => {
+//     if (!req.isAuthenticated())
+//         return res.send({ code: 1001, message: 'Account is not logged in' });
+//     next()
+// })
 
 router.get('/getuserinfo', (req, res, next) => {
     let data = {

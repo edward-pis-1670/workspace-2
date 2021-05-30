@@ -32,7 +32,8 @@ class ManageCourseDescription extends React.Component {
             this.setState({ course_description: e.editor.getData() })
         });
         if (!this.props.course_description) {
-            $.post('/api/user/get-course-description',
+            // $.post('/api/user/get-course-description',
+            $.post('http://localhost:5000/users/get-description-course',
                 { courseid: this.props.params.id },
                 (data, status) => {
                     if (data.code == 200) {
@@ -129,7 +130,8 @@ class ManageCourseDescription extends React.Component {
         fd.append('coverphoto', this.state.file);
         $.ajax({
             method: "POST",
-            url: '/api/user/set-course-description',
+            // url: '/api/user/set-course-description',
+            url: 'http://localhost:5000/users/set-description-course',
             data: fd,
             processData: false,
             contentType: false,

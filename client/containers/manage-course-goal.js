@@ -22,7 +22,8 @@ class ManageCourseGoal extends React.Component {
     }
     componentDidMount() {
         if (!this.props.needtoknow) {
-            $.post('/api/user/get-course-goals',
+            // $.post('/api/user/get-course-goals',
+            $.post('http://localhost:5000/users/get-goals-course',
                 { courseid: this.props.params.id },
                 (data, status) => {
                     if (data.code == 200) {
@@ -101,7 +102,8 @@ class ManageCourseGoal extends React.Component {
         e.preventDefault()
         this.setState({ isSubmitting: true })
         $.post(
-            '/api/user/set-course-goals',
+            // '/api/user/set-course-goals',
+            'http://localhost:5000/users/set-goals-course',
             {
                 courseid: this.props.params.id,
                 needtoknow: this.state.needtoknow,

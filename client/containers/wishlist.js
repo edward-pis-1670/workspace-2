@@ -30,7 +30,8 @@ class Wishlist extends React.Component {
             })
             $.ajax({
                 method: "POST",
-                url: '/api/user/wishlist',
+                // url: '/api/user/wishlist',
+                url: 'http://localhost:5000/users/wishlist',
                 data: nextProps.location.query,
                 success: (data, status) => {
                     if (data.code == 1001) {
@@ -59,7 +60,7 @@ class Wishlist extends React.Component {
     componentDidMount() {
         $.ajax({
             method: "POST",
-            url: '/api/user/wishlist',
+            url: 'http://localhost:5000/users/wishlist',
             data: this.props.location.query,
             success: (data, status) => {
                 if (data.code == 1001) {
