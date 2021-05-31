@@ -50,7 +50,8 @@ export const getCoursesRelateLecture = (data, callback) => {
 };
 
 export const addReview = (data, callback) => {
-  $.post("/api/course/add-review", data, callback);
+  // $.post("/api/course/add-review", data, callback);
+  $.post("http://localhost:5000/users/add-review", data, callback);
 };
 
 export const getReview = (data, callback) => {

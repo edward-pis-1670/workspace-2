@@ -13,10 +13,12 @@ class Course extends React.Component {
 		if (!this.props.islogged) {
 			return this.props.dispatch(showModal(1))
 		}
-		$.post('/api/user/change-wishlist',
+		// $.post('/api/user/change-wishlist',
+		$.post('http://localhost:5000/users/change-wishlist',
 			{
 				courseid: this.props.course._id
 			}, (data, status) => {
+				console.log(this.props.course._id)
 				this.props.dispatch(changeWishlist(data.action, this.props.course._id))
 			}
 		)

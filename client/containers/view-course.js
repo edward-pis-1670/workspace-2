@@ -174,7 +174,7 @@ class ViewCourse extends React.Component {
       return this.props.dispatch(showModal(1));
     }
     $.post(
-      "/api/user/change-wishlist",
+      "http://localhost:5000/users/change-wishlist",
       {
         courseid: courseid,
       },

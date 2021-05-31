@@ -108850,7 +108850,7 @@
 	      if (!this.props.islogged) {
 	        return this.props.dispatch((0, _actions.showModal)(1));
 	      }
-	      $.post("/api/user/change-wishlist", {
+	      $.post("http://localhost:5000/users/change-wishlist", {
 	        courseid: courseid
 	      }, function (data, status) {
 	        _this5.props.dispatch((0, _actions.changeWishlist)(data.action, courseid));
@@ -109822,9 +109822,11 @@
 				if (!this.props.islogged) {
 					return this.props.dispatch((0, _actions.showModal)(1));
 				}
-				$.post('/api/user/change-wishlist', {
+				// $.post('/api/user/change-wishlist',
+				$.post('http://localhost:5000/users/change-wishlist', {
 					courseid: this.props.course._id
 				}, function (data, status) {
+					console.log(_this2.props.course._id);
 					_this2.props.dispatch((0, _actions.changeWishlist)(data.action, _this2.props.course._id));
 				});
 			}
@@ -110002,7 +110004,8 @@
 	};
 
 	var addReview = exports.addReview = function addReview(data, callback) {
-	  $.post("/api/course/add-review", data, callback);
+	  // $.post("/api/course/add-review", data, callback);
+	  $.post("http://localhost:5000/users/add-review", data, callback);
 	};
 
 	var getReview = exports.getReview = function getReview(data, callback) {
