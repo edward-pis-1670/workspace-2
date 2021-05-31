@@ -404,7 +404,8 @@ class ViewCourse extends React.Component {
                 this.onClickTakeThisCourse(this.props.params.id);
               }}
             >
-              <span className="glyphicon glyphicon-shopping-cart"></span>Take This Course
+              <span className="glyphicon glyphicon-shopping-cart"></span>Take
+              This Course
             </button>
           )}
           <hr style={{ borderColor: "silver" }} />
@@ -944,7 +945,6 @@ class ViewCourse extends React.Component {
 
 ViewCourse = connect((state, props) => {
   let course = _.find(state.viewCourses, { _id: Number(props.params.id) });
-  // let course = _.find(state.viewCourses, { _id: props.params.id });
   if (course) {
     return {
       course: course,

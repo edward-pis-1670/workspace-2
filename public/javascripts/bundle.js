@@ -106425,10 +106425,10 @@
 /* 1101 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -106458,206 +106458,233 @@
 	var _ = __webpack_require__(221);
 
 	var ManageCourse = function (_React$Component) {
-	    _inherits(ManageCourse, _React$Component);
+	  _inherits(ManageCourse, _React$Component);
 
-	    function ManageCourse() {
-	        _classCallCheck(this, ManageCourse);
+	  function ManageCourse() {
+	    _classCallCheck(this, ManageCourse);
 
-	        return _possibleConstructorReturn(this, (ManageCourse.__proto__ || Object.getPrototypeOf(ManageCourse)).apply(this, arguments));
+	    return _possibleConstructorReturn(this, (ManageCourse.__proto__ || Object.getPrototypeOf(ManageCourse)).apply(this, arguments));
+	  }
+
+	  _createClass(ManageCourse, [{
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      var _this2 = this;
+
+	      if (!this.props.course) {
+	        // $.post('/api/user/get-course',
+	        $.post("http://localhost:5000/users/get-course", { courseid: this.props.params.id }, function (data, status) {
+	          if (data.code == 200) {
+	            _this2.props.dispatch((0, _actions.setCourse)(data.course));
+	          }
+	        });
+	      }
 	    }
+	  }, {
+	    key: "componentWillReceiveProps",
+	    value: function componentWillReceiveProps(nextProps) {
+	      var _this3 = this;
 
-	    _createClass(ManageCourse, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this2 = this;
+	      if (this.props.params.id != nextProps.params.id) {
+	        // $.post('/api/user/get-course',
+	        $.post("http://localhost:5000/users/get-course", { courseid: nextProps.params.id }, function (data, status) {
+	          if (data.code == 200) {
+	            _this3.props.dispatch((0, _actions.setCourse)(data.course));
+	          }
+	        });
+	      }
+	    }
+	  }, {
+	    key: "onClickPublish",
+	    value: function onClickPublish() {
+	      var _this4 = this;
 
-	            if (!this.props.course) {
-	                // $.post('/api/user/get-course',
-	                $.post('http://localhost:5000/users/get-course', { courseid: this.props.params.id }, function (data, status) {
-	                    if (data.code == 200) {
-	                        _this2.props.dispatch((0, _actions.setCourse)(data.course));
-	                    }
-	                });
-	            }
+	      // $.post('/api/user/publish-course',
+	      $.post("http://localhost:5000/users/publish-course", {
+	        courseid: this.props.params.id
+	      }, function (data, status) {
+	        if (data.code == 1001) {
+	          _this4.props.dispatch((0, _actions.setUser)({}));
+	          _this4.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          return browserHistory.push("/");
 	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            var _this3 = this;
-
-	            if (this.props.params.id != nextProps.params.id) {
-	                // $.post('/api/user/get-course',
-	                $.post('http://localhost:5000/users/get-course', { courseid: nextProps.params.id }, function (data, status) {
-	                    if (data.code == 200) {
-	                        _this3.props.dispatch((0, _actions.setCourse)(data.course));
-	                    }
-	                });
-	            }
+	        if (data.code == 200) {
+	          _this4.props.dispatch((0, _actions.publishCourse)(data.course));
 	        }
-	    }, {
-	        key: 'onClickPublish',
-	        value: function onClickPublish() {
-	            var _this4 = this;
-
-	            // $.post('/api/user/publish-course',
-	            $.post('http://localhost:5000/users/publish-course', {
-	                courseid: this.props.params.id
-	            }, function (data, status) {
-	                if (data.code == 1001) {
-	                    _this4.props.dispatch((0, _actions.setUser)({}));
-	                    _this4.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    return browserHistory.push('/');
-	                }
-	                if (data.code == 200) {
-	                    _this4.props.dispatch((0, _actions.publishCourse)(data.course));
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            if (!this.props.course) {
-	                return _react2.default.createElement('div', null);
-	            }
-	            return _react2.default.createElement(
-	                'div',
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      if (!this.props.course) {
+	        return _react2.default.createElement("div", null);
+	      }
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	          "div",
+	          { className: "row managecourse-header-box" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "container" },
+	            _react2.default.createElement("img", {
+	              className: "managecourse-header-image",
+	              src: "/api/resource/images?src=" + this.props.course.coverphoto + "&w=130&h=73"
+	            }),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "managecourse-header-detail" },
+	              _react2.default.createElement(
+	                "h4",
 	                null,
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'row managecourse-header-box' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'container' },
-	                        _react2.default.createElement('img', { className: 'managecourse-header-image', src: '/api/resource/images?src=' + this.props.course.coverphoto + '&w=130&h=73' }),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'managecourse-header-detail' },
-	                            _react2.default.createElement(
-	                                'h4',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'strong',
-	                                    null,
-	                                    this.props.course.name
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'h5',
-	                                null,
-	                                this.props.username
-	                            ),
-	                            _react2.default.createElement(
-	                                'h4',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'strong',
-	                                    null,
-	                                    this.props.course.public ? 'Public' : 'Draft'
-	                                )
-	                            )
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'container' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-xs-3 col-sm-3 col-md-3 col-lg-3 sidebar-profile' },
-	                        _react2.default.createElement(
-	                            'ul',
-	                            { className: 'menu-profile' },
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: '/managecourse/' + this.props.course._id + '/goals', activeClassName: 'active',
-	                                        onlyActiveOnIndex: true },
-	                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-screenshot' }),
-	                                    ' ',
-	                                    'Course Goals'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: '/managecourse/' + this.props.course._id + '/lectures', activeClassName: 'active',
-	                                        onlyActiveOnIndex: true },
-	                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-list-alt' }),
-	                                    ' ',
-	                                    'Lectures'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: '/managecourse/' + this.props.course._id + '/description', activeClassName: 'active',
-	                                        onlyActiveOnIndex: true },
-	                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-info-sign' }),
-	                                    ' ',
-	                                    'Description'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: '/managecourse/' + this.props.course._id + '/price', activeClassName: 'active',
-	                                        onlyActiveOnIndex: true },
-	                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-shopping-cart' }),
-	                                    ' ',
-	                                    'Price'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: '/managecourse/' + this.props.course._id + '/danger-zone', activeClassName: 'active',
-	                                        onlyActiveOnIndex: true },
-	                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-trash' }),
-	                                    ' ',
-	                                    'Danger Zone'
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { className: 'btn btn-lg btn-block btn-info button-submit-review',
-	                                disabled: this.props.course.review, onClick: this.onClickPublish.bind(this) },
-	                            _react2.default.createElement('span', { className: 'glyphicon glyphicon-share' }),
-	                            this.props.course.review ? ' Being Reviewed' : ' Publish'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-xs-9 col-sm-9 col-md-9 col-lg-9 bg-success edit-user-box' },
-	                        this.props.children
-	                    )
+	                  "strong",
+	                  null,
+	                  this.props.course.name
 	                )
-	            );
-	        }
-	    }]);
+	              ),
+	              _react2.default.createElement(
+	                "h5",
+	                null,
+	                this.props.username
+	              ),
+	              _react2.default.createElement(
+	                "h4",
+	                null,
+	                _react2.default.createElement(
+	                  "strong",
+	                  null,
+	                  this.props.course.public ? "Public" : "Draft"
+	                )
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "container" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "col-xs-3 col-sm-3 col-md-3 col-lg-3 sidebar-profile" },
+	            _react2.default.createElement(
+	              "ul",
+	              { className: "menu-profile" },
+	              _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  {
+	                    to: "/managecourse/" + this.props.course._id + "/goals",
+	                    activeClassName: "active",
+	                    onlyActiveOnIndex: true
+	                  },
+	                  _react2.default.createElement("span", { className: "glyphicon glyphicon-screenshot" }),
+	                  " ",
+	                  "Course Goals"
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  {
+	                    to: "/managecourse/" + this.props.course._id + "/lectures",
+	                    activeClassName: "active",
+	                    onlyActiveOnIndex: true
+	                  },
+	                  _react2.default.createElement("span", { className: "glyphicon glyphicon-list-alt" }),
+	                  " ",
+	                  "Lectures"
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  {
+	                    to: "/managecourse/" + this.props.course._id + "/description",
+	                    activeClassName: "active",
+	                    onlyActiveOnIndex: true
+	                  },
+	                  _react2.default.createElement("span", { className: "glyphicon glyphicon-info-sign" }),
+	                  " ",
+	                  "Description"
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  {
+	                    to: "/managecourse/" + this.props.course._id + "/price",
+	                    activeClassName: "active",
+	                    onlyActiveOnIndex: true
+	                  },
+	                  _react2.default.createElement("span", { className: "glyphicon glyphicon-shopping-cart" }),
+	                  " ",
+	                  "Price"
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  {
+	                    to: "/managecourse/" + this.props.course._id + "/danger-zone",
+	                    activeClassName: "active",
+	                    onlyActiveOnIndex: true
+	                  },
+	                  _react2.default.createElement("span", { className: "glyphicon glyphicon-trash" }),
+	                  " Danger Zone"
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "button",
+	              {
+	                className: "btn btn-lg btn-block btn-info button-submit-review",
+	                disabled: this.props.course.review,
+	                onClick: this.onClickPublish.bind(this)
+	              },
+	              _react2.default.createElement("span", { className: "glyphicon glyphicon-share" }),
+	              this.props.course.review ? " Being Reviewed" : " Publish"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "col-xs-9 col-sm-9 col-md-9 col-lg-9 bg-success edit-user-box" },
+	            this.props.children
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	    return ManageCourse;
+	  return ManageCourse;
 	}(_react2.default.Component);
 
 	ManageCourse = (0, _reactRedux.connect)(function (state, props) {
-	    if (state.user.mycourses) {
-	        var course = _.find(state.user.mycourses, { _id: props.params.id });
-	        if (course) return {
-	            course: { _id: course._id, name: course.name, public: course.public, coverphoto: course.coverphoto, review: course.review },
-	            username: state.user.username
-	        };
-	    }
-	    return props;
+	  if (state.user.mycourses) {
+	    var course = _.find(state.user.mycourses, { _id: Number(props.params.id) });
+	    console.log(state.user.mycourses);
+	    if (course) return {
+	      course: {
+	        _id: course._id,
+	        name: course.name,
+	        public: course.public,
+	        coverphoto: course.coverphoto,
+	        review: course.review
+	      },
+	      username: state.user.username
+	    };
+	  }
+	  return props;
 	})(ManageCourse);
 
 	exports.default = ManageCourse;
@@ -106666,10 +106693,10 @@
 /* 1102 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -106701,368 +106728,437 @@
 	var _ = __webpack_require__(221);
 
 	var ManageCourseGoal = function (_React$Component) {
-	    _inherits(ManageCourseGoal, _React$Component);
+	  _inherits(ManageCourseGoal, _React$Component);
 
-	    function ManageCourseGoal(props) {
-	        _classCallCheck(this, ManageCourseGoal);
+	  function ManageCourseGoal(props) {
+	    _classCallCheck(this, ManageCourseGoal);
 
-	        var _this = _possibleConstructorReturn(this, (ManageCourseGoal.__proto__ || Object.getPrototypeOf(ManageCourseGoal)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (ManageCourseGoal.__proto__ || Object.getPrototypeOf(ManageCourseGoal)).call(this, props));
 
-	        _this.state = {
-	            needtoknow: props.needtoknow || [],
-	            targetstudent: props.targetstudent || [],
-	            willableto: props.willableto || [],
-	            current_needtoknow: '',
-	            current_targetstudent: '',
-	            current_willableto: '',
-	            message: '',
-	            isSubmitting: false
-	        };
-	        return _this;
+	    _this.state = {
+	      needtoknow: props.needtoknow || [],
+	      targetstudent: props.targetstudent || [],
+	      willableto: props.willableto || [],
+	      current_needtoknow: "",
+	      current_targetstudent: "",
+	      current_willableto: "",
+	      message: "",
+	      isSubmitting: false
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ManageCourseGoal, [{
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      var _this2 = this;
+
+	      if (!this.props.needtoknow) {
+	        // $.post('/api/user/get-course-goals',
+	        $.post("http://localhost:5000/users/get-goals-course", { courseid: this.props.params.id }, function (data, status) {
+	          if (data.code == 200) {
+	            console.log(data);
+	            _this2.props.dispatch((0, _actions.setCourseGoals)(data.course));
+	            _this2.setState({
+	              needtoknow: data.course.needtoknow,
+	              willableto: data.course.willableto,
+	              targetstudent: data.course.targetstudent
+	            });
+	          }
+	        });
+	      }
 	    }
+	  }, {
+	    key: "handleNTK",
+	    value: function handleNTK(e) {
+	      this.setState({ current_needtoknow: e.target.value });
+	    }
+	  }, {
+	    key: "handleEditNTK",
+	    value: function handleEditNTK(e, index) {
+	      var needtoknow = this.state.needtoknow;
+	      needtoknow[index] = e.target.value;
+	      this.setState({ needtoknow: needtoknow });
+	    }
+	  }, {
+	    key: "onClickDeleteNTK",
+	    value: function onClickDeleteNTK(e, index) {
+	      var needtoknow = this.state.needtoknow;
+	      needtoknow.splice(index, 1);
+	      this.setState({ needtoknow: needtoknow });
+	    }
+	  }, {
+	    key: "onClickAddNTK",
+	    value: function onClickAddNTK() {
+	      this.setState({
+	        needtoknow: [].concat(_toConsumableArray(this.state.needtoknow), [this.state.current_needtoknow])
+	      });
+	      this.setState({ current_needtoknow: "" });
+	    }
+	    //targetstudent
 
-	    _createClass(ManageCourseGoal, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this2 = this;
+	  }, {
+	    key: "handleTS",
+	    value: function handleTS(e) {
+	      this.setState({ current_targetstudent: e.target.value });
+	    }
+	  }, {
+	    key: "handleEditTS",
+	    value: function handleEditTS(e, index) {
+	      var ts = this.state.targetstudent;
+	      ts[index] = e.target.value;
+	      this.setState({ targetstudent: ts });
+	    }
+	  }, {
+	    key: "onClickDeleteTS",
+	    value: function onClickDeleteTS(e, index) {
+	      var ts = this.state.targetstudent;
+	      ts.splice(index, 1);
+	      this.setState({ targetstudent: ts });
+	    }
+	  }, {
+	    key: "onClickAddTS",
+	    value: function onClickAddTS() {
+	      this.setState({
+	        targetstudent: [].concat(_toConsumableArray(this.state.targetstudent), [this.state.current_targetstudent])
+	      });
+	      this.setState({ current_targetstudent: "" });
+	    }
+	    //willableto
 
-	            if (!this.props.needtoknow) {
-	                // $.post('/api/user/get-course-goals',
-	                $.post('http://localhost:5000/users/get-goals-course', { courseid: this.props.params.id }, function (data, status) {
-	                    if (data.code == 200) {
-	                        console.log(data);
-	                        _this2.props.dispatch((0, _actions.setCourseGoals)(data.course));
-	                        _this2.setState({
-	                            needtoknow: data.course.needtoknow,
-	                            willableto: data.course.willableto,
-	                            targetstudent: data.course.targetstudent
-	                        });
-	                    }
-	                });
+	  }, {
+	    key: "handleWAT",
+	    value: function handleWAT(e) {
+	      this.setState({ current_willableto: e.target.value });
+	    }
+	  }, {
+	    key: "handleEditWAT",
+	    value: function handleEditWAT(e, index) {
+	      var wat = this.state.willableto;
+	      wat[index] = e.target.value;
+	      this.setState({ willableto: wat });
+	    }
+	  }, {
+	    key: "onClickDeleteWAT",
+	    value: function onClickDeleteWAT(e, index) {
+	      var wat = this.state.willableto;
+	      wat.splice(index, 1);
+	      this.setState({ willableto: wat });
+	    }
+	  }, {
+	    key: "onClickAddWAT",
+	    value: function onClickAddWAT() {
+	      this.setState({
+	        willableto: [].concat(_toConsumableArray(this.state.willableto), [this.state.current_willableto])
+	      });
+	      this.setState({ current_willableto: "" });
+	    }
+	  }, {
+	    key: "onSubmit",
+	    value: function onSubmit(e) {
+	      var _this3 = this;
+
+	      e.preventDefault();
+	      this.setState({ isSubmitting: true });
+	      $.post(
+	      // '/api/user/set-course-goals',
+	      "http://localhost:5000/users/set-goals-course", {
+	        courseid: this.props.params.id,
+	        needtoknow: this.state.needtoknow,
+	        targetstudent: this.state.targetstudent,
+	        willableto: this.state.willableto
+	      }, function (data, status) {
+	        if (data.code == 1001) {
+	          _this3.props.dispatch((0, _actions.setUser)({}));
+	          _this3.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          return _reactRouter.browserHistory.push("/");
+	        } else if (data.code == 200) {
+	          _this3.props.dispatch((0, _actions.setCourseGoals)(data.course));
+	        }
+	        var alertlogin = $(".alert:first");
+	        alertlogin.show(500, function () {
+	          setTimeout(function () {
+	            alertlogin.hide(500);
+	          }, 3000);
+	        });
+	        _this3.setState({ message: data.message, isSubmitting: false });
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this4 = this;
+
+	      var needtoknow = this.state.needtoknow.map(function (item, index) {
+	        return _react2.default.createElement(
+	          "div",
+	          {
+	            className: "input-group",
+	            key: index,
+	            style: { marginBottom: "10px" }
+	          },
+	          _react2.default.createElement("input", {
+	            type: "text",
+	            required: true,
+	            className: "form-control",
+	            placeholder: "What will students need to know or do before starting this course?",
+	            value: _this4.state.needtoknow[index],
+	            onChange: function onChange(e) {
+	              _this4.handleEditNTK(e, index);
 	            }
-	        }
-	    }, {
-	        key: 'handleNTK',
-	        value: function handleNTK(e) {
-	            this.setState({ current_needtoknow: e.target.value });
-	        }
-	    }, {
-	        key: 'handleEditNTK',
-	        value: function handleEditNTK(e, index) {
-	            var needtoknow = this.state.needtoknow;
-	            needtoknow[index] = e.target.value;
-	            this.setState({ needtoknow: needtoknow });
-	        }
-	    }, {
-	        key: 'onClickDeleteNTK',
-	        value: function onClickDeleteNTK(e, index) {
-	            var needtoknow = this.state.needtoknow;
-	            needtoknow.splice(index, 1);
-	            this.setState({ needtoknow: needtoknow });
-	        }
-	    }, {
-	        key: 'onClickAddNTK',
-	        value: function onClickAddNTK() {
-	            this.setState({
-	                needtoknow: [].concat(_toConsumableArray(this.state.needtoknow), [this.state.current_needtoknow])
-	            });
-	            this.setState({ current_needtoknow: '' });
-	        }
-	        //targetstudent
-
-	    }, {
-	        key: 'handleTS',
-	        value: function handleTS(e) {
-	            this.setState({ current_targetstudent: e.target.value });
-	        }
-	    }, {
-	        key: 'handleEditTS',
-	        value: function handleEditTS(e, index) {
-	            var ts = this.state.targetstudent;
-	            ts[index] = e.target.value;
-	            this.setState({ targetstudent: ts });
-	        }
-	    }, {
-	        key: 'onClickDeleteTS',
-	        value: function onClickDeleteTS(e, index) {
-	            var ts = this.state.targetstudent;
-	            ts.splice(index, 1);
-	            this.setState({ targetstudent: ts });
-	        }
-	    }, {
-	        key: 'onClickAddTS',
-	        value: function onClickAddTS() {
-	            this.setState({
-	                targetstudent: [].concat(_toConsumableArray(this.state.targetstudent), [this.state.current_targetstudent])
-	            });
-	            this.setState({ current_targetstudent: '' });
-	        }
-	        //willableto
-
-	    }, {
-	        key: 'handleWAT',
-	        value: function handleWAT(e) {
-	            this.setState({ current_willableto: e.target.value });
-	        }
-	    }, {
-	        key: 'handleEditWAT',
-	        value: function handleEditWAT(e, index) {
-	            var wat = this.state.willableto;
-	            wat[index] = e.target.value;
-	            this.setState({ willableto: wat });
-	        }
-	    }, {
-	        key: 'onClickDeleteWAT',
-	        value: function onClickDeleteWAT(e, index) {
-	            var wat = this.state.willableto;
-	            wat.splice(index, 1);
-	            this.setState({ willableto: wat });
-	        }
-	    }, {
-	        key: 'onClickAddWAT',
-	        value: function onClickAddWAT() {
-	            this.setState({
-	                willableto: [].concat(_toConsumableArray(this.state.willableto), [this.state.current_willableto])
-	            });
-	            this.setState({ current_willableto: '' });
-	        }
-	    }, {
-	        key: 'onSubmit',
-	        value: function onSubmit(e) {
-	            var _this3 = this;
-
-	            e.preventDefault();
-	            this.setState({ isSubmitting: true });
-	            $.post(
-	            // '/api/user/set-course-goals',
-	            'http://localhost:5000/users/set-goals-course', {
-	                courseid: this.props.params.id,
-	                needtoknow: this.state.needtoknow,
-	                targetstudent: this.state.targetstudent,
-	                willableto: this.state.willableto
-	            }, function (data, status) {
-	                if (data.code == 1001) {
-	                    _this3.props.dispatch((0, _actions.setUser)({}));
-	                    _this3.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    return _reactRouter.browserHistory.push('/');
-	                } else if (data.code == 200) {
-	                    _this3.props.dispatch((0, _actions.setCourseGoals)(data.course));
+	          }),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "input-group-btn" },
+	            _react2.default.createElement(
+	              "button",
+	              {
+	                type: "button",
+	                className: "btn btn-danger",
+	                onClick: function onClick(e) {
+	                  _this4.onClickDeleteNTK(e, index);
 	                }
-	                var alertlogin = $(".alert:first");
-	                alertlogin.show(500, function () {
-	                    setTimeout(function () {
-	                        alertlogin.hide(500);
-	                    }, 3000);
-	                });
-	                _this3.setState({ message: data.message, isSubmitting: false });
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this4 = this;
-
-	            var needtoknow = this.state.needtoknow.map(function (item, index) {
-	                return _react2.default.createElement(
-	                    'div',
-	                    { className: 'input-group', key: index, style: { marginBottom: '10px' } },
-	                    _react2.default.createElement('input', { type: 'text', required: true, className: 'form-control',
-	                        placeholder: 'What will students need to know or do before starting this course?',
-	                        value: _this4.state.needtoknow[index], onChange: function onChange(e) {
-	                            _this4.handleEditNTK(e, index);
-	                        } }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'input-group-btn' },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'btn btn-danger', onClick: function onClick(e) {
-	                                    _this4.onClickDeleteNTK(e, index);
-	                                } },
-	                            _react2.default.createElement('span', { className: 'glyphicon glyphicon-trash' })
-	                        )
-	                    )
-	                );
-	            });
-	            var targetstudent = this.state.targetstudent.map(function (item, index) {
-	                return _react2.default.createElement(
-	                    'div',
-	                    { className: 'input-group', key: index, style: { marginBottom: '10px' } },
-	                    _react2.default.createElement('input', { type: 'text', required: true, className: 'form-control',
-	                        placeholder: 'What will students need to know or do before starting this course?',
-	                        value: _this4.state.targetstudent[index], onChange: function onChange(e) {
-	                            _this4.handleEditTS(e, index);
-	                        } }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'input-group-btn' },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'btn btn-danger', onClick: function onClick(e) {
-	                                    _this4.onClickDeleteTS(e, index);
-	                                } },
-	                            _react2.default.createElement('span', { className: 'glyphicon glyphicon-trash' })
-	                        )
-	                    )
-	                );
-	            });
-	            var willableto = this.state.willableto.map(function (item, index) {
-	                return _react2.default.createElement(
-	                    'div',
-	                    { className: 'input-group', key: index, style: { marginBottom: '10px' } },
-	                    _react2.default.createElement('input', { type: 'text', required: true, className: 'form-control',
-	                        placeholder: 'What will students need to know or do before starting this course?',
-	                        value: _this4.state.willableto[index], onChange: function onChange(e) {
-	                            _this4.handleEditWAT(e, index);
-	                        } }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'input-group-btn' },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'btn btn-danger', onClick: function onClick(e) {
-	                                    _this4.onClickDeleteWAT(e, index);
-	                                } },
-	                            _react2.default.createElement('span', { className: 'glyphicon glyphicon-trash' })
-	                        )
-	                    )
-	                );
-	            });
-	            return _react2.default.createElement(
-	                'form',
-	                { onSubmit: this.onSubmit.bind(this) },
+	              },
+	              _react2.default.createElement("span", { className: "glyphicon glyphicon-trash" })
+	            )
+	          )
+	        );
+	      });
+	      var targetstudent = this.state.targetstudent.map(function (item, index) {
+	        return _react2.default.createElement(
+	          "div",
+	          {
+	            className: "input-group",
+	            key: index,
+	            style: { marginBottom: "10px" }
+	          },
+	          _react2.default.createElement("input", {
+	            type: "text",
+	            required: true,
+	            className: "form-control",
+	            placeholder: "What will students need to know or do before starting this course?",
+	            value: _this4.state.targetstudent[index],
+	            onChange: function onChange(e) {
+	              _this4.handleEditTS(e, index);
+	            }
+	          }),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "input-group-btn" },
+	            _react2.default.createElement(
+	              "button",
+	              {
+	                type: "button",
+	                className: "btn btn-danger",
+	                onClick: function onClick(e) {
+	                  _this4.onClickDeleteTS(e, index);
+	                }
+	              },
+	              _react2.default.createElement("span", { className: "glyphicon glyphicon-trash" })
+	            )
+	          )
+	        );
+	      });
+	      var willableto = this.state.willableto.map(function (item, index) {
+	        return _react2.default.createElement(
+	          "div",
+	          {
+	            className: "input-group",
+	            key: index,
+	            style: { marginBottom: "10px" }
+	          },
+	          _react2.default.createElement("input", {
+	            type: "text",
+	            required: true,
+	            className: "form-control",
+	            placeholder: "What will students need to know or do before starting this course?",
+	            value: _this4.state.willableto[index],
+	            onChange: function onChange(e) {
+	              _this4.handleEditWAT(e, index);
+	            }
+	          }),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "input-group-btn" },
+	            _react2.default.createElement(
+	              "button",
+	              {
+	                type: "button",
+	                className: "btn btn-danger",
+	                onClick: function onClick(e) {
+	                  _this4.onClickDeleteWAT(e, index);
+	                }
+	              },
+	              _react2.default.createElement("span", { className: "glyphicon glyphicon-trash" })
+	            )
+	          )
+	        );
+	      });
+	      return _react2.default.createElement(
+	        "form",
+	        { onSubmit: this.onSubmit.bind(this) },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "managecourse-title-box" },
+	          _react2.default.createElement(
+	            "h1",
+	            null,
+	            _react2.default.createElement(
+	              "em",
+	              null,
+	              "Course Goals"
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "managecourse-content" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "item" },
+	            _react2.default.createElement(
+	              "label",
+	              null,
+	              "What will students need to know or do before starting this course?"
+	            ),
+	            needtoknow,
+	            _react2.default.createElement(
+	              "div",
+	              { className: "input-group input-group-lg" },
+	              _react2.default.createElement("input", {
+	                type: "text",
+	                className: "form-control",
+	                placeholder: "What will students need to know or do before starting this course?",
+	                value: this.state.current_needtoknow,
+	                onChange: this.handleNTK.bind(this)
+	              }),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group-btn" },
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'managecourse-title-box' },
-	                    _react2.default.createElement(
-	                        'h1',
-	                        null,
-	                        _react2.default.createElement(
-	                            'em',
-	                            null,
-	                            'Course Goals'
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'managecourse-content' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'item' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            null,
-	                            'What will students need to know or do before starting this course?'
-	                        ),
-	                        needtoknow,
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'input-group input-group-lg' },
-	                            _react2.default.createElement('input', { type: 'text', className: 'form-control',
-	                                placeholder: 'What will students need to know or do before starting this course?',
-	                                value: this.state.current_needtoknow, onChange: this.handleNTK.bind(this) }),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group-btn' },
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { type: 'button', disabled: this.state.current_needtoknow == '',
-	                                        className: 'btn btn-success', onClick: this.onClickAddNTK.bind(this) },
-	                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-plus-sign' })
-	                                )
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'item' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            null,
-	                            'Who is your target student?'
-	                        ),
-	                        targetstudent,
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'input-group input-group-lg' },
-	                            _react2.default.createElement('input', { type: 'text', className: 'form-control',
-	                                placeholder: 'Who is your target student?', value: this.state.current_targetstudent,
-	                                onChange: this.handleTS.bind(this) }),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group-btn' },
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { type: 'button', disabled: this.state.current_targetstudent == '',
-	                                        className: 'btn btn-success', onClick: this.onClickAddTS.bind(this) },
-	                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-plus-sign' })
-	                                )
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'item' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            null,
-	                            'At the end of my course, students will be able to...'
-	                        ),
-	                        willableto,
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'input-group input-group-lg' },
-	                            _react2.default.createElement('input', { type: 'text', className: 'form-control',
-	                                placeholder: 'At the end of my course, students will be able to...',
-	                                value: this.state.current_willableto, onChange: this.handleWAT.bind(this) }),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group-btn' },
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { type: 'button', disabled: this.state.current_willableto == '',
-	                                        className: 'btn btn-success', onClick: this.onClickAddWAT.bind(this) },
-	                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-plus-sign' })
-	                                )
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'alert alert-danger text-center', role: 'alert', style: { display: 'none', marginBottom: 0 } },
-	                        this.state.message,
-	                        ' '
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'button',
-	                    { type: 'submit', disabled: this.state.isSubmitting,
-	                        className: 'btn btn-success center-block' },
-	                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-ok' }),
-	                    ' ',
-	                    'Save'
+	                  "button",
+	                  {
+	                    type: "button",
+	                    disabled: this.state.current_needtoknow == "",
+	                    className: "btn btn-success",
+	                    onClick: this.onClickAddNTK.bind(this)
+	                  },
+	                  _react2.default.createElement("span", { className: "glyphicon glyphicon-plus-sign" })
 	                )
-	            );
-	        }
-	    }]);
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "item" },
+	            _react2.default.createElement(
+	              "label",
+	              null,
+	              "Who is your target student?"
+	            ),
+	            targetstudent,
+	            _react2.default.createElement(
+	              "div",
+	              { className: "input-group input-group-lg" },
+	              _react2.default.createElement("input", {
+	                type: "text",
+	                className: "form-control",
+	                placeholder: "Who is your target student?",
+	                value: this.state.current_targetstudent,
+	                onChange: this.handleTS.bind(this)
+	              }),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group-btn" },
+	                _react2.default.createElement(
+	                  "button",
+	                  {
+	                    type: "button",
+	                    disabled: this.state.current_targetstudent == "",
+	                    className: "btn btn-success",
+	                    onClick: this.onClickAddTS.bind(this)
+	                  },
+	                  _react2.default.createElement("span", { className: "glyphicon glyphicon-plus-sign" })
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "item" },
+	            _react2.default.createElement(
+	              "label",
+	              null,
+	              "At the end of my course, students will be able to..."
+	            ),
+	            willableto,
+	            _react2.default.createElement(
+	              "div",
+	              { className: "input-group input-group-lg" },
+	              _react2.default.createElement("input", {
+	                type: "text",
+	                className: "form-control",
+	                placeholder: "At the end of my course, students will be able to...",
+	                value: this.state.current_willableto,
+	                onChange: this.handleWAT.bind(this)
+	              }),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group-btn" },
+	                _react2.default.createElement(
+	                  "button",
+	                  {
+	                    type: "button",
+	                    disabled: this.state.current_willableto == "",
+	                    className: "btn btn-success",
+	                    onClick: this.onClickAddWAT.bind(this)
+	                  },
+	                  _react2.default.createElement("span", { className: "glyphicon glyphicon-plus-sign" })
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            {
+	              className: "alert alert-danger text-center",
+	              role: "alert",
+	              style: { display: "none", marginBottom: 0 }
+	            },
+	            this.state.message,
+	            " "
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "button",
+	          {
+	            type: "submit",
+	            disabled: this.state.isSubmitting,
+	            className: "btn btn-success center-block"
+	          },
+	          _react2.default.createElement("span", { className: "glyphicon glyphicon-ok" }),
+	          " Save"
+	        )
+	      );
+	    }
+	  }]);
 
-	    return ManageCourseGoal;
+	  return ManageCourseGoal;
 	}(_react2.default.Component);
 
 	ManageCourseGoal = (0, _reactRedux.connect)(function (state, props) {
-	    if (state.user.mycourses) {
-	        var course = _.find(state.user.mycourses, { _id: props.params.id });
-	        if (course.needtoknow) {
-	            return {
-	                needtoknow: course.needtoknow,
-	                targetstudent: course.targetstudent,
-	                willableto: course.willableto
-	            };
-	        }
-	        return props;
+	  if (state.user.mycourses) {
+	    var course = _.find(state.user.mycourses, { _id: Number(props.params.id) });
+	    if (course.needtoknow) {
+	      return {
+	        needtoknow: course.needtoknow,
+	        targetstudent: course.targetstudent,
+	        willableto: course.willableto
+	      };
 	    }
 	    return props;
+	  }
+	  return props;
 	})(ManageCourseGoal);
 
 	exports.default = ManageCourseGoal;
@@ -107071,10 +107167,10 @@
 /* 1103 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -107106,438 +107202,503 @@
 	var _ = __webpack_require__(221);
 
 	var ManageCourseDescription = function (_React$Component) {
-	    _inherits(ManageCourseDescription, _React$Component);
+	  _inherits(ManageCourseDescription, _React$Component);
 
-	    function ManageCourseDescription(props) {
-	        _classCallCheck(this, ManageCourseDescription);
+	  function ManageCourseDescription(props) {
+	    _classCallCheck(this, ManageCourseDescription);
 
-	        var _this = _possibleConstructorReturn(this, (ManageCourseDescription.__proto__ || Object.getPrototypeOf(ManageCourseDescription)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (ManageCourseDescription.__proto__ || Object.getPrototypeOf(ManageCourseDescription)).call(this, props));
 
-	        _this.state = {
-	            course_name: _this.props.course_name || '',
-	            course_description: _this.props.course_description || '',
-	            course_image: _this.props.course_image ? '/api/resource/images?src=' + _this.props.course_image + '&w=320&h=180' : '',
-	            course_category: _this.props.course_category || '',
-	            course_subcategory: _this.props.course_subcategory || '',
-	            course_level: _this.props.course_level || 0,
-	            file: {},
-	            progress_video: 0,
-	            previewvideoname: '',
-	            message: '',
-	            isSubmitting: false
-	        };
-	        return _this;
+	    _this.state = {
+	      course_name: _this.props.course_name || "",
+	      course_description: _this.props.course_description || "",
+	      course_image: _this.props.course_image ? "/api/resource/images?src=" + _this.props.course_image + "&w=320&h=180" : "",
+	      course_category: _this.props.course_category || "",
+	      course_subcategory: _this.props.course_subcategory || "",
+	      course_level: _this.props.course_level || 0,
+	      file: {},
+	      progress_video: 0,
+	      previewvideoname: "",
+	      message: "",
+	      isSubmitting: false
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ManageCourseDescription, [{
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      var _this2 = this;
+
+	      var editor = CKEDITOR.replace("ckeditor");
+	      CKEDITOR.instances.ckeditor.setData(this.props.course_description);
+	      editor.on("change", function (e) {
+	        // getData() returns CKEditor's HTML content.
+	        _this2.setState({ course_description: e.editor.getData() });
+	      });
+	      if (!this.props.course_description) {
+	        // $.post('/api/user/get-course-description',
+	        $.post("http://localhost:5000/users/get-description-course", { courseid: this.props.params.id }, function (data, status) {
+	          if (data.code == 200) {
+	            _this2.props.dispatch((0, _actions.setCourseDescription)(data.course));
+	            _this2.setState({
+	              course_name: data.course.name,
+	              course_description: data.course.description,
+	              course_image: "/api/resource/images?src=" + data.course.coverphoto + "&w=320&h=180",
+	              course_category: data.course.genre,
+	              course_subcategory: data.course.subgenre,
+	              course_level: data.course.level
+	            });
+	            CKEDITOR.instances.ckeditor.setData(data.course.description);
+	          }
+	        });
+	      }
+	      if (this.props.genreList.length == 0) {
+	        (0, _genres.getAllGenres)(function (result) {
+	          _this2.props.dispatch((0, _actions.setGenres)(JSON.parse(result)));
+	        });
+	      }
 	    }
+	  }, {
+	    key: "handleCourseName",
+	    value: function handleCourseName(e) {
+	      this.setState({ course_name: e.target.value });
+	    }
+	  }, {
+	    key: "handleLevel",
+	    value: function handleLevel(e) {
+	      this.setState({ course_level: e.target.value });
+	    }
+	  }, {
+	    key: "handleCategory",
+	    value: function handleCategory(e) {
+	      this.setState({ course_category: Number(e.target.value) });
+	    }
+	  }, {
+	    key: "handleSubcategory",
+	    value: function handleSubcategory(e) {
+	      this.setState({ course_subcategory: Number(e.target.value) });
+	    }
+	  }, {
+	    key: "handleImageFile",
+	    value: function handleImageFile(e) {
+	      var _this3 = this;
 
-	    _createClass(ManageCourseDescription, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this2 = this;
+	      e.preventDefault();
 
-	            var editor = CKEDITOR.replace('ckeditor');
-	            CKEDITOR.instances.ckeditor.setData(this.props.course_description);
-	            editor.on('change', function (e) {
-	                // getData() returns CKEditor's HTML content.
-	                _this2.setState({ course_description: e.editor.getData() });
-	            });
-	            if (!this.props.course_description) {
-	                // $.post('/api/user/get-course-description',
-	                $.post('http://localhost:5000/users/get-description-course', { courseid: this.props.params.id }, function (data, status) {
-	                    if (data.code == 200) {
-	                        _this2.props.dispatch((0, _actions.setCourseDescription)(data.course));
-	                        _this2.setState({
-	                            course_name: data.course.name,
-	                            course_description: data.course.description,
-	                            course_image: '/api/resource/images?src=' + data.course.coverphoto + '&w=320&h=180',
-	                            course_category: data.course.genre,
-	                            course_subcategory: data.course.subgenre,
-	                            course_level: data.course.level
-	                        });
-	                        CKEDITOR.instances.ckeditor.setData(data.course.description);
-	                    }
-	                });
+	      var reader = new FileReader();
+	      var file = e.target.files[0];
+	      reader.onloadend = function () {
+	        _this3.setState({
+	          file: file,
+	          course_image: reader.result
+	        });
+	      };
+
+	      reader.readAsDataURL(file);
+	    }
+	  }, {
+	    key: "handlePreviewVideo",
+	    value: function handlePreviewVideo(e) {
+	      var _this4 = this;
+
+	      this.setState({ previewvideoname: e.target.files[0].name });
+	      var fd = new FormData();
+	      fd.append("previewvideo", e.target.files[0]);
+	      fd.append("courseid", this.props.params.id);
+	      $.ajax({
+	        method: "POST",
+	        url: "/api/user/upload-preview-video-course",
+	        data: fd,
+	        processData: false,
+	        contentType: false,
+	        success: function success(data, status) {
+	          if (data.code == 1001) {
+	            _this4.props.dispatch((0, _actions.setUser)({}));
+	            _this4.props.dispatch((0, _actions.setGetMyCourses)(false));
+	            return _reactRouter.browserHistory.push("/");
+	          } else if (data.code == 200) {
+	            _this4.props.dispatch((0, _actions.setCoursePreviewVideo)(data.previewvideo, _this4.props.params.id));
+	            document.getElementById("video-" + _this4.props.params.id).load();
+	          }
+	        },
+	        xhr: function xhr() {
+	          var xhr = new window.XMLHttpRequest();
+	          xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	              var percentComplete = Math.ceil(evt.loaded / evt.total * 100);
+	              _this4.setState({ progress_video: percentComplete });
 	            }
-	            if (this.props.genreList.length == 0) {
-	                (0, _genres.getAllGenres)(function (result) {
-	                    _this2.props.dispatch((0, _actions.setGenres)(JSON.parse(result)));
-	                });
-	            }
+	          }, false);
+	          return xhr;
 	        }
-	    }, {
-	        key: 'handleCourseName',
-	        value: function handleCourseName(e) {
-	            this.setState({ course_name: e.target.value });
-	        }
-	    }, {
-	        key: 'handleLevel',
-	        value: function handleLevel(e) {
-	            this.setState({ course_level: e.target.value });
-	        }
-	    }, {
-	        key: 'handleCategory',
-	        value: function handleCategory(e) {
-	            this.setState({ course_category: e.target.value });
-	        }
-	    }, {
-	        key: 'handleSubcategory',
-	        value: function handleSubcategory(e) {
-	            this.setState({ course_subcategory: e.target.value });
-	        }
-	    }, {
-	        key: 'handleImageFile',
-	        value: function handleImageFile(e) {
-	            var _this3 = this;
+	      });
+	    }
+	  }, {
+	    key: "onSubmit",
+	    value: function onSubmit(e) {
+	      var _this5 = this;
 
-	            e.preventDefault();
-
-	            var reader = new FileReader();
-	            var file = e.target.files[0];
-	            reader.onloadend = function () {
-	                _this3.setState({
-	                    file: file,
-	                    course_image: reader.result
-	                });
-	            };
-
-	            reader.readAsDataURL(file);
+	      e.preventDefault();
+	      this.setState({ isSubmitting: true });
+	      var fd = new FormData();
+	      fd.append("courseid", this.props.params.id);
+	      fd.append("name", this.state.course_name);
+	      fd.append("description", this.state.course_description);
+	      fd.append("genre", this.state.course_category);
+	      fd.append("subgenre", this.state.course_subcategory);
+	      fd.append("level", this.state.course_level);
+	      fd.append("coverphoto", this.state.file);
+	      $.ajax({
+	        method: "POST",
+	        // url: '/api/user/set-course-description',
+	        url: "http://localhost:5000/users/set-description-course",
+	        data: fd,
+	        processData: false,
+	        contentType: false,
+	        success: function success(data, status) {
+	          if (data.code == 1001) {
+	            _this5.props.dispatch((0, _actions.setUser)({}));
+	            _this5.props.dispatch((0, _actions.setGetMyCourses)(false));
+	            return _reactRouter.browserHistory.push("/");
+	          } else if (data.code == 200) {
+	            _this5.props.dispatch((0, _actions.setCourseDescription)(data.course));
+	          }
+	          var alertlogin = $(".alert:first");
+	          alertlogin.show(500, function () {
+	            setTimeout(function () {
+	              alertlogin.hide(500);
+	            }, 3000);
+	          });
+	          _this5.setState({ message: data.message, isSubmitting: false });
 	        }
-	    }, {
-	        key: 'handlePreviewVideo',
-	        value: function handlePreviewVideo(e) {
-	            var _this4 = this;
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var video = void 0;
+	      if (this.props.course_previewvideo) {
+	        video = _react2.default.createElement(
+	          "div",
+	          null,
+	          _react2.default.createElement(
+	            "video",
+	            {
+	              id: "video-" + this.props.params.id,
+	              className: "video-js center-block",
+	              controls: true,
+	              preload: "auto",
+	              width: "640",
+	              height: "auto"
+	            },
+	            _react2.default.createElement("source", { src: this.props.course_previewvideo, type: "video/mp4" })
+	          ),
+	          _react2.default.createElement("br", null)
+	        );
+	      }
+	      var genreList = this.props.genreList.map(function (item, index) {
+	        return _react2.default.createElement(
+	          "option",
+	          { value: item._id, key: index },
+	          item.name
+	        );
+	      });
+	      var genre = _.find(this.props.genreList, {
+	        _id: this.state.course_category
+	      });
+	      var subgenreList = void 0;
+	      if (genre) {
+	        subgenreList = genre.subgenres.map(function (item, index) {
+	          return _react2.default.createElement(
+	            "option",
+	            { value: item._id, key: index },
+	            item.name
+	          );
+	        });
+	      }
 
-	            this.setState({ previewvideoname: e.target.files[0].name });
-	            var fd = new FormData();
-	            fd.append('previewvideo', e.target.files[0]);
-	            fd.append('courseid', this.props.params.id);
-	            $.ajax({
-	                method: "POST",
-	                url: "/api/user/upload-preview-video-course",
-	                data: fd,
-	                processData: false,
-	                contentType: false,
-	                success: function success(data, status) {
-	                    if (data.code == 1001) {
-	                        _this4.props.dispatch((0, _actions.setUser)({}));
-	                        _this4.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                        return _reactRouter.browserHistory.push('/');
-	                    } else if (data.code == 200) {
-	                        _this4.props.dispatch((0, _actions.setCoursePreviewVideo)(data.previewvideo, _this4.props.params.id));
-	                        document.getElementById('video-' + _this4.props.params.id).load();
-	                    }
-	                },
-	                xhr: function xhr() {
-	                    var xhr = new window.XMLHttpRequest();
-	                    xhr.upload.addEventListener("progress", function (evt) {
-	                        if (evt.lengthComputable) {
-	                            var percentComplete = Math.ceil(evt.loaded / evt.total * 100);
-	                            _this4.setState({ progress_video: percentComplete });
-	                        }
-	                    }, false);
-	                    return xhr;
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'onSubmit',
-	        value: function onSubmit(e) {
-	            var _this5 = this;
-
-	            e.preventDefault();
-	            this.setState({ isSubmitting: true });
-	            var fd = new FormData();
-	            fd.append('courseid', this.props.params.id);
-	            fd.append('name', this.state.course_name);
-	            fd.append('description', this.state.course_description);
-	            fd.append('genre', this.state.course_category);
-	            fd.append('subgenre', this.state.course_subcategory);
-	            fd.append('level', this.state.course_level);
-	            fd.append('coverphoto', this.state.file);
-	            $.ajax({
-	                method: "POST",
-	                // url: '/api/user/set-course-description',
-	                url: 'http://localhost:5000/users/set-description-course',
-	                data: fd,
-	                processData: false,
-	                contentType: false,
-	                success: function success(data, status) {
-	                    if (data.code == 1001) {
-	                        _this5.props.dispatch((0, _actions.setUser)({}));
-	                        _this5.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                        return _reactRouter.browserHistory.push('/');
-	                    } else if (data.code == 200) {
-	                        _this5.props.dispatch((0, _actions.setCourseDescription)(data.course));
-	                    }
-	                    var alertlogin = $(".alert:first");
-	                    alertlogin.show(500, function () {
-	                        setTimeout(function () {
-	                            alertlogin.hide(500);
-	                        }, 3000);
-	                    });
-	                    _this5.setState({ message: data.message, isSubmitting: false });
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var video = void 0;
-	            if (this.props.course_previewvideo) {
-	                video = _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    _react2.default.createElement(
-	                        'video',
-	                        { id: "video-" + this.props.params.id, className: 'video-js center-block', controls: true, preload: 'auto',
-	                            width: '640', height: 'auto' },
-	                        _react2.default.createElement('source', { src: this.props.course_previewvideo,
-	                            type: 'video/mp4' })
-	                    ),
-	                    _react2.default.createElement('br', null)
-	                );
-	            }
-	            var genreList = this.props.genreList.map(function (item, index) {
-	                return _react2.default.createElement(
-	                    'option',
-	                    { value: item._id, key: index },
-	                    item.name
-	                );
-	            });
-	            var genre = _.find(this.props.genreList, { _id: this.state.course_category });
-	            var subgenreList = void 0;
-	            if (genre) {
-	                subgenreList = genre.subgenres.map(function (item, index) {
-	                    return _react2.default.createElement(
-	                        'option',
-	                        { value: item._id, key: index },
-	                        item.name
-	                    );
-	                });
-	            }
-
-	            return _react2.default.createElement(
-	                'form',
-	                { onSubmit: this.onSubmit.bind(this) },
+	      return _react2.default.createElement(
+	        "form",
+	        { onSubmit: this.onSubmit.bind(this) },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "managecourse-title-box" },
+	          _react2.default.createElement(
+	            "h1",
+	            null,
+	            _react2.default.createElement(
+	              "em",
+	              null,
+	              "Course Description"
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "managecourse-content" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "item" },
+	            _react2.default.createElement(
+	              "label",
+	              null,
+	              "Course Title"
+	            ),
+	            _react2.default.createElement("input", {
+	              type: "text",
+	              required: true,
+	              className: "form-control input-lg",
+	              placeholder: "Course Title",
+	              value: this.state.course_name,
+	              onChange: this.handleCourseName.bind(this)
+	            })
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "item" },
+	            _react2.default.createElement(
+	              "label",
+	              null,
+	              "Course Description"
+	            ),
+	            _react2.default.createElement("textarea", {
+	              className: "form-control",
+	              rows: "10",
+	              id: "ckeditor"
+	            })
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "item" },
+	            _react2.default.createElement(
+	              "label",
+	              null,
+	              "Course Image: "
+	            ),
+	            _react2.default.createElement("img", {
+	              className: "center-block image-description",
+	              src: this.state.course_image
+	            }),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "input-group" },
+	              _react2.default.createElement(
+	                "label",
+	                { className: "input-group-btn" },
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'managecourse-title-box' },
-	                    _react2.default.createElement(
-	                        'h1',
-	                        null,
-	                        _react2.default.createElement(
-	                            'em',
-	                            null,
-	                            'Course Description'
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'managecourse-content' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'item' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            null,
-	                            'Course Title'
-	                        ),
-	                        _react2.default.createElement('input', { type: 'text', required: true, className: 'form-control input-lg',
-	                            placeholder: 'Course Title',
-	                            value: this.state.course_name, onChange: this.handleCourseName.bind(this) })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'item' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            null,
-	                            'Course Description'
-	                        ),
-	                        _react2.default.createElement('textarea', { className: 'form-control', rows: '10', id: 'ckeditor' })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'item' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            null,
-	                            'Course Image: '
-	                        ),
-	                        _react2.default.createElement('img', { className: 'center-block image-description', src: this.state.course_image }),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'input-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                { className: 'input-group-btn' },
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'btn btn-primary glyphicon glyphicon-picture', style: { top: 0 } },
-	                                    _react2.default.createElement('input', { type: 'file', onChange: this.handleImageFile.bind(this),
-	                                        style: { display: 'none', multiple: '' } })
-	                                )
-	                            ),
-	                            _react2.default.createElement('input', { type: 'text', className: 'form-control', readOnly: true, value: this.state.file.name || '' })
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'item' },
-	                        video,
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Upload Video: '
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement(
-	                                    'label',
-	                                    { className: 'input-group-btn' },
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { className: 'btn btn-primary glyphicon glyphicon-film', style: { top: 0 } },
-	                                        _react2.default.createElement('input', { type: 'file',
-	                                            style: { display: 'none', multiple: '' }, onChange: this.handlePreviewVideo.bind(this) })
-	                                    )
-	                                ),
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', readOnly: true, value: this.state.previewvideoname || 'None' })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'progress' + (this.state.progress_video ? '' : ' hide') },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'progress-bar progress-bar-striped active',
-	                                    style: { width: this.state.progress_video + '%' } },
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    null,
-	                                    this.state.progress_video + '%'
-	                                )
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'item row' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-6 col-md-4' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Select Level'
-	                            ),
-	                            _react2.default.createElement(
-	                                'select',
-	                                { className: 'form-control', value: this.state.course_level, onChange: this.handleLevel.bind(this) },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 1 },
-	                                    'Beginner Level'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 2 },
-	                                    'Intermediate Level'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 3 },
-	                                    'Expert Level'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 0 },
-	                                    'All Levels'
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-6 col-md-4' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Select Category'
-	                            ),
-	                            _react2.default.createElement(
-	                                'select',
-	                                { required: true, className: 'form-control', value: this.state.course_category, onChange: this.handleCategory.bind(this) },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    null,
-	                                    '--Select Category--'
-	                                ),
-	                                genreList
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-6 col-md-4' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Select Subcategory'
-	                            ),
-	                            _react2.default.createElement(
-	                                'select',
-	                                { required: true, className: 'form-control', value: this.state.course_subcategory, onChange: this.handleSubcategory.bind(this) },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    null,
-	                                    '--Select Category--'
-	                                ),
-	                                subgenreList
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'alert alert-danger text-center', role: 'alert', style: { display: 'none', marginBottom: 0 } },
-	                        this.state.message,
-	                        ' '
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'button',
-	                    { type: 'submit', disabled: this.state.isSubmitting,
-	                        className: 'btn btn-success center-block' },
-	                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-ok' }),
-	                    ' ',
-	                    'Save'
+	                  "span",
+	                  {
+	                    className: "btn btn-primary glyphicon glyphicon-picture",
+	                    style: { top: 0 }
+	                  },
+	                  _react2.default.createElement("input", {
+	                    type: "file",
+	                    onChange: this.handleImageFile.bind(this),
+	                    style: { display: "none", multiple: "" }
+	                  })
 	                )
-	            );
-	        }
-	    }]);
+	              ),
+	              _react2.default.createElement("input", {
+	                type: "text",
+	                className: "form-control",
+	                readOnly: true,
+	                value: this.state.file.name || ""
+	              })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "item" },
+	            video,
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "label",
+	                null,
+	                "Upload Video: "
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement(
+	                  "label",
+	                  { className: "input-group-btn" },
+	                  _react2.default.createElement(
+	                    "span",
+	                    {
+	                      className: "btn btn-primary glyphicon glyphicon-film",
+	                      style: { top: 0 }
+	                    },
+	                    _react2.default.createElement("input", {
+	                      type: "file",
+	                      style: { display: "none", multiple: "" },
+	                      onChange: this.handlePreviewVideo.bind(this)
+	                    })
+	                  )
+	                ),
+	                _react2.default.createElement("input", {
+	                  type: "text",
+	                  className: "form-control",
+	                  readOnly: true,
+	                  value: this.state.previewvideoname || "None"
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              {
+	                className: "progress" + (this.state.progress_video ? "" : " hide")
+	              },
+	              _react2.default.createElement(
+	                "div",
+	                {
+	                  className: "progress-bar progress-bar-striped active",
+	                  style: { width: this.state.progress_video + "%" }
+	                },
+	                _react2.default.createElement(
+	                  "span",
+	                  null,
+	                  this.state.progress_video + "%"
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "item row" },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "col-xs-6 col-md-4" },
+	              _react2.default.createElement(
+	                "label",
+	                null,
+	                "Select Level"
+	              ),
+	              _react2.default.createElement(
+	                "select",
+	                {
+	                  className: "form-control",
+	                  value: this.state.course_level,
+	                  onChange: this.handleLevel.bind(this)
+	                },
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: 1 },
+	                  "Beginner Level"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: 2 },
+	                  "Intermediate Level"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: 3 },
+	                  "Expert Level"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: 0 },
+	                  "All Levels"
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "col-xs-6 col-md-4" },
+	              _react2.default.createElement(
+	                "label",
+	                null,
+	                "Select Category"
+	              ),
+	              _react2.default.createElement(
+	                "select",
+	                {
+	                  required: true,
+	                  className: "form-control",
+	                  value: this.state.course_category,
+	                  onChange: this.handleCategory.bind(this)
+	                },
+	                _react2.default.createElement(
+	                  "option",
+	                  null,
+	                  "--Select Category--"
+	                ),
+	                genreList
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "col-xs-6 col-md-4" },
+	              _react2.default.createElement(
+	                "label",
+	                null,
+	                "Select Subcategory"
+	              ),
+	              _react2.default.createElement(
+	                "select",
+	                {
+	                  required: true,
+	                  className: "form-control",
+	                  value: this.state.course_subcategory,
+	                  onChange: this.handleSubcategory.bind(this)
+	                },
+	                _react2.default.createElement(
+	                  "option",
+	                  null,
+	                  "--Select Category--"
+	                ),
+	                subgenreList
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            {
+	              className: "alert alert-danger text-center",
+	              role: "alert",
+	              style: { display: "none", marginBottom: 0 }
+	            },
+	            this.state.message,
+	            " "
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "button",
+	          {
+	            type: "submit",
+	            disabled: this.state.isSubmitting,
+	            className: "btn btn-success center-block"
+	          },
+	          _react2.default.createElement("span", { className: "glyphicon glyphicon-ok" }),
+	          " Save"
+	        )
+	      );
+	    }
+	  }]);
 
-	    return ManageCourseDescription;
+	  return ManageCourseDescription;
 	}(_react2.default.Component);
 
 	ManageCourseDescription = (0, _reactRedux.connect)(function (state, props) {
-	    if (state.user.mycourses) {
-	        var course = _.find(state.user.mycourses, { _id: props.params.id });
-	        if (course) {
-	            return {
-	                course_previewvideo: course.previewvideo,
-	                course_name: course.name,
-	                course_description: course.description,
-	                course_image: course.coverphoto,
-	                course_level: course.level,
-	                course_category: course.genre,
-	                course_subcategory: course.subgenre,
-	                genreList: state.genreList
-	            };
-	        }
+	  if (state.user.mycourses) {
+	    var course = _.find(state.user.mycourses, { _id: Number(props.params.id) });
+	    if (course) {
+	      return {
+	        course_previewvideo: course.previewvideo,
+	        course_name: course.name,
+	        course_description: course.description,
+	        course_image: course.coverphoto,
+	        course_level: course.level,
+	        course_category: course.genre,
+	        course_subcategory: course.subgenre,
+	        genreList: state.genreList
+	      };
 	    }
-	    return { genreList: state.genreList };
+	  }
+	  return { genreList: state.genreList };
 	})(ManageCourseDescription);
 
 	exports.default = ManageCourseDescription;
@@ -107546,10 +107707,10 @@
 /* 1104 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -107579,124 +107740,136 @@
 	var _ = __webpack_require__(221);
 
 	var ManageCoursePrice = function (_React$Component) {
-	    _inherits(ManageCoursePrice, _React$Component);
+	  _inherits(ManageCoursePrice, _React$Component);
 
-	    function ManageCoursePrice(props) {
-	        _classCallCheck(this, ManageCoursePrice);
+	  function ManageCoursePrice(props) {
+	    _classCallCheck(this, ManageCoursePrice);
 
-	        var _this = _possibleConstructorReturn(this, (ManageCoursePrice.__proto__ || Object.getPrototypeOf(ManageCoursePrice)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (ManageCoursePrice.__proto__ || Object.getPrototypeOf(ManageCoursePrice)).call(this, props));
 
-	        _this.state = {
-	            cost: _this.props.cost,
-	            message: '',
-	            isSubmitting: false
-	        };
-	        return _this;
+	    _this.state = {
+	      cost: _this.props.cost,
+	      message: "",
+	      isSubmitting: false
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ManageCoursePrice, [{
+	    key: "handleCost",
+	    value: function handleCost(e) {
+	      this.setState({ cost: e.target.value });
 	    }
+	  }, {
+	    key: "onSubmit",
+	    value: function onSubmit(e) {
+	      var _this2 = this;
 
-	    _createClass(ManageCoursePrice, [{
-	        key: 'handleCost',
-	        value: function handleCost(e) {
-	            this.setState({ cost: e.target.value });
+	      e.preventDefault();
+	      this.setState({ isSubmitting: true });
+	      $.post(
+	      // '/api/user/set-course-price',
+	      "http://localhost:5000/users/set-price-course", {
+	        courseid: this.props.params.id,
+	        cost: this.state.cost
+	      }, function (data, status) {
+	        if (data.code == 1001) {
+	          _this2.props.dispatch((0, _actions.setUser)({}));
+	          _this2.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          return _reactRouter.browserHistory.push("/");
+	        } else if (data.code == 200) {
+	          _this2.props.dispatch((0, _actions.setCoursePrice)(data.course));
 	        }
-	    }, {
-	        key: 'onSubmit',
-	        value: function onSubmit(e) {
-	            var _this2 = this;
+	        var alertlogin = $(".alert:first");
+	        alertlogin.show(500, function () {
+	          setTimeout(function () {
+	            alertlogin.hide(500);
+	          }, 3000);
+	        });
+	        _this2.setState({ message: data.message, isSubmitting: false });
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "form",
+	        { onSubmit: this.onSubmit.bind(this) },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "managecourse-title-box" },
+	          _react2.default.createElement(
+	            "h1",
+	            null,
+	            _react2.default.createElement(
+	              "em",
+	              null,
+	              "Course Price"
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "managecourse-content" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "item" },
+	            _react2.default.createElement(
+	              "label",
+	              null,
+	              "Course Price"
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "input-group input-group-lg" },
+	              _react2.default.createElement("input", {
+	                required: true,
+	                type: "number",
+	                min: "0",
+	                className: "form-control",
+	                placeholder: "Course Price",
+	                value: this.state.cost || 0,
+	                onChange: this.handleCost.bind(this)
+	              }),
+	              _react2.default.createElement("span", { className: "input-group-addon glyphicon glyphicon-usd" })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            {
+	              className: "alert alert-danger text-center",
+	              role: "alert",
+	              style: { display: "none", marginBottom: 0 }
+	            },
+	            this.state.message,
+	            " "
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "button",
+	          {
+	            type: "submit",
+	            disabled: this.state.isSubmitting,
+	            className: "btn btn-success center-block"
+	          },
+	          _react2.default.createElement("span", { className: "glyphicon glyphicon-ok" }),
+	          " Save"
+	        )
+	      );
+	    }
+	  }]);
 
-	            e.preventDefault();
-	            this.setState({ isSubmitting: true });
-	            $.post(
-	            // '/api/user/set-course-price',
-	            'http://localhost:5000/users/set-price-course', {
-	                courseid: this.props.params.id,
-	                cost: this.state.cost
-	            }, function (data, status) {
-	                if (data.code == 1001) {
-	                    _this2.props.dispatch((0, _actions.setUser)({}));
-	                    _this2.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    return _reactRouter.browserHistory.push('/');
-	                } else if (data.code == 200) {
-	                    _this2.props.dispatch((0, _actions.setCoursePrice)(data.course));
-	                }
-	                var alertlogin = $(".alert:first");
-	                alertlogin.show(500, function () {
-	                    setTimeout(function () {
-	                        alertlogin.hide(500);
-	                    }, 3000);
-	                });
-	                _this2.setState({ message: data.message, isSubmitting: false });
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'form',
-	                { onSubmit: this.onSubmit.bind(this) },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'managecourse-title-box' },
-	                    _react2.default.createElement(
-	                        'h1',
-	                        null,
-	                        _react2.default.createElement(
-	                            'em',
-	                            null,
-	                            'Course Price'
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'managecourse-content' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'item' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            null,
-	                            'Course Price'
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'input-group input-group-lg' },
-	                            _react2.default.createElement('input', { required: true, type: 'number', min: '0', className: 'form-control',
-	                                placeholder: 'Course Price',
-	                                value: this.state.cost || 0, onChange: this.handleCost.bind(this) }),
-	                            _react2.default.createElement('span', { className: 'input-group-addon glyphicon glyphicon-usd' })
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'alert alert-danger text-center', role: 'alert', style: { display: 'none', marginBottom: 0 } },
-	                        this.state.message,
-	                        ' '
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'button',
-	                    { type: 'submit', disabled: this.state.isSubmitting,
-	                        className: 'btn btn-success center-block' },
-	                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-ok' }),
-	                    ' ',
-	                    'Save'
-	                )
-	            );
-	        }
-	    }]);
-
-	    return ManageCoursePrice;
+	  return ManageCoursePrice;
 	}(_react2.default.Component);
 
 	ManageCoursePrice = (0, _reactRedux.connect)(function (state, props) {
-	    if (state.user.mycourses) {
-	        var course = _.find(state.user.mycourses, { _id: props.params.id });
-	        return {
-	            cost: course.cost
-	        };
-	    }
-	    return props;
+	  if (state.user.mycourses) {
+	    var course = _.find(state.user.mycourses, { _id: Number(props.params.id) });
+	    return {
+	      cost: course.cost
+	    };
+	  }
+	  return props;
 	})(ManageCoursePrice);
 
 	exports.default = ManageCoursePrice;
@@ -107705,10 +107878,10 @@
 /* 1105 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -107740,437 +107913,505 @@
 	var _ = __webpack_require__(221);
 
 	var ModalAddLecture = function (_React$Component) {
-	    _inherits(ModalAddLecture, _React$Component);
+	  _inherits(ModalAddLecture, _React$Component);
 
-	    function ModalAddLecture(props) {
-	        _classCallCheck(this, ModalAddLecture);
+	  function ModalAddLecture(props) {
+	    _classCallCheck(this, ModalAddLecture);
 
-	        var _this = _possibleConstructorReturn(this, (ModalAddLecture.__proto__ || Object.getPrototypeOf(ModalAddLecture)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (ModalAddLecture.__proto__ || Object.getPrototypeOf(ModalAddLecture)).call(this, props));
 
-	        _this.state = {
-	            showModal: false,
-	            lecturename: '',
-	            message: '',
-	            isSubmitting: false
-	        };
-	        return _this;
+	    _this.state = {
+	      showModal: false,
+	      lecturename: "",
+	      message: "",
+	      isSubmitting: false
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ModalAddLecture, [{
+	    key: "hideModal",
+	    value: function hideModal() {
+	      this.setState({ showModal: false, coursename: "" });
 	    }
-
-	    _createClass(ModalAddLecture, [{
-	        key: 'hideModal',
-	        value: function hideModal() {
-	            this.setState({ showModal: false, coursename: '' });
-	        }
-	    }, {
-	        key: 'handleLectureName',
-	        value: function handleLectureName(e) {
-	            this.setState({ lecturename: e.target.value });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                _reactBootstrap.Modal,
-	                { show: this.state.showModal,
-	                    onHide: this.hideModal.bind(this) },
+	  }, {
+	    key: "handleLectureName",
+	    value: function handleLectureName(e) {
+	      this.setState({ lecturename: e.target.value });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _reactBootstrap.Modal,
+	        { show: this.state.showModal, onHide: this.hideModal.bind(this) },
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Header,
+	          { closeButton: true },
+	          _react2.default.createElement(
+	            _reactBootstrap.Modal.Title,
+	            { className: "text-center h3" },
+	            "ADD LECTURE"
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Body,
+	          { style: { overflow: "auto" } },
+	          _react2.default.createElement(
+	            "div",
+	            {
+	              className: "alert alert-danger text-center",
+	              role: "alert",
+	              style: { display: "none", marginBottom: 0 }
+	            },
+	            this.state.message,
+	            " "
+	          ),
+	          _react2.default.createElement(
+	            "form",
+	            {
+	              className: "form-horizontal",
+	              onSubmit: this.props.onSubmitAddLecture.bind(this)
+	            },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group form-group-lg" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group col-sm-offset-1 col-sm-10" },
+	                _react2.default.createElement("span", { className: "input-group-addon glyphicon glyphicon-bookmark" }),
+	                _react2.default.createElement("input", {
+	                  type: "text",
+	                  required: true,
+	                  className: "form-control",
+	                  placeholder: "Lecture's name",
+	                  onChange: this.handleLectureName.bind(this)
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "col-sm-offset-1 col-sm-10" },
 	                _react2.default.createElement(
-	                    _reactBootstrap.Modal.Header,
-	                    { closeButton: true },
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Modal.Title,
-	                        { className: 'text-center h3' },
-	                        'ADD LECTURE'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    _reactBootstrap.Modal.Body,
-	                    { style: { overflow: 'auto' } },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'alert alert-danger text-center', role: 'alert', style: { display: 'none', marginBottom: 0 } },
-	                        this.state.message,
-	                        ' '
-	                    ),
-	                    _react2.default.createElement(
-	                        'form',
-	                        { className: 'form-horizontal', onSubmit: this.props.onSubmitAddLecture.bind(this) },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group form-group-lg' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group col-sm-offset-1 col-sm-10' },
-	                                _react2.default.createElement('span', { className: 'input-group-addon glyphicon glyphicon-bookmark' }),
-	                                _react2.default.createElement('input', { type: 'text', required: true, className: 'form-control',
-	                                    placeholder: 'Lecture\'s name', onChange: this.handleLectureName.bind(this) })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-sm-offset-1 col-sm-10' },
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { disabled: this.state.isSubmitting, type: 'submit', className: 'btn btn-success btn-lg btn-block' },
-	                                    'ADD'
-	                                )
-	                            )
-	                        )
-	                    )
+	                  "button",
+	                  {
+	                    disabled: this.state.isSubmitting,
+	                    type: "submit",
+	                    className: "btn btn-success btn-lg btn-block"
+	                  },
+	                  "ADD"
 	                )
-	            );
-	        }
-	    }]);
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	    return ModalAddLecture;
+	  return ModalAddLecture;
 	}(_react2.default.Component);
 
 	var ManageCourseLecture = function (_React$Component2) {
-	    _inherits(ManageCourseLecture, _React$Component2);
+	  _inherits(ManageCourseLecture, _React$Component2);
 
-	    function ManageCourseLecture(props) {
-	        _classCallCheck(this, ManageCourseLecture);
+	  function ManageCourseLecture(props) {
+	    _classCallCheck(this, ManageCourseLecture);
 
-	        var _this2 = _possibleConstructorReturn(this, (ManageCourseLecture.__proto__ || Object.getPrototypeOf(ManageCourseLecture)).call(this, props));
+	    var _this2 = _possibleConstructorReturn(this, (ManageCourseLecture.__proto__ || Object.getPrototypeOf(ManageCourseLecture)).call(this, props));
 
-	        _this2.state = {
-	            progress_list: [],
-	            lecturename_list: [],
-	            videoname_list: []
-	        };
-	        return _this2;
+	    _this2.state = {
+	      progress_list: [],
+	      lecturename_list: [],
+	      videoname_list: []
+	    };
+	    return _this2;
+	  }
+
+	  _createClass(ManageCourseLecture, [{
+	    key: "showModal",
+	    value: function showModal() {
+	      this.refs.modalAddLecture.setState({ showModal: true });
 	    }
+	  }, {
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      var _this3 = this;
 
-	    _createClass(ManageCourseLecture, [{
-	        key: 'showModal',
-	        value: function showModal() {
-	            this.refs.modalAddLecture.setState({ showModal: true });
+	      if (!this.props.lectures) {
+	        // $.post('/api/user/get-course-lectures',
+	        $.post("http://localhost:5000/users/get-lectures-course", { courseid: this.props.params.id }, function (data, status) {
+	          if (data.code == 200) {
+	            _this3.props.dispatch((0, _actions.setCourseLectures)(data.course));
+	          }
+	        });
+	      }
+	    }
+	  }, {
+	    key: "onSubmitAddLecture",
+	    value: function onSubmitAddLecture(e) {
+	      var _this4 = this;
+
+	      e.preventDefault();
+	      this.refs.modalAddLecture.setState({ isSubmitting: true });
+	      // $.post('/api/user/add-course-lecture',
+	      $.post("http://localhost:5000/users/add-video-lecture", {
+	        courseid: this.props.params.id,
+	        name: this.refs.modalAddLecture.state.lecturename
+	      }, function (data, status) {
+	        if (data.code == 1001) {
+	          _this4.props.dispatch((0, _actions.setUser)({}));
+	          _this4.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          return _reactRouter.browserHistory.push("/");
 	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this3 = this;
+	        if (data.code == 200) {
+	          _this4.props.dispatch((0, _actions.addLecture)(data.lecture, _this4.props.params.id));
+	          return _this4.refs.modalAddLecture.setState({
+	            isSubmitting: false,
+	            lecturename: "",
+	            showModal: false
+	          });
+	        }
+	        var alertlogin = $(".alert:first");
+	        alertlogin.show(500, function () {
+	          setTimeout(function () {
+	            alertlogin.hide(500);
+	          }, 3000);
+	        });
+	        _this4.refs.modalCreateCourse.setState({
+	          message: data.message,
+	          isSubmitting: false
+	        });
+	      });
+	    }
+	  }, {
+	    key: "onSubmitDeleteLecture",
+	    value: function onSubmitDeleteLecture(e, lectureid) {
+	      var _this5 = this;
 
-	            if (!this.props.lectures) {
-	                // $.post('/api/user/get-course-lectures',
-	                $.post('http://localhost:5000/users/get-lectures-course', { courseid: this.props.params.id }, function (data, status) {
-	                    if (data.code == 200) {
-	                        _this3.props.dispatch((0, _actions.setCourseLectures)(data.course));
-	                    }
-	                });
+	      e.preventDefault();
+	      $.post("/api/user/delete-course-lecture", {
+	        courseid: this.props.params.id,
+	        lectureid: lectureid
+	      }, function (data, status) {
+	        if (data.code == 1001) {
+	          _this5.props.dispatch((0, _actions.setUser)({}));
+	          _this5.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          return _reactRouter.browserHistory.push("/");
+	        }
+	        if (data.code == 200) {
+	          _this5.props.dispatch((0, _actions.deleteLecture)(lectureid, _this5.props.params.id));
+	        }
+	      });
+	    }
+	  }, {
+	    key: "onSubmitSetLectureName",
+	    value: function onSubmitSetLectureName(e, lectureid) {
+	      var _this6 = this;
+
+	      e.preventDefault();
+	      $.post("/api/user/set-lecture-name", {
+	        courseid: this.props.params.id,
+	        lectureid: lectureid,
+	        name: this.state.lecturename_list[lectureid]
+	      }, function (data, status) {
+	        if (data.code == 1001) {
+	          _this6.props.dispatch((0, _actions.setUser)({}));
+	          _this6.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          return _reactRouter.browserHistory.push("/");
+	        }
+	        if (data.code == 200) {
+	          _this6.props.dispatch((0, _actions.setLectureName)(data.lecture, _this6.props.params.id));
+	        }
+	      });
+	    }
+	  }, {
+	    key: "handleLectureName",
+	    value: function handleLectureName(e, lectureid) {
+	      var lecturename_list = this.state.lecturename_list;
+	      lecturename_list[lectureid] = e.target.value;
+	      this.setState({ lecturename_list: lecturename_list });
+	    }
+	  }, {
+	    key: "handleVideoLecture",
+	    value: function handleVideoLecture(e, lectureid) {
+	      var _this7 = this;
+
+	      e.preventDefault();
+
+	      var videoname_list = this.state.videoname_list;
+	      videoname_list[lectureid] = e.target.files[0].name;
+	      this.setState({ videoname_list: videoname_list });
+
+	      var fd = new FormData();
+	      fd.append("video", e.target.files[0]);
+	      fd.append("courseid", this.props.params.id);
+	      fd.append("lectureid", lectureid);
+	      $.ajax({
+	        method: "POST",
+	        // url: "/api/user/upload-video-lecture",
+	        url: "http://localhost:5000/users/upload-video-lecture",
+	        data: fd,
+	        processData: false,
+	        contentType: false,
+	        success: function success(data, status) {
+	          console.log(data);
+	          if (data.code == 1001) {
+	            _this7.props.dispatch((0, _actions.setUser)({}));
+	            return _reactRouter.browserHistory.push("/");
+	          } else if (data.code == 200) {
+	            _this7.props.dispatch((0, _actions.setLectureVideo)(data.lecture, _this7.props.params.id));
+	            document.getElementById("video-" + lectureid).load();
+	          }
+	        },
+	        xhr: function xhr() {
+	          var xhr = new window.XMLHttpRequest();
+	          xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	              var percentComplete = Math.ceil(evt.loaded / evt.total * 100);
+	              var progress_list = _this7.state.progress_list;
+	              progress_list[lectureid] = percentComplete;
+	              _this7.setState({ progress_list: progress_list });
 	            }
+	          }, false);
+	          return xhr;
 	        }
-	    }, {
-	        key: 'onSubmitAddLecture',
-	        value: function onSubmitAddLecture(e) {
-	            var _this4 = this;
+	      });
+	    }
+	  }, {
+	    key: "onClickSetPreview",
+	    value: function onClickSetPreview(e, lectureid) {
+	      var _this8 = this;
 
-	            e.preventDefault();
-	            this.refs.modalAddLecture.setState({ isSubmitting: true });
-	            // $.post('/api/user/add-course-lecture',
-	            $.post('http://localhost:5000/users/add-video-lecture', {
-	                courseid: this.props.params.id,
-	                name: this.refs.modalAddLecture.state.lecturename
-	            }, function (data, status) {
-	                if (data.code == 1001) {
-	                    _this4.props.dispatch((0, _actions.setUser)({}));
-	                    _this4.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    return _reactRouter.browserHistory.push('/');
-	                }
-	                if (data.code == 200) {
-	                    _this4.props.dispatch((0, _actions.addLecture)(data.lecture, _this4.props.params.id));
-	                    return _this4.refs.modalAddLecture.setState({ isSubmitting: false, lecturename: '', showModal: false });
-	                }
-	                var alertlogin = $(".alert:first");
-	                alertlogin.show(500, function () {
-	                    setTimeout(function () {
-	                        alertlogin.hide(500);
-	                    }, 3000);
-	                });
-	                _this4.refs.modalCreateCourse.setState({ message: data.message, isSubmitting: false });
-	            });
+	      e.preventDefault();
+	      $.post("/api/user/change-preview-lecture", {
+	        courseid: this.props.params.id,
+	        lectureid: lectureid
+	      }, function (data, status) {
+	        if (data.code == 1001) {
+	          _this8.props.dispatch((0, _actions.setUser)({}));
+	          _this8.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          return _reactRouter.browserHistory.push("/");
 	        }
-	    }, {
-	        key: 'onSubmitDeleteLecture',
-	        value: function onSubmitDeleteLecture(e, lectureid) {
-	            var _this5 = this;
-
-	            e.preventDefault();
-	            $.post('/api/user/delete-course-lecture', {
-	                courseid: this.props.params.id,
-	                lectureid: lectureid
-	            }, function (data, status) {
-	                if (data.code == 1001) {
-	                    _this5.props.dispatch((0, _actions.setUser)({}));
-	                    _this5.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    return _reactRouter.browserHistory.push('/');
-	                }
-	                if (data.code == 200) {
-	                    _this5.props.dispatch((0, _actions.deleteLecture)(lectureid, _this5.props.params.id));
-	                }
-	            });
+	        if (data.code == 200) {
+	          _this8.props.dispatch((0, _actions.setLecturePreview)(data.lecture, _this8.props.params.id));
 	        }
-	    }, {
-	        key: 'onSubmitSetLectureName',
-	        value: function onSubmitSetLectureName(e, lectureid) {
-	            var _this6 = this;
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this9 = this;
 
-	            e.preventDefault();
-	            $.post('/api/user/set-lecture-name', {
-	                courseid: this.props.params.id,
-	                lectureid: lectureid,
-	                name: this.state.lecturename_list[lectureid]
-	            }, function (data, status) {
-	                if (data.code == 1001) {
-	                    _this6.props.dispatch((0, _actions.setUser)({}));
-	                    _this6.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    return _reactRouter.browserHistory.push('/');
-	                }
-	                if (data.code == 200) {
-	                    _this6.props.dispatch((0, _actions.setLectureName)(data.lecture, _this6.props.params.id));
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'handleLectureName',
-	        value: function handleLectureName(e, lectureid) {
-	            var lecturename_list = this.state.lecturename_list;
-	            lecturename_list[lectureid] = e.target.value;
-	            this.setState({ lecturename_list: lecturename_list });
-	        }
-	    }, {
-	        key: 'handleVideoLecture',
-	        value: function handleVideoLecture(e, lectureid) {
-	            var _this7 = this;
-
-	            e.preventDefault();
-
-	            var videoname_list = this.state.videoname_list;
-	            videoname_list[lectureid] = e.target.files[0].name;
-	            this.setState({ videoname_list: videoname_list });
-
-	            var fd = new FormData();
-	            fd.append('video', e.target.files[0]);
-	            fd.append('courseid', this.props.params.id);
-	            fd.append('lectureid', lectureid);
-	            $.ajax({
-	                method: "POST",
-	                // url: "/api/user/upload-video-lecture",
-	                url: "http://localhost:5000/users/upload-video-lecture",
-	                data: fd,
-	                processData: false,
-	                contentType: false,
-	                success: function success(data, status) {
-	                    console.log(data);
-	                    if (data.code == 1001) {
-	                        _this7.props.dispatch((0, _actions.setUser)({}));
-	                        return _reactRouter.browserHistory.push('/');
-	                    } else if (data.code == 200) {
-	                        _this7.props.dispatch((0, _actions.setLectureVideo)(data.lecture, _this7.props.params.id));
-	                        document.getElementById('video-' + lectureid).load();
-	                    }
+	      var lectures = void 0;
+	      if (this.props.lectures) {
+	        lectures = this.props.lectures.map(function (lecture, index) {
+	          var video = void 0;
+	          if (lecture.video) {
+	            video = _react2.default.createElement(
+	              "div",
+	              null,
+	              _react2.default.createElement(
+	                "video",
+	                {
+	                  id: "video-" + lecture._id,
+	                  className: "video-js center-block",
+	                  controls: true,
+	                  preload: "auto",
+	                  width: "640",
+	                  height: "auto"
 	                },
-	                xhr: function xhr() {
-	                    var xhr = new window.XMLHttpRequest();
-	                    xhr.upload.addEventListener("progress", function (evt) {
-	                        if (evt.lengthComputable) {
-	                            var percentComplete = Math.ceil(evt.loaded / evt.total * 100);
-	                            var progress_list = _this7.state.progress_list;
-	                            progress_list[lectureid] = percentComplete;
-	                            _this7.setState({ progress_list: progress_list });
-	                        }
-	                    }, false);
-	                    return xhr;
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'onClickSetPreview',
-	        value: function onClickSetPreview(e, lectureid) {
-	            var _this8 = this;
-
-	            e.preventDefault();
-	            $.post('/api/user/change-preview-lecture', {
-	                courseid: this.props.params.id,
-	                lectureid: lectureid
-	            }, function (data, status) {
-	                if (data.code == 1001) {
-	                    _this8.props.dispatch((0, _actions.setUser)({}));
-	                    _this8.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    return _reactRouter.browserHistory.push('/');
-	                }
-	                if (data.code == 200) {
-	                    _this8.props.dispatch((0, _actions.setLecturePreview)(data.lecture, _this8.props.params.id));
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this9 = this;
-
-	            var lectures = void 0;
-	            if (this.props.lectures) {
-	                lectures = this.props.lectures.map(function (lecture, index) {
-	                    var video = void 0;
-	                    if (lecture.video) {
-	                        video = _react2.default.createElement(
-	                            'div',
-	                            null,
-	                            _react2.default.createElement(
-	                                'video',
-	                                { id: "video-" + lecture._id, className: 'video-js center-block', controls: true, preload: 'auto',
-	                                    width: '640', height: 'auto' },
-	                                _react2.default.createElement('source', { src: '/api/resource/play-video-lecturer/' + lecture._id + '?path=' + lecture.video, type: 'video/mp4' })
-	                            ),
-	                            _react2.default.createElement('br', null)
-	                        );
-	                    }
-	                    return _react2.default.createElement(
-	                        'div',
-	                        { className: 'item box white', key: index },
-	                        _react2.default.createElement(
-	                            'form',
-	                            { onSubmit: function onSubmit(e) {
-	                                    _this9.onSubmitSetLectureName(e, lecture._id);
-	                                } },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group input-group-lg' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'input-group-btn' },
-	                                    _react2.default.createElement(
-	                                        'button',
-	                                        { type: 'button', className: 'btn' + (lecture.preview ? ' btn-primary' : ''),
-	                                            onClick: function onClick(e) {
-	                                                _this9.onClickSetPreview(e, lecture._id);
-	                                            } },
-	                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-eye-' + (lecture.preview ? 'open' : 'close') })
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'input-group-addon' },
-	                                    'Lecture ',
-	                                    index + 1,
-	                                    ':'
-	                                ),
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control',
-	                                    value: _this9.state.lecturename_list[lecture._id] == null ? lecture.name : _this9.state.lecturename_list[lecture._id],
-	                                    onChange: function onChange(e) {
-	                                        _this9.handleLectureName(e, lecture._id);
-	                                    } }),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'input-group-btn' },
-	                                    _react2.default.createElement(
-	                                        'button',
-	                                        { type: 'submit', className: 'btn btn-success',
-	                                            disabled: lecture.name == _this9.state.lecturename_list[lecture._id] || !_this9.state.lecturename_list[lecture._id] },
-	                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-save' })
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'button',
-	                                        { type: 'button', className: 'btn btn-danger', onClick: function onClick(e) {
-	                                                _this9.onSubmitDeleteLecture(e, lecture._id);
-	                                            } },
-	                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-trash' })
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        video,
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Upload Video: '
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement(
-	                                    'label',
-	                                    { className: 'input-group-btn' },
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { className: 'btn btn-primary glyphicon glyphicon-film', style: { top: 0 } },
-	                                        _react2.default.createElement('input', { type: 'file',
-	                                            style: { display: 'none', multiple: '' }, onChange: function onChange(e) {
-	                                                _this9.handleVideoLecture(e, lecture._id);
-	                                            } })
-	                                    )
-	                                ),
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', readOnly: true, value: _this9.state.videoname_list[lecture._id] || 'None' })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'progress' + (_this9.state.progress_list[lecture._id] ? '' : ' hide') },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'progress-bar progress-bar-striped active',
-	                                    style: { width: _this9.state.progress_list[lecture._id] + '%' } },
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    null,
-	                                    _this9.state.progress_list[lecture._id] + '%'
-	                                )
-	                            )
-	                        )
-	                    );
-	                });
-	            }
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'managecourse-title-box' },
-	                    _react2.default.createElement(
-	                        'h1',
-	                        null,
-	                        _react2.default.createElement(
-	                            'em',
-	                            null,
-	                            'Lectures'
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'managecourse-content' },
-	                    lectures
-	                ),
-	                _react2.default.createElement(
-	                    'button',
-	                    { className: 'btn btn-danger btn-lg btn-block', onClick: this.showModal.bind(this) },
-	                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-plus-sign' }),
-	                    ' ',
-	                    'Add Lecture'
-	                ),
-	                _react2.default.createElement(ModalAddLecture, { ref: 'modalAddLecture', onSubmitAddLecture: this.onSubmitAddLecture.bind(this) })
+	                _react2.default.createElement("source", {
+	                  src: "/api/resource/play-video-lecturer/" + lecture._id + "?path=" + lecture.video,
+	                  type: "video/mp4"
+	                })
+	              ),
+	              _react2.default.createElement("br", null)
 	            );
-	        }
-	    }]);
+	          }
+	          return _react2.default.createElement(
+	            "div",
+	            { className: "item box white", key: index },
+	            _react2.default.createElement(
+	              "form",
+	              {
+	                onSubmit: function onSubmit(e) {
+	                  _this9.onSubmitSetLectureName(e, lecture._id);
+	                }
+	              },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group input-group-lg" },
+	                _react2.default.createElement(
+	                  "div",
+	                  { className: "input-group-btn" },
+	                  _react2.default.createElement(
+	                    "button",
+	                    {
+	                      type: "button",
+	                      className: "btn" + (lecture.preview ? " btn-primary" : ""),
+	                      onClick: function onClick(e) {
+	                        _this9.onClickSetPreview(e, lecture._id);
+	                      }
+	                    },
+	                    _react2.default.createElement("span", {
+	                      className: "glyphicon glyphicon-eye-" + (lecture.preview ? "open" : "close")
+	                    })
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  "span",
+	                  { className: "input-group-addon" },
+	                  "Lecture ",
+	                  index + 1,
+	                  ":"
+	                ),
+	                _react2.default.createElement("input", {
+	                  type: "text",
+	                  className: "form-control",
+	                  value: _this9.state.lecturename_list[lecture._id] == null ? lecture.name : _this9.state.lecturename_list[lecture._id],
+	                  onChange: function onChange(e) {
+	                    _this9.handleLectureName(e, lecture._id);
+	                  }
+	                }),
+	                _react2.default.createElement(
+	                  "div",
+	                  { className: "input-group-btn" },
+	                  _react2.default.createElement(
+	                    "button",
+	                    {
+	                      type: "submit",
+	                      className: "btn btn-success",
+	                      disabled: lecture.name == _this9.state.lecturename_list[lecture._id] || !_this9.state.lecturename_list[lecture._id]
+	                    },
+	                    _react2.default.createElement("span", { className: "glyphicon glyphicon-save" })
+	                  ),
+	                  _react2.default.createElement(
+	                    "button",
+	                    {
+	                      type: "button",
+	                      className: "btn btn-danger",
+	                      onClick: function onClick(e) {
+	                        _this9.onSubmitDeleteLecture(e, lecture._id);
+	                      }
+	                    },
+	                    _react2.default.createElement("span", { className: "glyphicon glyphicon-trash" })
+	                  )
+	                )
+	              )
+	            ),
+	            _react2.default.createElement("br", null),
+	            video,
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "label",
+	                null,
+	                "Upload Video: "
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement(
+	                  "label",
+	                  { className: "input-group-btn" },
+	                  _react2.default.createElement(
+	                    "span",
+	                    {
+	                      className: "btn btn-primary glyphicon glyphicon-film",
+	                      style: { top: 0 }
+	                    },
+	                    _react2.default.createElement("input", {
+	                      type: "file",
+	                      style: { display: "none", multiple: "" },
+	                      onChange: function onChange(e) {
+	                        _this9.handleVideoLecture(e, lecture._id);
+	                      }
+	                    })
+	                  )
+	                ),
+	                _react2.default.createElement("input", {
+	                  type: "text",
+	                  className: "form-control",
+	                  readOnly: true,
+	                  value: _this9.state.videoname_list[lecture._id] || "None"
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              {
+	                className: "progress" + (_this9.state.progress_list[lecture._id] ? "" : " hide")
+	              },
+	              _react2.default.createElement(
+	                "div",
+	                {
+	                  className: "progress-bar progress-bar-striped active",
+	                  style: { width: _this9.state.progress_list[lecture._id] + "%" }
+	                },
+	                _react2.default.createElement(
+	                  "span",
+	                  null,
+	                  _this9.state.progress_list[lecture._id] + "%"
+	                )
+	              )
+	            )
+	          );
+	        });
+	      }
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	          "div",
+	          { className: "managecourse-title-box" },
+	          _react2.default.createElement(
+	            "h1",
+	            null,
+	            _react2.default.createElement(
+	              "em",
+	              null,
+	              "Lectures"
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "managecourse-content" },
+	          lectures
+	        ),
+	        _react2.default.createElement(
+	          "button",
+	          {
+	            className: "btn btn-danger btn-lg btn-block",
+	            onClick: this.showModal.bind(this)
+	          },
+	          _react2.default.createElement("span", { className: "glyphicon glyphicon-plus-sign" }),
+	          " Add Lecture"
+	        ),
+	        _react2.default.createElement(ModalAddLecture, {
+	          ref: "modalAddLecture",
+	          onSubmitAddLecture: this.onSubmitAddLecture.bind(this)
+	        })
+	      );
+	    }
+	  }]);
 
-	    return ManageCourseLecture;
+	  return ManageCourseLecture;
 	}(_react2.default.Component);
 
 	ManageCourseLecture = (0, _reactRedux.connect)(function (state, props) {
-	    if (state.user.mycourses) {
-	        var course = _.find(state.user.mycourses, { _id: props.params.id });
-	        return {
-	            lectures: course.lectures
-	        };
-	    }
-	    return props;
+	  if (state.user.mycourses) {
+	    var course = _.find(state.user.mycourses, { _id: Number(props.params.id) });
+	    return {
+	      lectures: course.lectures
+	    };
+	  }
+	  return props;
 	})(ManageCourseLecture);
 
 	exports.default = ManageCourseLecture;
@@ -109513,7 +109754,6 @@
 
 	ViewCourse = (0, _reactRedux.connect)(function (state, props) {
 	  var course = _.find(state.viewCourses, { _id: Number(props.params.id) });
-	  // let course = _.find(state.viewCourses, { _id: props.params.id });
 	  if (course) {
 	    return {
 	      course: course,
@@ -109779,10 +110019,10 @@
 /* 1110 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -109820,384 +110060,467 @@
 	var _ = __webpack_require__(221);
 
 	var LearnCourse = function (_React$Component) {
-	    _inherits(LearnCourse, _React$Component);
+	  _inherits(LearnCourse, _React$Component);
 
-	    function LearnCourse(props) {
-	        _classCallCheck(this, LearnCourse);
+	  function LearnCourse(props) {
+	    _classCallCheck(this, LearnCourse);
 
-	        var _this = _possibleConstructorReturn(this, (LearnCourse.__proto__ || Object.getPrototypeOf(LearnCourse)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (LearnCourse.__proto__ || Object.getPrototypeOf(LearnCourse)).call(this, props));
 
-	        _this.state = {
-	            pageReviews: 1,
-	            reviews: [],
-	            currentLectureIndex: 0
-	        };
-	        return _this;
+	    _this.state = {
+	      pageReviews: 1,
+	      reviews: [],
+	      currentLectureIndex: 0
+	    };
+	    return _this;
+	  }
+
+	  _createClass(LearnCourse, [{
+	    key: "onClickNextLecture",
+	    value: function onClickNextLecture() {
+	      this.setState({ currentLectureIndex: this.state.currentLectureIndex + 1 });
+	      document.getElementById("video").load();
 	    }
+	  }, {
+	    key: "onClickPrevLecture",
+	    value: function onClickPrevLecture() {
+	      this.setState({ currentLectureIndex: this.state.currentLectureIndex - 1 });
+	      document.getElementById("video").load();
+	    }
+	  }, {
+	    key: "onClickViewLecture",
+	    value: function onClickViewLecture(index) {
+	      this.setState({ currentLectureIndex: index });
+	      document.getElementById("video").load();
+	    }
+	  }, {
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      var _this2 = this;
 
-	    _createClass(LearnCourse, [{
-	        key: 'onClickNextLecture',
-	        value: function onClickNextLecture() {
-	            this.setState({ currentLectureIndex: this.state.currentLectureIndex + 1 });
-	            document.getElementById('video').load();
+	      (0, _courses.getReview)({
+	        courseid: this.props.params.id,
+	        page: this.state.pageReviews
+	      }, function (data, status) {
+	        if (data.code == 200) {
+	          _this2.setState({ reviews: data.reviews });
 	        }
-	    }, {
-	        key: 'onClickPrevLecture',
-	        value: function onClickPrevLecture() {
-	            this.setState({ currentLectureIndex: this.state.currentLectureIndex - 1 });
-	            document.getElementById('video').load();
+	      });
+	      if (this.props.course) {
+	        return;
+	      }
+	      (0, _courses.getCourseIntro)({
+	        courseid: this.props.params.id
+	      }, function (data, status) {
+	        if (data.code == 1001) {
+	          _this2.props.dispatch((0, _actions.setUser)({}));
+	          _this2.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          browserHistory.push("/");
+	          return;
 	        }
-	    }, {
-	        key: 'onClickViewLecture',
-	        value: function onClickViewLecture(index) {
-	            this.setState({ currentLectureIndex: index });
-	            document.getElementById('video').load();
+	        if (data.code == 200) {
+	          if (data.course.lectures.length != 0) {
+	            _this2.props.dispatch((0, _actions.addViewCourse)(data.course));
+	          }
 	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this2 = this;
+	      });
+	    }
+	  }, {
+	    key: "onClickPrev",
+	    value: function onClickPrev() {
+	      var _this3 = this;
 
-	            (0, _courses.getReview)({
-	                courseid: this.props.params.id,
-	                page: this.state.pageReviews
-	            }, function (data, status) {
-	                if (data.code == 200) {
-	                    _this2.setState({ reviews: data.reviews });
-	                }
-	            });
-	            if (this.props.course) {
-	                return;
-	            }
-	            (0, _courses.getCourseIntro)({
-	                courseid: this.props.params.id
-	            }, function (data, status) {
-	                if (data.code == 1001) {
-	                    _this2.props.dispatch((0, _actions.setUser)({}));
-	                    _this2.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    browserHistory.push('/');
-	                    return;
-	                }
-	                if (data.code == 200) {
-	                    if (data.course.lectures.length != 0) {
-	                        _this2.props.dispatch((0, _actions.addViewCourse)(data.course));
-	                    }
-	                }
-	            });
+	      var page = this.state.pageReviews;
+	      this.setState({ pageReviews: page - 1 });
+	      (0, _courses.getReview)({
+	        courseid: this.props.params.id,
+	        page: page - 1
+	      }, function (data, status) {
+	        if (data.code == 200) {
+	          _this3.setState({ reviews: data.reviews });
 	        }
-	    }, {
-	        key: 'onClickPrev',
-	        value: function onClickPrev() {
-	            var _this3 = this;
+	      });
+	    }
+	  }, {
+	    key: "onClickNext",
+	    value: function onClickNext() {
+	      var _this4 = this;
 
-	            var page = this.state.pageReviews;
-	            this.setState({ pageReviews: page - 1 });
-	            (0, _courses.getReview)({
-	                courseid: this.props.params.id,
-	                page: page - 1
-	            }, function (data, status) {
-	                if (data.code == 200) {
-	                    _this3.setState({ reviews: data.reviews });
-	                }
-	            });
+	      var page = this.state.pageReviews;
+	      this.setState({ pageReviews: page + 1 });
+	      (0, _courses.getReview)({
+	        courseid: this.props.params.id,
+	        page: page + 1
+	      }, function (data, status) {
+	        if (data.code == 200) {
+	          _this4.setState({ reviews: data.reviews });
 	        }
-	    }, {
-	        key: 'onClickNext',
-	        value: function onClickNext() {
-	            var _this4 = this;
+	      });
+	    }
+	  }, {
+	    key: "onClickWriteReview",
+	    value: function onClickWriteReview() {
+	      this.refs.review.setState({ show: true });
+	    }
+	  }, {
+	    key: "onSubmitReviewSuccess",
+	    value: function onSubmitReviewSuccess() {
+	      var _this5 = this;
 
-	            var page = this.state.pageReviews;
-	            this.setState({ pageReviews: page + 1 });
-	            (0, _courses.getReview)({
-	                courseid: this.props.params.id,
-	                page: page + 1
-	            }, function (data, status) {
-	                if (data.code == 200) {
-	                    _this4.setState({ reviews: data.reviews });
-	                }
-	            });
+	      (0, _courses.getReview)({
+	        courseid: this.props.params.id,
+	        page: this.state.pageReviews
+	      }, function (data, status) {
+	        if (data.code == 200) {
+	          _this5.setState({ reviews: data.reviews });
 	        }
-	    }, {
-	        key: 'onClickWriteReview',
-	        value: function onClickWriteReview() {
-	            this.refs.review.setState({ show: true });
-	        }
-	    }, {
-	        key: 'onSubmitReviewSuccess',
-	        value: function onSubmitReviewSuccess() {
-	            var _this5 = this;
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this6 = this;
 
-	            (0, _courses.getReview)({
-	                courseid: this.props.params.id,
-	                page: this.state.pageReviews
-	            }, function (data, status) {
-	                if (data.code == 200) {
-	                    _this5.setState({ reviews: data.reviews });
+	      if (!this.props.course || this.props.course.lectures.length == 0) return _react2.default.createElement("div", null);
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement("link", {
+	          rel: "stylesheet",
+	          href: "/stylesheets/simple-sidebar-learning.css"
+	        }),
+	        _react2.default.createElement(
+	          "div",
+	          { id: "top-bar-learn", className: "top-bar-learn row" },
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 1 },
+	            _react2.default.createElement(
+	              "button",
+	              {
+	                className: "btn btn-link btn-lg text-left",
+	                onClick: function onClick() {
+	                  $("#wrapper").toggleClass("toggled");
 	                }
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this6 = this;
-
-	            if (!this.props.course || this.props.course.lectures.length == 0) return _react2.default.createElement('div', null);
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement('link', { rel: 'stylesheet', href: '/stylesheets/simple-sidebar-learning.css' }),
+	              },
+	              _react2.default.createElement("span", { className: "glyphicon glyphicon-menu-hamburger" })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 11 },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "top-bar-title h4" },
+	              _react2.default.createElement(
+	                "button",
+	                {
+	                  className: "btn btn-link btn-lg",
+	                  onClick: function onClick() {
+	                    _this6.onClickPrevLecture();
+	                  },
+	                  style: {
+	                    display: this.state.currentLectureIndex == 0 ? "none" : ""
+	                  }
+	                },
+	                _react2.default.createElement("span", { className: "glyphicon glyphicon-menu-left" })
+	              ),
+	              " " + this.props.course.lectures[this.state.currentLectureIndex].name + " ",
+	              _react2.default.createElement(
+	                "button",
+	                {
+	                  className: "btn btn-link btn-lg",
+	                  onClick: function onClick() {
+	                    _this6.onClickNextLecture();
+	                  },
+	                  style: {
+	                    display: this.state.currentLectureIndex == this.props.course.lectures.length - 1 ? "none" : ""
+	                  }
+	                },
+	                _react2.default.createElement("span", { className: "glyphicon glyphicon-menu-right" })
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { id: "wrapper" },
+	          _react2.default.createElement(
+	            "div",
+	            { id: "sidebar-wrapper" },
+	            _react2.default.createElement(
+	              "ul",
+	              { className: "sidebar-nav" },
+	              _react2.default.createElement(
+	                "li",
+	                { className: "sidebar-brand" },
+	                this.props.course.name
+	              ),
+	              this.props.course.lectures.map(function (lecture, index) {
+	                return _react2.default.createElement(
+	                  "li",
+	                  { key: index },
+	                  _react2.default.createElement("span", {
+	                    style: {
+	                      color: _this6.state.currentLectureIndex >= index ? "#449d44" : "",
+	                      display: "inline"
+	                    },
+	                    className: "glyphicon glyphicon-" + (_this6.state.currentLectureIndex >= index ? "ok" : "unchecked")
+	                  }),
+	                  _react2.default.createElement(
+	                    "a",
+	                    {
+	                      style: {
+	                        color: _this6.state.currentLectureIndex >= index ? "#5bc0de" : "white",
+	                        display: "inline"
+	                      },
+	                      onClick: function onClick() {
+	                        _this6.onClickViewLecture(index);
+	                      }
+	                    },
+	                    " " + (index + 1) + ". " + lecture.name
+	                  )
+	                );
+	              })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { id: "page-content-wrapper" },
+	            _react2.default.createElement(
+	              "video",
+	              {
+	                id: "video",
+	                className: "video-js",
+	                controls: true,
+	                preload: "false",
+	                width: "100%",
+	                height: "auto"
+	              },
+	              _react2.default.createElement("source", {
+	                src: "/api/resource/play-video-learning/" + this.props.params.id + "/" + this.props.course.lectures[this.state.currentLectureIndex]._id,
+	                type: "video/mp4"
+	              })
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "container", style: { marginTop: "30px" } },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "panel panel-primary" },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "panel-heading" },
+	              _react2.default.createElement(
+	                "h1",
+	                { className: "panel-title" },
+	                "Reviews"
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "panel-body" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "row" },
 	                _react2.default.createElement(
-	                    'div',
-	                    { id: 'top-bar-learn', className: 'top-bar-learn row' },
+	                  _reactBootstrap.Col,
+	                  {
+	                    xs: 3,
+	                    md: 2,
+	                    style: { paddingLeft: "0px", paddingRight: "0px" }
+	                  },
+	                  _react2.default.createElement(
+	                    "span",
+	                    null,
+	                    "Avegare Rating"
+	                  ),
+	                  _react2.default.createElement(
+	                    "div",
+	                    {
+	                      style: {
+	                        fontSize: "96px",
+	                        fontWeight: 600,
+	                        color: "#17aa1c",
+	                        lineHeight: 1
+	                      }
+	                    },
+	                    this.props.course.star ? this.props.course.star.toFixed(1) : 0
+	                  ),
+	                  _react2.default.createElement(
+	                    "div",
+	                    null,
 	                    _react2.default.createElement(
-	                        _reactBootstrap.Col,
-	                        { xs: 1 },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { className: 'btn btn-link btn-lg text-left', onClick: function onClick() {
-	                                    $("#wrapper").toggleClass("toggled");
-	                                } },
-	                            _react2.default.createElement('span', { className: 'glyphicon glyphicon-menu-hamburger' })
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Col,
-	                        { xs: 11 },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'top-bar-title h4' },
-	                            _react2.default.createElement(
-	                                'button',
-	                                { className: 'btn btn-link btn-lg', onClick: function onClick() {
-	                                        _this6.onClickPrevLecture();
-	                                    },
-	                                    style: { display: this.state.currentLectureIndex == 0 ? 'none' : '' } },
-	                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-menu-left' })
-	                            ),
-	                            ' ' + this.props.course.lectures[this.state.currentLectureIndex].name + ' ',
-	                            _react2.default.createElement(
-	                                'button',
-	                                { className: 'btn btn-link btn-lg', onClick: function onClick() {
-	                                        _this6.onClickNextLecture();
-	                                    },
-	                                    style: { display: this.state.currentLectureIndex == this.props.course.lectures.length - 1 ? 'none' : '' } },
-	                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-menu-right' })
-	                            )
-	                        )
+	                      "span",
+	                      { className: "course-rate" },
+	                      _react2.default.createElement("span", {
+	                        style: {
+	                          width: (this.props.course.star || 0) * 20 + "%"
+	                        }
+	                      })
 	                    )
+	                  ),
+	                  _react2.default.createElement(
+	                    "span",
+	                    { style: { display: "block" } },
+	                    _react2.default.createElement(
+	                      "strong",
+	                      null,
+	                      "Details(",
+	                      this.props.course.numberofreviews + " ",
+	                      "reivews)"
+	                    )
+	                  ),
+	                  _react2.default.createElement(
+	                    "button",
+	                    {
+	                      className: "btn btn-primary btn-lg center-block",
+	                      style: { marginTop: "10px" },
+	                      onClick: function onClick() {
+	                        _this6.onClickWriteReview();
+	                      }
+	                    },
+	                    _react2.default.createElement("span", { className: "glyphicon glyphicon-pencil" }),
+	                    " Write a Review"
+	                  )
 	                ),
 	                _react2.default.createElement(
-	                    'div',
-	                    { id: 'wrapper' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { id: 'sidebar-wrapper' },
+	                  _reactBootstrap.Col,
+	                  { xs: 9, md: 10 },
+	                  this.state.reviews.map(function (review, index) {
+	                    return _react2.default.createElement(
+	                      "div",
+	                      { className: "info-rate", key: index },
+	                      _react2.default.createElement("img", {
+	                        className: "avatar-rate",
+	                        src: "/api/resource/images?src=" + review.user.photo + "&w=50&h=50"
+	                      }),
+	                      _react2.default.createElement(
+	                        "div",
+	                        {
+	                          style: {
+	                            display: "inline-block",
+	                            verticalAlign: "middle"
+	                          }
+	                        },
 	                        _react2.default.createElement(
-	                            'ul',
-	                            { className: 'sidebar-nav' },
-	                            _react2.default.createElement(
-	                                'li',
-	                                { className: 'sidebar-brand' },
-	                                this.props.course.name
-	                            ),
-	                            this.props.course.lectures.map(function (lecture, index) {
-	                                return _react2.default.createElement(
-	                                    'li',
-	                                    { key: index },
-	                                    _react2.default.createElement('span', { style: { color: _this6.state.currentLectureIndex >= index ? '#449d44' : '', display: 'inline' }, className: "glyphicon glyphicon-" + (_this6.state.currentLectureIndex >= index ? "ok" : "unchecked") }),
-	                                    _react2.default.createElement(
-	                                        'a',
-	                                        { style: { color: _this6.state.currentLectureIndex >= index ? '#5bc0de' : 'white', display: 'inline' },
-	                                            onClick: function onClick() {
-	                                                _this6.onClickViewLecture(index);
-	                                            } },
-	                                        ' ' + (index + 1) + '. ' + lecture.name
-	                                    )
-	                                );
-	                            })
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { id: 'page-content-wrapper' },
-	                        _react2.default.createElement(
-	                            'video',
-	                            { id: 'video', className: 'video-js', controls: true, preload: 'false',
-	                                width: '100%', height: 'auto' },
-	                            _react2.default.createElement('source', { src: '/api/resource/play-video-learning/' + this.props.params.id + '/' + this.props.course.lectures[this.state.currentLectureIndex]._id, type: 'video/mp4' })
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'container', style: { marginTop: '30px' } },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'panel panel-primary' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'panel-heading' },
-	                            _react2.default.createElement(
-	                                'h1',
-	                                { className: 'panel-title' },
-	                                'Reviews'
-	                            )
+	                          _reactRouter.Link,
+	                          {
+	                            to: "/view-user/" + review.user._id,
+	                            className: "username-rate"
+	                          },
+	                          review.user.username
 	                        ),
+	                        _react2.default.createElement(_reactBootstrap.Glyphicon, {
+	                          style: { marginLeft: "10px" },
+	                          glyph: "calendar"
+	                        }),
 	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'panel-body' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'row' },
-	                                _react2.default.createElement(
-	                                    _reactBootstrap.Col,
-	                                    { xs: 3, md: 2, style: { paddingLeft: '0px', paddingRight: '0px' } },
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        null,
-	                                        'Avegare Rating'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { style: { fontSize: '96px', fontWeight: 600, color: '#17aa1c', lineHeight: 1 } },
-	                                        this.props.course.star ? this.props.course.star.toFixed(1) : 0
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            'span',
-	                                            { className: 'course-rate' },
-	                                            _react2.default.createElement('span', { style: { width: (this.props.course.star || 0) * 20 + '%' } })
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { style: { display: 'block' } },
-	                                        _react2.default.createElement(
-	                                            'strong',
-	                                            null,
-	                                            'Details(',
-	                                            this.props.course.numberofreviews + ' ',
-	                                            'reivews)'
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'button',
-	                                        { className: 'btn btn-primary btn-lg center-block', style: { marginTop: '10px' },
-	                                            onClick: function onClick() {
-	                                                _this6.onClickWriteReview();
-	                                            } },
-	                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-pencil' }),
-	                                        ' ',
-	                                        'Write a Review'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    _reactBootstrap.Col,
-	                                    { xs: 9, md: 10 },
-	                                    this.state.reviews.map(function (review, index) {
-	                                        return _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'info-rate', key: index },
-	                                            _react2.default.createElement('img', { className: 'avatar-rate', src: '/api/resource/images?src=' + review.user.photo + '&w=50&h=50' }),
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                { style: { display: 'inline-block', verticalAlign: 'middle' } },
-	                                                _react2.default.createElement(
-	                                                    _reactRouter.Link,
-	                                                    { to: '/view-user/' + review.user._id, className: 'username-rate' },
-	                                                    review.user.username
-	                                                ),
-	                                                _react2.default.createElement(_reactBootstrap.Glyphicon, { style: { marginLeft: '10px' }, glyph: 'calendar' }),
-	                                                _react2.default.createElement(
-	                                                    'span',
-	                                                    null,
-	                                                    ' ' + new Date(review.createdAt).toLocaleString()
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    'span',
-	                                                    { className: 'course-rate' },
-	                                                    _react2.default.createElement('span', { style: { width: review.star * 20 + '%' } })
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: review.content.replace(/\n/g, '<br/>') }, className: 'content-rate' })
-	                                        );
-	                                    }),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { className: 'text-center' },
-	                                        _react2.default.createElement(
-	                                            'ul',
-	                                            { className: 'pagination' },
-	                                            _react2.default.createElement(
-	                                                'li',
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    'button',
-	                                                    { disabled: this.state.pageReviews <= 1, onClick: function onClick() {
-	                                                            _this6.onClickPrev();
-	                                                        },
-	                                                        className: 'btn btn-success btn-lg' },
-	                                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-chevron-left' })
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'li',
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    'button',
-	                                                    { disabled: true, className: 'btn btn-link btn-lg' },
-	                                                    this.state.pageReviews
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'li',
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    'button',
-	                                                    { onClick: function onClick() {
-	                                                            _this6.onClickNext();
-	                                                        },
-	                                                        className: 'btn btn-success btn-lg' },
-	                                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-chevron-right' })
-	                                                )
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            )
+	                          "span",
+	                          null,
+	                          " " + new Date(review.createdAt).toLocaleString()
 	                        )
+	                      ),
+	                      _react2.default.createElement(
+	                        "div",
+	                        null,
+	                        _react2.default.createElement(
+	                          "span",
+	                          { className: "course-rate" },
+	                          _react2.default.createElement("span", {
+	                            style: { width: review.star * 20 + "%" }
+	                          })
+	                        )
+	                      ),
+	                      _react2.default.createElement("span", {
+	                        dangerouslySetInnerHTML: {
+	                          __html: review.content.replace(/\n/g, "<br/>")
+	                        },
+	                        className: "content-rate"
+	                      })
+	                    );
+	                  }),
+	                  _react2.default.createElement(
+	                    "div",
+	                    { className: "text-center" },
+	                    _react2.default.createElement(
+	                      "ul",
+	                      { className: "pagination" },
+	                      _react2.default.createElement(
+	                        "li",
+	                        null,
+	                        _react2.default.createElement(
+	                          "button",
+	                          {
+	                            disabled: this.state.pageReviews <= 1,
+	                            onClick: function onClick() {
+	                              _this6.onClickPrev();
+	                            },
+	                            className: "btn btn-success btn-lg"
+	                          },
+	                          _react2.default.createElement("span", { className: "glyphicon glyphicon-chevron-left" })
+	                        )
+	                      ),
+	                      _react2.default.createElement(
+	                        "li",
+	                        null,
+	                        _react2.default.createElement(
+	                          "button",
+	                          { disabled: true, className: "btn btn-link btn-lg" },
+	                          this.state.pageReviews
+	                        )
+	                      ),
+	                      _react2.default.createElement(
+	                        "li",
+	                        null,
+	                        _react2.default.createElement(
+	                          "button",
+	                          {
+	                            onClick: function onClick() {
+	                              _this6.onClickNext();
+	                            },
+	                            className: "btn btn-success btn-lg"
+	                          },
+	                          _react2.default.createElement("span", { className: "glyphicon glyphicon-chevron-right" })
+	                        )
+	                      )
 	                    )
-	                ),
-	                _react2.default.createElement(_review2.default, { ref: 'review', user: this.props.user, course: { _id: this.props.params.id },
-	                    onSubmitReviewSuccess: function onSubmitReviewSuccess() {
-	                        _this6.onSubmitReviewSuccess();
-	                    } })
-	            );
-	        }
-	    }]);
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(_review2.default, {
+	          ref: "review",
+	          user: this.props.user,
+	          course: { _id: this.props.params.id },
+	          onSubmitReviewSuccess: function onSubmitReviewSuccess() {
+	            _this6.onSubmitReviewSuccess();
+	          }
+	        })
+	      );
+	    }
+	  }]);
 
-	    return LearnCourse;
+	  return LearnCourse;
 	}(_react2.default.Component);
 
 	LearnCourse = (0, _reactRedux.connect)(function (state, props) {
-	    var course = _.find(state.viewCourses, { _id: props.params.id });
-	    if (course) {
-	        return {
-	            course: course,
-	            user: {
-	                _id: state.user._id,
-	                username: state.user.username,
-	                photo: state.user.photo
-	            }
-	        };
-	    }
-	    return props;
+	  var course = _.find(state.viewCourses, { _id: Number(props.params.id) });
+	  if (course) {
+	    return {
+	      course: course,
+	      user: {
+	        _id: state.user._id,
+	        username: state.user.username,
+	        photo: state.user.photo
+	      }
+	    };
+	  }
+	  return props;
 	})(LearnCourse);
 
 	exports.default = LearnCourse;
