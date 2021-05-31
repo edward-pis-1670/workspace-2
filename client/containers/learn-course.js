@@ -33,7 +33,7 @@ class LearnCourse extends React.Component {
   componentDidMount() {
     getReview(
       {
-        courseid: this.props.params.id,
+        courseid: Number(this.props.params.id),
         page: this.state.pageReviews,
       },
       (data, status) => {
@@ -47,7 +47,7 @@ class LearnCourse extends React.Component {
     }
     getCourseIntro(
       {
-        courseid: this.props.params.id,
+        courseid: Number(this.props.params.id),
       },
       (data, status) => {
         if (data.code == 1001) {
@@ -69,7 +69,7 @@ class LearnCourse extends React.Component {
     this.setState({ pageReviews: page - 1 });
     getReview(
       {
-        courseid: this.props.params.id,
+        courseid: Number(this.props.params.id),
         page: page - 1,
       },
       (data, status) => {
@@ -84,7 +84,7 @@ class LearnCourse extends React.Component {
     this.setState({ pageReviews: page + 1 });
     getReview(
       {
-        courseid: this.props.params.id,
+        courseid: Number(this.props.params.id),
         page: page + 1,
       },
       (data, status) => {
@@ -100,7 +100,7 @@ class LearnCourse extends React.Component {
   onSubmitReviewSuccess() {
     getReview(
       {
-        courseid: this.props.params.id,
+        courseid: Number(this.props.params.id),
         page: this.state.pageReviews,
       },
       (data, status) => {
@@ -401,7 +401,7 @@ class LearnCourse extends React.Component {
         <Review
           ref="review"
           user={this.props.user}
-          course={{ _id: this.props.params.id }}
+          course={{ _id: Number(this.props.params.id) }}
           onSubmitReviewSuccess={() => {
             this.onSubmitReviewSuccess();
           }}

@@ -196,7 +196,7 @@ class ViewCourse extends React.Component {
     if (this.props.params.id != nextProps.params.id) {
       getReview(
         {
-          courseid: this.props.params.id,
+          courseid: Number(this.props.params.id),
           page: this.state.pageReviews,
         },
         (data, status) => {
@@ -240,7 +240,7 @@ class ViewCourse extends React.Component {
   componentDidMount() {
     getReview(
       {
-        courseid: this.props.params.id,
+        courseid: Number(this.props.params.id),
         page: this.state.pageReviews,
       },
       (data, status) => {
@@ -266,13 +266,13 @@ class ViewCourse extends React.Component {
       });
       this.getCoursesRelateLecture(
         this.props.course.lecturer._id,
-        this.props.params.id
+        Number(this.props.params.id)
       );
       return;
     }
     getCourseIntro(
       {
-        courseid: this.props.params.id,
+        courseid: Number(this.props.params.id),
       },
       (data, status) => {
         if (data.code == 1001) {
@@ -299,7 +299,7 @@ class ViewCourse extends React.Component {
           });
           this.getCoursesRelateLecture(
             data.course.lecturer._id,
-            this.props.params.id
+            Number(this.props.params.id)
           );
         }
       }
@@ -322,7 +322,7 @@ class ViewCourse extends React.Component {
     this.setState({ pageReviews: page - 1 });
     getReview(
       {
-        courseid: this.props.params.id,
+        courseid: Number(this.props.params.id),
         page: page - 1,
       },
       (data, status) => {
@@ -337,7 +337,7 @@ class ViewCourse extends React.Component {
     this.setState({ pageReviews: page + 1 });
     getReview(
       {
-        courseid: this.props.params.id,
+        courseid: Number(this.props.params.id),
         page: page + 1,
       },
       (data, status) => {
@@ -391,7 +391,7 @@ class ViewCourse extends React.Component {
             <button
               className="btn btn-success btn-lg"
               onClick={() => {
-                this.onClickTakeThisCourse(this.props.params.id);
+                this.onClickTakeThisCourse(Number(this.props.params.id));
               }}
             >
               <span className="glyphicon glyphicon-list-alt"></span> Start
@@ -401,7 +401,7 @@ class ViewCourse extends React.Component {
             <button
               className="btn btn-success btn-lg"
               onClick={() => {
-                this.onClickTakeThisCourse(this.props.params.id);
+                this.onClickTakeThisCourse(Number(this.props.params.id));
               }}
             >
               <span className="glyphicon glyphicon-shopping-cart"></span>Take
@@ -443,7 +443,7 @@ class ViewCourse extends React.Component {
               "btn " + (this.props.wishlisted ? "btn-danger" : "btn-success")
             }
             onClick={(e) => {
-              this.onClickAddOrRemoveWishlist(this.props.params.id);
+              this.onClickAddOrRemoveWishlist(Number(this.props.params.id));
             }}
           >
             <span className="glyphicon glyphicon-heart"></span>{" "}
@@ -920,12 +920,12 @@ class ViewCourse extends React.Component {
           <ModalPurchase
             ref="modalPurchase"
             courseName={this.props.course.name}
-            courseId={this.props.params.id}
+            courseId={Number(this.props.params.id)}
             courseCost={this.props.course.cost}
             creditBalance={this.props.creditBalance}
             onTakeCourseSuccess={() => {
               this.props.dispatch(
-                takeCourse(this.props.params.id, this.props.course.cost)
+                takeCourse(Number(this.props.params.id), this.props.course.cost)
               );
               browserHistory.push(
                 "/course/" + this.props.params.id + "/learning"
@@ -948,8 +948,8 @@ ViewCourse = connect((state, props) => {
   if (course) {
     return {
       course: course,
-      islearning: _.includes(state.user.mylearningcourses, props.params.id),
-      wishlisted: _.includes(state.user.mywishlist, props.params.id),
+      islearning: _.includes(state.user.mylearningcourses, Number(props.params.id)),
+      wishlisted: _.includes(state.user.mywishlist, Number(props.params.id)),
       islogged:
         state.hasOwnProperty("user") && state.user.hasOwnProperty("username"),
       creditBalance: state.user.creditbalance || 0,

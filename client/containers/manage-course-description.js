@@ -42,7 +42,7 @@ class ManageCourseDescription extends React.Component {
       // $.post('/api/user/get-course-description',
       $.post(
         "http://localhost:5000/users/get-description-course",
-        { courseid: this.props.params.id },
+        { courseid: Number(this.props.params.id) },
         (data, status) => {
           if (data.code == 200) {
             this.props.dispatch(setCourseDescription(data.course));
@@ -99,7 +99,7 @@ class ManageCourseDescription extends React.Component {
     this.setState({ previewvideoname: e.target.files[0].name });
     let fd = new FormData();
     fd.append("previewvideo", e.target.files[0]);
-    fd.append("courseid", this.props.params.id);
+    fd.append("courseid", Number(this.props.params.id));
     $.ajax({
       method: "POST",
       url: "/api/user/upload-preview-video-course",
@@ -113,7 +113,7 @@ class ManageCourseDescription extends React.Component {
           return browserHistory.push("/");
         } else if (data.code == 200) {
           this.props.dispatch(
-            setCoursePreviewVideo(data.previewvideo, this.props.params.id)
+            setCoursePreviewVideo(data.previewvideo, Number(this.props.params.id))
           );
           document.getElementById("video-" + this.props.params.id).load();
         }
@@ -138,7 +138,7 @@ class ManageCourseDescription extends React.Component {
     e.preventDefault();
     this.setState({ isSubmitting: true });
     let fd = new FormData();
-    fd.append("courseid", this.props.params.id);
+    fd.append("courseid", Number(this.props.params.id));
     fd.append("name", this.state.course_name);
     fd.append("description", this.state.course_description);
     fd.append("genre", this.state.course_category);

@@ -17,7 +17,7 @@ class ViewUser extends React.Component {
     componentDidMount() {
         $.post('/api/user/view-user',
             {
-                id: this.props.params.id
+                id: Number(this.props.params.id)
             }, (data, status) => {
                 if (data.code == 200)
                     this.setState({ user: data.user })

@@ -106473,7 +106473,7 @@
 
 	      if (!this.props.course) {
 	        // $.post('/api/user/get-course',
-	        $.post("http://localhost:5000/users/get-course", { courseid: this.props.params.id }, function (data, status) {
+	        $.post("http://localhost:5000/users/get-course", { courseid: Number(this.props.params.id) }, function (data, status) {
 	          if (data.code == 200) {
 	            _this2.props.dispatch((0, _actions.setCourse)(data.course));
 	          }
@@ -106501,7 +106501,7 @@
 
 	      // $.post('/api/user/publish-course',
 	      $.post("http://localhost:5000/users/publish-course", {
-	        courseid: this.props.params.id
+	        courseid: Number(this.props.params.id)
 	      }, function (data, status) {
 	        if (data.code == 1001) {
 	          _this4.props.dispatch((0, _actions.setUser)({}));
@@ -106755,7 +106755,7 @@
 
 	      if (!this.props.needtoknow) {
 	        // $.post('/api/user/get-course-goals',
-	        $.post("http://localhost:5000/users/get-goals-course", { courseid: this.props.params.id }, function (data, status) {
+	        $.post("http://localhost:5000/users/get-goals-course", { courseid: Number(this.props.params.id) }, function (data, status) {
 	          if (data.code == 200) {
 	            console.log(data);
 	            _this2.props.dispatch((0, _actions.setCourseGoals)(data.course));
@@ -106863,7 +106863,7 @@
 	      $.post(
 	      // '/api/user/set-course-goals',
 	      "http://localhost:5000/users/set-goals-course", {
-	        courseid: this.props.params.id,
+	        courseid: Number(this.props.params.id),
 	        needtoknow: this.state.needtoknow,
 	        targetstudent: this.state.targetstudent,
 	        willableto: this.state.willableto
@@ -107238,7 +107238,7 @@
 	      });
 	      if (!this.props.course_description) {
 	        // $.post('/api/user/get-course-description',
-	        $.post("http://localhost:5000/users/get-description-course", { courseid: this.props.params.id }, function (data, status) {
+	        $.post("http://localhost:5000/users/get-description-course", { courseid: Number(this.props.params.id) }, function (data, status) {
 	          if (data.code == 200) {
 	            _this2.props.dispatch((0, _actions.setCourseDescription)(data.course));
 	            _this2.setState({
@@ -107305,7 +107305,7 @@
 	      this.setState({ previewvideoname: e.target.files[0].name });
 	      var fd = new FormData();
 	      fd.append("previewvideo", e.target.files[0]);
-	      fd.append("courseid", this.props.params.id);
+	      fd.append("courseid", Number(this.props.params.id));
 	      $.ajax({
 	        method: "POST",
 	        url: "/api/user/upload-preview-video-course",
@@ -107318,7 +107318,7 @@
 	            _this4.props.dispatch((0, _actions.setGetMyCourses)(false));
 	            return _reactRouter.browserHistory.push("/");
 	          } else if (data.code == 200) {
-	            _this4.props.dispatch((0, _actions.setCoursePreviewVideo)(data.previewvideo, _this4.props.params.id));
+	            _this4.props.dispatch((0, _actions.setCoursePreviewVideo)(data.previewvideo, Number(_this4.props.params.id)));
 	            document.getElementById("video-" + _this4.props.params.id).load();
 	          }
 	        },
@@ -107342,7 +107342,7 @@
 	      e.preventDefault();
 	      this.setState({ isSubmitting: true });
 	      var fd = new FormData();
-	      fd.append("courseid", this.props.params.id);
+	      fd.append("courseid", Number(this.props.params.id));
 	      fd.append("name", this.state.course_name);
 	      fd.append("description", this.state.course_description);
 	      fd.append("genre", this.state.course_category);
@@ -107770,7 +107770,7 @@
 	      $.post(
 	      // '/api/user/set-course-price',
 	      "http://localhost:5000/users/set-price-course", {
-	        courseid: this.props.params.id,
+	        courseid: Number(this.props.params.id),
 	        cost: this.state.cost
 	      }, function (data, status) {
 	        if (data.code == 1001) {
@@ -108043,7 +108043,7 @@
 
 	      if (!this.props.lectures) {
 	        // $.post('/api/user/get-course-lectures',
-	        $.post("http://localhost:5000/users/get-lectures-course", { courseid: this.props.params.id }, function (data, status) {
+	        $.post("http://localhost:5000/users/get-lectures-course", { courseid: Number(this.props.params.id) }, function (data, status) {
 	          if (data.code == 200) {
 	            _this3.props.dispatch((0, _actions.setCourseLectures)(data.course));
 	          }
@@ -108059,7 +108059,7 @@
 	      this.refs.modalAddLecture.setState({ isSubmitting: true });
 	      // $.post('/api/user/add-course-lecture',
 	      $.post("http://localhost:5000/users/add-video-lecture", {
-	        courseid: this.props.params.id,
+	        courseid: Number(this.props.params.id),
 	        name: this.refs.modalAddLecture.state.lecturename
 	      }, function (data, status) {
 	        if (data.code == 1001) {
@@ -108068,7 +108068,7 @@
 	          return _reactRouter.browserHistory.push("/");
 	        }
 	        if (data.code == 200) {
-	          _this4.props.dispatch((0, _actions.addLecture)(data.lecture, _this4.props.params.id));
+	          _this4.props.dispatch((0, _actions.addLecture)(data.lecture, Number(_this4.props.params.id)));
 	          return _this4.refs.modalAddLecture.setState({
 	            isSubmitting: false,
 	            lecturename: "",
@@ -108094,7 +108094,7 @@
 
 	      e.preventDefault();
 	      $.post("/api/user/delete-course-lecture", {
-	        courseid: this.props.params.id,
+	        courseid: Number(this.props.params.id),
 	        lectureid: lectureid
 	      }, function (data, status) {
 	        if (data.code == 1001) {
@@ -108103,7 +108103,7 @@
 	          return _reactRouter.browserHistory.push("/");
 	        }
 	        if (data.code == 200) {
-	          _this5.props.dispatch((0, _actions.deleteLecture)(lectureid, _this5.props.params.id));
+	          _this5.props.dispatch((0, _actions.deleteLecture)(lectureid, Number(_this5.props.params.id)));
 	        }
 	      });
 	    }
@@ -108114,7 +108114,7 @@
 
 	      e.preventDefault();
 	      $.post("/api/user/set-lecture-name", {
-	        courseid: this.props.params.id,
+	        courseid: Number(this.props.params.id),
 	        lectureid: lectureid,
 	        name: this.state.lecturename_list[lectureid]
 	      }, function (data, status) {
@@ -108124,7 +108124,7 @@
 	          return _reactRouter.browserHistory.push("/");
 	        }
 	        if (data.code == 200) {
-	          _this6.props.dispatch((0, _actions.setLectureName)(data.lecture, _this6.props.params.id));
+	          _this6.props.dispatch((0, _actions.setLectureName)(data.lecture, Number(_this6.props.params.id)));
 	        }
 	      });
 	    }
@@ -108148,7 +108148,7 @@
 
 	      var fd = new FormData();
 	      fd.append("video", e.target.files[0]);
-	      fd.append("courseid", this.props.params.id);
+	      fd.append("courseid", Number(this.props.params.id));
 	      fd.append("lectureid", lectureid);
 	      $.ajax({
 	        method: "POST",
@@ -108163,7 +108163,7 @@
 	            _this7.props.dispatch((0, _actions.setUser)({}));
 	            return _reactRouter.browserHistory.push("/");
 	          } else if (data.code == 200) {
-	            _this7.props.dispatch((0, _actions.setLectureVideo)(data.lecture, _this7.props.params.id));
+	            _this7.props.dispatch((0, _actions.setLectureVideo)(data.lecture, Number(_this7.props.params.id)));
 	            document.getElementById("video-" + lectureid).load();
 	          }
 	        },
@@ -108188,7 +108188,7 @@
 
 	      e.preventDefault();
 	      $.post("/api/user/change-preview-lecture", {
-	        courseid: this.props.params.id,
+	        courseid: Number(this.props.params.id),
 	        lectureid: lectureid
 	      }, function (data, status) {
 	        if (data.code == 1001) {
@@ -108197,7 +108197,7 @@
 	          return _reactRouter.browserHistory.push("/");
 	        }
 	        if (data.code == 200) {
-	          _this8.props.dispatch((0, _actions.setLecturePreview)(data.lecture, _this8.props.params.id));
+	          _this8.props.dispatch((0, _actions.setLecturePreview)(data.lecture, Number(_this8.props.params.id)));
 	        }
 	      });
 	    }
@@ -108470,7 +108470,7 @@
 	            this.setState({ isSubmitting: true });
 	            // $.post('/api/user/delete-course',
 	            $.post('http://localhost:5000/users/delete-course', {
-	                courseid: this.props.params.id
+	                courseid: Number(this.props.params.id)
 	            }, function (data, status) {
 	                if (data.code == 1001) {
 	                    _this2.props.dispatch((0, _actions.setUser)({}));
@@ -108479,7 +108479,7 @@
 	                }
 	                if (data.code == 200) {
 	                    _reactRouter.browserHistory.push('/instructor');
-	                    return _this2.props.dispatch((0, _actions.deleteCourse)(_this2.props.params.id));
+	                    return _this2.props.dispatch((0, _actions.deleteCourse)(Number(_this2.props.params.id)));
 	                }
 	                var alertlogin = $(".alert:first");
 	                alertlogin.show(500, function () {
@@ -108874,7 +108874,7 @@
 
 	      if (this.props.params.id != nextProps.params.id) {
 	        (0, _courses.getReview)({
-	          courseid: this.props.params.id,
+	          courseid: Number(this.props.params.id),
 	          page: this.state.pageReviews
 	        }, function (data, status) {
 	          if (data.code == 200) {
@@ -108908,7 +108908,7 @@
 	      var _this7 = this;
 
 	      (0, _courses.getReview)({
-	        courseid: this.props.params.id,
+	        courseid: Number(this.props.params.id),
 	        page: this.state.pageReviews
 	      }, function (data, status) {
 	        if (data.code == 200) {
@@ -108930,11 +108930,11 @@
 	            }
 	          }
 	        });
-	        this.getCoursesRelateLecture(this.props.course.lecturer._id, this.props.params.id);
+	        this.getCoursesRelateLecture(this.props.course.lecturer._id, Number(this.props.params.id));
 	        return;
 	      }
 	      (0, _courses.getCourseIntro)({
-	        courseid: this.props.params.id
+	        courseid: Number(this.props.params.id)
 	      }, function (data, status) {
 	        if (data.code == 1001) {
 	          _this7.props.dispatch((0, _actions.setUser)({}));
@@ -108958,7 +108958,7 @@
 	              }
 	            }
 	          });
-	          _this7.getCoursesRelateLecture(data.course.lecturer._id, _this7.props.params.id);
+	          _this7.getCoursesRelateLecture(data.course.lecturer._id, Number(_this7.props.params.id));
 	        }
 	      });
 	    }
@@ -108982,7 +108982,7 @@
 	      var page = this.state.pageReviews;
 	      this.setState({ pageReviews: page - 1 });
 	      (0, _courses.getReview)({
-	        courseid: this.props.params.id,
+	        courseid: Number(this.props.params.id),
 	        page: page - 1
 	      }, function (data, status) {
 	        if (data.code == 200) {
@@ -108998,7 +108998,7 @@
 	      var page = this.state.pageReviews;
 	      this.setState({ pageReviews: page + 1 });
 	      (0, _courses.getReview)({
-	        courseid: this.props.params.id,
+	        courseid: Number(this.props.params.id),
 	        page: page + 1
 	      }, function (data, status) {
 	        if (data.code == 200) {
@@ -109058,7 +109058,7 @@
 	            {
 	              className: "btn btn-success btn-lg",
 	              onClick: function onClick() {
-	                _this11.onClickTakeThisCourse(_this11.props.params.id);
+	                _this11.onClickTakeThisCourse(Number(_this11.props.params.id));
 	              }
 	            },
 	            _react2.default.createElement("span", { className: "glyphicon glyphicon-list-alt" }),
@@ -109068,7 +109068,7 @@
 	            {
 	              className: "btn btn-success btn-lg",
 	              onClick: function onClick() {
-	                _this11.onClickTakeThisCourse(_this11.props.params.id);
+	                _this11.onClickTakeThisCourse(Number(_this11.props.params.id));
 	              }
 	            },
 	            _react2.default.createElement("span", { className: "glyphicon glyphicon-shopping-cart" }),
@@ -109142,7 +109142,7 @@
 	            {
 	              className: "btn " + (this.props.wishlisted ? "btn-danger" : "btn-success"),
 	              onClick: function onClick(e) {
-	                _this11.onClickAddOrRemoveWishlist(_this11.props.params.id);
+	                _this11.onClickAddOrRemoveWishlist(Number(_this11.props.params.id));
 	              }
 	            },
 	            _react2.default.createElement("span", { className: "glyphicon glyphicon-heart" }),
@@ -109731,11 +109731,11 @@
 	          _react2.default.createElement(ModalPurchase, {
 	            ref: "modalPurchase",
 	            courseName: this.props.course.name,
-	            courseId: this.props.params.id,
+	            courseId: Number(this.props.params.id),
 	            courseCost: this.props.course.cost,
 	            creditBalance: this.props.creditBalance,
 	            onTakeCourseSuccess: function onTakeCourseSuccess() {
-	              _this11.props.dispatch((0, _actions.takeCourse)(_this11.props.params.id, _this11.props.course.cost));
+	              _this11.props.dispatch((0, _actions.takeCourse)(Number(_this11.props.params.id), _this11.props.course.cost));
 	              _reactRouter.browserHistory.push("/course/" + _this11.props.params.id + "/learning");
 	            },
 	            onTakeCourseNotLoggedIn: function onTakeCourseNotLoggedIn() {
@@ -109757,8 +109757,8 @@
 	  if (course) {
 	    return {
 	      course: course,
-	      islearning: _.includes(state.user.mylearningcourses, props.params.id),
-	      wishlisted: _.includes(state.user.mywishlist, props.params.id),
+	      islearning: _.includes(state.user.mylearningcourses, Number(props.params.id)),
+	      wishlisted: _.includes(state.user.mywishlist, Number(props.params.id)),
 	      islogged: state.hasOwnProperty("user") && state.user.hasOwnProperty("username"),
 	      creditBalance: state.user.creditbalance || 0
 	    };
@@ -110099,7 +110099,7 @@
 	      var _this2 = this;
 
 	      (0, _courses.getReview)({
-	        courseid: this.props.params.id,
+	        courseid: Number(this.props.params.id),
 	        page: this.state.pageReviews
 	      }, function (data, status) {
 	        if (data.code == 200) {
@@ -110110,7 +110110,7 @@
 	        return;
 	      }
 	      (0, _courses.getCourseIntro)({
-	        courseid: this.props.params.id
+	        courseid: Number(this.props.params.id)
 	      }, function (data, status) {
 	        if (data.code == 1001) {
 	          _this2.props.dispatch((0, _actions.setUser)({}));
@@ -110133,7 +110133,7 @@
 	      var page = this.state.pageReviews;
 	      this.setState({ pageReviews: page - 1 });
 	      (0, _courses.getReview)({
-	        courseid: this.props.params.id,
+	        courseid: Number(this.props.params.id),
 	        page: page - 1
 	      }, function (data, status) {
 	        if (data.code == 200) {
@@ -110149,7 +110149,7 @@
 	      var page = this.state.pageReviews;
 	      this.setState({ pageReviews: page + 1 });
 	      (0, _courses.getReview)({
-	        courseid: this.props.params.id,
+	        courseid: Number(this.props.params.id),
 	        page: page + 1
 	      }, function (data, status) {
 	        if (data.code == 200) {
@@ -110168,7 +110168,7 @@
 	      var _this5 = this;
 
 	      (0, _courses.getReview)({
-	        courseid: this.props.params.id,
+	        courseid: Number(this.props.params.id),
 	        page: this.state.pageReviews
 	      }, function (data, status) {
 	        if (data.code == 200) {
@@ -110496,7 +110496,7 @@
 	        _react2.default.createElement(_review2.default, {
 	          ref: "review",
 	          user: this.props.user,
-	          course: { _id: this.props.params.id },
+	          course: { _id: Number(this.props.params.id) },
 	          onSubmitReviewSuccess: function onSubmitReviewSuccess() {
 	            _this6.onSubmitReviewSuccess();
 	          }
@@ -112887,7 +112887,7 @@
 	            var _this2 = this;
 
 	            $.post('/api/user/view-user', {
-	                id: this.props.params.id
+	                id: Number(this.props.params.id)
 	            }, function (data, status) {
 	                if (data.code == 200) _this2.setState({ user: data.user });
 	            });

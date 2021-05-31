@@ -11,7 +11,7 @@ class ManageCourse extends React.Component {
       // $.post('/api/user/get-course',
       $.post(
         "http://localhost:5000/users/get-course",
-        { courseid: this.props.params.id },
+        { courseid: Number(this.props.params.id) },
         (data, status) => {
           if (data.code == 200) {
             this.props.dispatch(setCourse(data.course));
@@ -39,7 +39,7 @@ class ManageCourse extends React.Component {
     $.post(
       "http://localhost:5000/users/publish-course",
       {
-        courseid: this.props.params.id,
+        courseid: Number(this.props.params.id),
       },
       (data, status) => {
         if (data.code == 1001) {

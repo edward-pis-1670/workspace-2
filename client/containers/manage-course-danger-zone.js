@@ -17,7 +17,7 @@ class ManageCourseDangerZone extends React.Component {
         // $.post('/api/user/delete-course',
         $.post('http://localhost:5000/users/delete-course',
             {
-                courseid: this.props.params.id
+                courseid: Number(this.props.params.id)
             }, (data, status) => {
                 if (data.code == 1001) {
                     this.props.dispatch(setUser({}))
@@ -26,7 +26,7 @@ class ManageCourseDangerZone extends React.Component {
                 }
                 if (data.code == 200) {
                     browserHistory.push('/instructor')
-                    return this.props.dispatch(deleteCourse(this.props.params.id))
+                    return this.props.dispatch(deleteCourse(Number(this.props.params.id)))
                 }
                 let alertlogin = $(".alert:first")
                 alertlogin.show(500, function () {

@@ -24,7 +24,7 @@ class ManageCourseGoal extends React.Component {
       // $.post('/api/user/get-course-goals',
       $.post(
         "http://localhost:5000/users/get-goals-course",
-        { courseid: this.props.params.id },
+        { courseid:Number(this.props.params.id)},
         (data, status) => {
           if (data.code == 200) {
             console.log(data);
@@ -108,7 +108,7 @@ class ManageCourseGoal extends React.Component {
       // '/api/user/set-course-goals',
       "http://localhost:5000/users/set-goals-course",
       {
-        courseid: this.props.params.id,
+        courseid: Number(this.props.params.id),
         needtoknow: this.state.needtoknow,
         targetstudent: this.state.targetstudent,
         willableto: this.state.willableto,

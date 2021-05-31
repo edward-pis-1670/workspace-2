@@ -24,7 +24,7 @@ class ManageCoursePrice extends React.Component {
       // '/api/user/set-course-price',
       "http://localhost:5000/users/set-price-course",
       {
-        courseid: this.props.params.id,
+        courseid: Number(this.props.params.id),
         cost: this.state.cost,
       },
       (data, status) => {

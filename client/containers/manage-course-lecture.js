@@ -98,7 +98,7 @@ class ManageCourseLecture extends React.Component {
       // $.post('/api/user/get-course-lectures',
       $.post(
         "http://localhost:5000/users/get-lectures-course",
-        { courseid: this.props.params.id },
+        { courseid: Number(this.props.params.id) },
         (data, status) => {
           if (data.code == 200) {
             this.props.dispatch(setCourseLectures(data.course));
@@ -114,7 +114,7 @@ class ManageCourseLecture extends React.Component {
     $.post(
       "http://localhost:5000/users/add-video-lecture",
       {
-        courseid: this.props.params.id,
+        courseid: Number(this.props.params.id),
         name: this.refs.modalAddLecture.state.lecturename,
       },
       (data, status) => {
@@ -124,7 +124,7 @@ class ManageCourseLecture extends React.Component {
           return browserHistory.push("/");
         }
         if (data.code == 200) {
-          this.props.dispatch(addLecture(data.lecture, this.props.params.id));
+          this.props.dispatch(addLecture(data.lecture, Number(this.props.params.id)));
           return this.refs.modalAddLecture.setState({
             isSubmitting: false,
             lecturename: "",
@@ -149,7 +149,7 @@ class ManageCourseLecture extends React.Component {
     $.post(
       "/api/user/delete-course-lecture",
       {
-        courseid: this.props.params.id,
+        courseid: Number(this.props.params.id),
         lectureid: lectureid,
       },
       (data, status) => {
@@ -159,7 +159,7 @@ class ManageCourseLecture extends React.Component {
           return browserHistory.push("/");
         }
         if (data.code == 200) {
-          this.props.dispatch(deleteLecture(lectureid, this.props.params.id));
+          this.props.dispatch(deleteLecture(lectureid, Number(this.props.params.id)));
         }
       }
     );
@@ -169,7 +169,7 @@ class ManageCourseLecture extends React.Component {
     $.post(
       "/api/user/set-lecture-name",
       {
-        courseid: this.props.params.id,
+        courseid: Number(this.props.params.id),
         lectureid: lectureid,
         name: this.state.lecturename_list[lectureid],
       },
@@ -181,7 +181,7 @@ class ManageCourseLecture extends React.Component {
         }
         if (data.code == 200) {
           this.props.dispatch(
-            setLectureName(data.lecture, this.props.params.id)
+            setLectureName(data.lecture, Number(this.props.params.id))
           );
         }
       }
@@ -201,7 +201,7 @@ class ManageCourseLecture extends React.Component {
 
     let fd = new FormData();
     fd.append("video", e.target.files[0]);
-    fd.append("courseid", this.props.params.id);
+    fd.append("courseid", Number(this.props.params.id));
     fd.append("lectureid", lectureid);
     $.ajax({
       method: "POST",
@@ -217,7 +217,7 @@ class ManageCourseLecture extends React.Component {
           return browserHistory.push("/");
         } else if (data.code == 200) {
           this.props.dispatch(
-            setLectureVideo(data.lecture, this.props.params.id)
+            setLectureVideo(data.lecture, Number(this.props.params.id))
           );
           document.getElementById("video-" + lectureid).load();
         }
@@ -245,7 +245,7 @@ class ManageCourseLecture extends React.Component {
     $.post(
       "/api/user/change-preview-lecture",
       {
-        courseid: this.props.params.id,
+        courseid: Number(this.props.params.id),
         lectureid: lectureid,
       },
       (data, status) => {
@@ -256,7 +256,7 @@ class ManageCourseLecture extends React.Component {
         }
         if (data.code == 200) {
           this.props.dispatch(
-            setLecturePreview(data.lecture, this.props.params.id)
+            setLecturePreview(data.lecture, Number(this.props.params.id))
           );
         }
       }
