@@ -70,7 +70,8 @@ class Navbar extends React.Component {
   markAsRead(e, noti) {
     e.preventDefault();
     if (!noti.seen) {
-      $.post("/api/user/mark-read-noti", { id: noti._id });
+      // $.post("/api/user/mark-read-noti", { id: noti._id });
+      $.post("http://localhost:5000/users/mark-read-notification", { id: noti._id });
       this.props.dispatch(markRead(noti._id));
     }
   }

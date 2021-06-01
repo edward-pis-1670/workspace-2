@@ -42161,7 +42161,8 @@
 	    value: function markAsRead(e, noti) {
 	      e.preventDefault();
 	      if (!noti.seen) {
-	        $.post("/api/user/mark-read-noti", { id: noti._id });
+	        // $.post("/api/user/mark-read-noti", { id: noti._id });
+	        $.post("http://localhost:5000/users/mark-read-notification", { id: noti._id });
 	        this.props.dispatch((0, _actions.markRead)(noti._id));
 	      }
 	    }
