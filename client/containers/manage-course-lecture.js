@@ -147,10 +147,11 @@ class ManageCourseLecture extends React.Component {
   onSubmitDeleteLecture(e, lectureid) {
     e.preventDefault();
     $.post(
-      "/api/user/delete-course-lecture",
+      // "/api/user/delete-course-lecture",
+      "http://localhost:5000/users/delete-video-lectures",
       {
         courseid: Number(this.props.params.id),
-        lectureid: lectureid,
+        lectureid: Number(lectureid),
       },
       (data, status) => {
         if (data.code == 1001) {
@@ -167,10 +168,11 @@ class ManageCourseLecture extends React.Component {
   onSubmitSetLectureName(e, lectureid) {
     e.preventDefault();
     $.post(
-      "/api/user/set-lecture-name",
+      // "/api/user/set-lecture-name",
+      "http://localhost:5000/users/set-name-lecture",
       {
         courseid: Number(this.props.params.id),
-        lectureid: lectureid,
+        lectureid: Number(lectureid),
         name: this.state.lecturename_list[lectureid],
       },
       (data, status) => {
@@ -194,7 +196,6 @@ class ManageCourseLecture extends React.Component {
   }
   handleVideoLecture(e, lectureid) {
     e.preventDefault();
-
     let videoname_list = this.state.videoname_list;
     videoname_list[lectureid] = e.target.files[0].name;
     this.setState({ videoname_list: videoname_list });
@@ -202,7 +203,7 @@ class ManageCourseLecture extends React.Component {
     let fd = new FormData();
     fd.append("video", e.target.files[0]);
     fd.append("courseid", Number(this.props.params.id));
-    fd.append("lectureid", lectureid);
+    fd.append("lectureid", Number(lectureid));
     $.ajax({
       method: "POST",
       // url: "/api/user/upload-video-lecture",
@@ -243,10 +244,11 @@ class ManageCourseLecture extends React.Component {
   onClickSetPreview(e, lectureid) {
     e.preventDefault();
     $.post(
-      "/api/user/change-preview-lecture",
+      // "/api/user/change-preview-lecture",
+      "http://localhost:5000/users/change-preview-lecture",
       {
         courseid: Number(this.props.params.id),
-        lectureid: lectureid,
+        lectureid: Number(lectureid),
       },
       (data, status) => {
         if (data.code == 1001) {
@@ -281,13 +283,16 @@ class ManageCourseLecture extends React.Component {
               >
                 <source
                   src={
-                    "/api/resource/play-video-lecturer/" +
-                    lecture._id +
-                    "?path=" +
-                    lecture.video
+                    // // "/api/resource/play-video-lecturer/" +
+                    // "http://localhost:5000/resources/play-video-lecturer/" +
+                    // lecture._id +
+                    // "?path=" +
+                    // lecture.video
+                    `${lecture.video}`
                   }
                   type="video/mp4"
                 />
+                
               </video>
               <br />
             </div>

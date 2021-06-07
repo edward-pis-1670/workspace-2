@@ -16,7 +16,7 @@ class Course extends React.Component {
 		// $.post('/api/user/change-wishlist',
 		$.post('http://localhost:5000/users/change-wishlist',
 			{
-				courseid: this.props.course._id
+				courseid: Number(this.props.course._id)
 			}, (data, status) => {
 				console.log(this.props.course._id)
 				this.props.dispatch(changeWishlist(data.action, this.props.course._id))

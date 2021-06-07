@@ -29,7 +29,8 @@ class Notifications extends React.Component {
     markAsRead(e, noti, i) {
         e.preventDefault()
         if (!noti.seen) {
-            $.post('/api/user/mark-read-noti', { id: noti._id })
+            // $.post('/api/user/mark-read-noti', { id: noti._id })
+            $.post('http://localhost:5000/users/mark-read-notification', { id: noti._id })
             let notis = this.state.notis
             notis[i].seen = true
             this.setState({ notis: notis })

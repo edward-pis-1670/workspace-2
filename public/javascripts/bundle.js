@@ -106577,7 +106577,7 @@
 	                _react2.default.createElement(
 	                  _reactRouter.Link,
 	                  {
-	                    to: "/managecourse/" + this.props.course._id + "/goals",
+	                    to: "/managecourse/" + Number(this.props.course._id) + "/goals",
 	                    activeClassName: "active",
 	                    onlyActiveOnIndex: true
 	                  },
@@ -106592,7 +106592,7 @@
 	                _react2.default.createElement(
 	                  _reactRouter.Link,
 	                  {
-	                    to: "/managecourse/" + this.props.course._id + "/lectures",
+	                    to: "/managecourse/" + Number(this.props.course._id) + "/lectures",
 	                    activeClassName: "active",
 	                    onlyActiveOnIndex: true
 	                  },
@@ -106607,7 +106607,7 @@
 	                _react2.default.createElement(
 	                  _reactRouter.Link,
 	                  {
-	                    to: "/managecourse/" + this.props.course._id + "/description",
+	                    to: "/managecourse/" + Number(this.props.course._id) + "/description",
 	                    activeClassName: "active",
 	                    onlyActiveOnIndex: true
 	                  },
@@ -106622,7 +106622,7 @@
 	                _react2.default.createElement(
 	                  _reactRouter.Link,
 	                  {
-	                    to: "/managecourse/" + this.props.course._id + "/price",
+	                    to: "/managecourse/" + Number(this.props.course._id) + "/price",
 	                    activeClassName: "active",
 	                    onlyActiveOnIndex: true
 	                  },
@@ -106637,7 +106637,7 @@
 	                _react2.default.createElement(
 	                  _reactRouter.Link,
 	                  {
-	                    to: "/managecourse/" + this.props.course._id + "/danger-zone",
+	                    to: "/managecourse/" + Number(this.props.course._id) + "/danger-zone",
 	                    activeClassName: "active",
 	                    onlyActiveOnIndex: true
 	                  },
@@ -108094,9 +108094,11 @@
 	      var _this5 = this;
 
 	      e.preventDefault();
-	      $.post("/api/user/delete-course-lecture", {
+	      $.post(
+	      // "/api/user/delete-course-lecture",
+	      "http://localhost:5000/users/delete-video-lectures", {
 	        courseid: Number(this.props.params.id),
-	        lectureid: lectureid
+	        lectureid: Number(lectureid)
 	      }, function (data, status) {
 	        if (data.code == 1001) {
 	          _this5.props.dispatch((0, _actions.setUser)({}));
@@ -108114,9 +108116,11 @@
 	      var _this6 = this;
 
 	      e.preventDefault();
-	      $.post("/api/user/set-lecture-name", {
+	      $.post(
+	      // "/api/user/set-lecture-name",
+	      "http://localhost:5000/users/set-name-lecture", {
 	        courseid: Number(this.props.params.id),
-	        lectureid: lectureid,
+	        lectureid: Number(lectureid),
 	        name: this.state.lecturename_list[lectureid]
 	      }, function (data, status) {
 	        if (data.code == 1001) {
@@ -108142,7 +108146,6 @@
 	      var _this7 = this;
 
 	      e.preventDefault();
-
 	      var videoname_list = this.state.videoname_list;
 	      videoname_list[lectureid] = e.target.files[0].name;
 	      this.setState({ videoname_list: videoname_list });
@@ -108150,7 +108153,7 @@
 	      var fd = new FormData();
 	      fd.append("video", e.target.files[0]);
 	      fd.append("courseid", Number(this.props.params.id));
-	      fd.append("lectureid", lectureid);
+	      fd.append("lectureid", Number(lectureid));
 	      $.ajax({
 	        method: "POST",
 	        // url: "/api/user/upload-video-lecture",
@@ -108188,9 +108191,11 @@
 	      var _this8 = this;
 
 	      e.preventDefault();
-	      $.post("/api/user/change-preview-lecture", {
+	      $.post(
+	      // "/api/user/change-preview-lecture",
+	      "http://localhost:5000/users/change-preview-lecture", {
 	        courseid: Number(this.props.params.id),
-	        lectureid: lectureid
+	        lectureid: Number(lectureid)
 	      }, function (data, status) {
 	        if (data.code == 1001) {
 	          _this8.props.dispatch((0, _actions.setUser)({}));
@@ -108226,7 +108231,13 @@
 	                  height: "auto"
 	                },
 	                _react2.default.createElement("source", {
-	                  src: "/api/resource/play-video-lecturer/" + lecture._id + "?path=" + lecture.video,
+	                  src:
+	                  // // "/api/resource/play-video-lecturer/" +
+	                  // "http://localhost:5000/resources/play-video-lecturer/" +
+	                  // lecture._id +
+	                  // "?path=" +
+	                  // lecture.video
+	                  "" + lecture.video,
 	                  type: "video/mp4"
 	                })
 	              ),
@@ -109825,7 +109836,7 @@
 				}
 				// $.post('/api/user/change-wishlist',
 				$.post('http://localhost:5000/users/change-wishlist', {
-					courseid: this.props.course._id
+					courseid: Number(this.props.course._id)
 				}, function (data, status) {
 					console.log(_this2.props.course._id);
 					_this2.props.dispatch((0, _actions.changeWishlist)(data.action, _this2.props.course._id));
@@ -113114,7 +113125,8 @@
 	        value: function markAsRead(e, noti, i) {
 	            e.preventDefault();
 	            if (!noti.seen) {
-	                $.post('/api/user/mark-read-noti', { id: noti._id });
+	                // $.post('/api/user/mark-read-noti', { id: noti._id })
+	                $.post('http://localhost:5000/users/mark-read-notification', { id: noti._id });
 	                var notis = this.state.notis;
 	                notis[i].seen = true;
 	                this.setState({ notis: notis });

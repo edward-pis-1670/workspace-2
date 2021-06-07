@@ -90,7 +90,7 @@ class ManageCourse extends React.Component {
             <ul className="menu-profile">
               <li>
                 <Link
-                  to={"/managecourse/" + this.props.course._id + "/goals"}
+                  to={"/managecourse/" + Number(this.props.course._id) + "/goals"}
                   activeClassName="active"
                   onlyActiveOnIndex={true}
                 >
@@ -100,7 +100,7 @@ class ManageCourse extends React.Component {
               </li>
               <li>
                 <Link
-                  to={"/managecourse/" + this.props.course._id + "/lectures"}
+                  to={"/managecourse/" + Number(this.props.course._id) + "/lectures"}
                   activeClassName="active"
                   onlyActiveOnIndex={true}
                 >
@@ -110,7 +110,7 @@ class ManageCourse extends React.Component {
               </li>
               <li>
                 <Link
-                  to={"/managecourse/" + this.props.course._id + "/description"}
+                  to={"/managecourse/" + Number(this.props.course._id) + "/description"}
                   activeClassName="active"
                   onlyActiveOnIndex={true}
                 >
@@ -120,7 +120,7 @@ class ManageCourse extends React.Component {
               </li>
               <li>
                 <Link
-                  to={"/managecourse/" + this.props.course._id + "/price"}
+                  to={"/managecourse/" + Number(this.props.course._id) + "/price"}
                   activeClassName="active"
                   onlyActiveOnIndex={true}
                 >
@@ -130,7 +130,7 @@ class ManageCourse extends React.Component {
               </li>
               <li>
                 <Link
-                  to={"/managecourse/" + this.props.course._id + "/danger-zone"}
+                  to={"/managecourse/" + Number(this.props.course._id) + "/danger-zone"}
                   activeClassName="active"
                   onlyActiveOnIndex={true}
                 >
