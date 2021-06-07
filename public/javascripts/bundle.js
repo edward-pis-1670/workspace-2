@@ -107309,7 +107309,8 @@
 	      fd.append("courseid", Number(this.props.params.id));
 	      $.ajax({
 	        method: "POST",
-	        url: "/api/user/upload-preview-video-course",
+	        // url: "/api/user/upload-preview-video-course",
+	        url: "http://localhost:5000/users/upload-previewvideo-lecture",
 	        data: fd,
 	        processData: false,
 	        contentType: false,
@@ -107393,7 +107394,7 @@
 	              width: "640",
 	              height: "auto"
 	            },
-	            _react2.default.createElement("source", { src: this.props.course_previewvideo, type: "video/mp4" })
+	            _react2.default.createElement("source", { src: "" + data.previewvideo, type: "video/mp4" })
 	          ),
 	          _react2.default.createElement("br", null)
 	        );

@@ -102,7 +102,8 @@ class ManageCourseDescription extends React.Component {
     fd.append("courseid", Number(this.props.params.id));
     $.ajax({
       method: "POST",
-      url: "/api/user/upload-preview-video-course",
+      // url: "/api/user/upload-preview-video-course",
+      url: "http://localhost:5000/users/upload-previewvideo-lecture",
       data: fd,
       processData: false,
       contentType: false,
@@ -183,7 +184,8 @@ class ManageCourseDescription extends React.Component {
             width="640"
             height="auto"
           >
-            <source src={this.props.course_previewvideo} type="video/mp4" />
+            {/* <source src={this.props.course_previewvideo} type="video/mp4" /> */}
+            <source src={`${data.previewvideo}`} type="video/mp4" />
           </video>
           <br />
         </div>
