@@ -70202,7 +70202,9 @@
 	            e.preventDefault();
 
 	            this.setState({ isSubmitting: true });
-	            $.post('/api/user/edit-profile', {
+	            $.post(
+	            // '/api/user/edit-profile',
+	            'http://localhost:5000/users/edit-profile', {
 	                username: this.state.username,
 	                biography: this.state.biography,
 	                website: this.state.website,
@@ -70486,7 +70488,8 @@
 	            this.setState({ isSubmitting: true });
 	            $.ajax({
 	                method: "POST",
-	                url: "/api/user/edit-photo",
+	                // url: "/api/user/edit-photo",
+	                url: "http://localhost:5000/users/edit-avatar",
 	                data: fd,
 	                processData: false,
 	                contentType: false,
@@ -107213,7 +107216,7 @@
 	    _this.state = {
 	      course_name: _this.props.course_name || "",
 	      course_description: _this.props.course_description || "",
-	      course_image: _this.props.course_image ? "/api/resource/images?src=" + _this.props.course_image + "&w=320&h=180" : "",
+	      course_image: _this.props.course_image,
 	      course_category: _this.props.course_category || "",
 	      course_subcategory: _this.props.course_subcategory || "",
 	      course_level: _this.props.course_level || 0,
@@ -107245,7 +107248,9 @@
 	            _this2.setState({
 	              course_name: data.course.name,
 	              course_description: data.course.description,
-	              course_image: "/api/resource/images?src=" + data.course.coverphoto + "&w=320&h=180",
+	              course_image:
+	              // "/api/resource/images?src=" +
+	              data.course.coverphoto,
 	              course_category: data.course.genre,
 	              course_subcategory: data.course.subgenre,
 	              course_level: data.course.level
@@ -107394,7 +107399,7 @@
 	              width: "640",
 	              height: "auto"
 	            },
-	            _react2.default.createElement("source", { src: "" + data.previewvideo, type: "video/mp4" })
+	            _react2.default.createElement("source", { src: this.props.course_previewvideo, type: "video/mp4" })
 	          ),
 	          _react2.default.createElement("br", null)
 	        );
@@ -107688,6 +107693,7 @@
 	  if (state.user.mycourses) {
 	    var course = _.find(state.user.mycourses, { _id: Number(props.params.id) });
 	    if (course) {
+	      console.log(course.coverphoto);
 	      return {
 	        course_previewvideo: course.previewvideo,
 	        course_name: course.name,

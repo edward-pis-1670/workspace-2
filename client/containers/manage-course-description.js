@@ -18,9 +18,7 @@ class ManageCourseDescription extends React.Component {
     this.state = {
       course_name: this.props.course_name || "",
       course_description: this.props.course_description || "",
-      course_image: this.props.course_image
-        ? "/api/resource/images?src=" + this.props.course_image + "&w=320&h=180"
-        : "",
+      course_image: this.props.course_image,
       course_category: this.props.course_category || "",
       course_subcategory: this.props.course_subcategory || "",
       course_level: this.props.course_level || 0,
@@ -50,9 +48,8 @@ class ManageCourseDescription extends React.Component {
               course_name: data.course.name,
               course_description: data.course.description,
               course_image:
-                "/api/resource/images?src=" +
-                data.course.coverphoto +
-                "&w=320&h=180",
+                // "/api/resource/images?src=" +
+                data.course.coverphoto,
               course_category: data.course.genre,
               course_subcategory: data.course.subgenre,
               course_level: data.course.level,
@@ -184,8 +181,8 @@ class ManageCourseDescription extends React.Component {
             width="640"
             height="auto"
           >
-            {/* <source src={this.props.course_previewvideo} type="video/mp4" /> */}
-            <source src={`${data.previewvideo}`} type="video/mp4" />
+            <source src={this.props.course_previewvideo} type="video/mp4" />
+            {/* <source src={`${data.previewvideo}`} type="video/mp4" /> */}
           </video>
           <br />
         </div>
@@ -368,6 +365,7 @@ ManageCourseDescription = connect((state, props) => {
   if (state.user.mycourses) {
     let course = _.find(state.user.mycourses, { _id: Number(props.params.id) });
     if (course) {
+      console.log(course.coverphoto);
       return {
         course_previewvideo: course.previewvideo,
         course_name: course.name,

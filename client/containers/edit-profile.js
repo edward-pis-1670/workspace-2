@@ -30,7 +30,8 @@ class EditProfile extends React.Component {
 
         this.setState({ isSubmitting: true })
         $.post(
-            '/api/user/edit-profile',
+            // '/api/user/edit-profile',
+            'http://localhost:5000/users/edit-profile',
             {
                 username: this.state.username,
                 biography: this.state.biography,

@@ -37,7 +37,8 @@ class EditPhoto extends React.Component {
         this.setState({ isSubmitting: true })
         $.ajax({
             method: "POST",
-            url: "/api/user/edit-photo",
+            // url: "/api/user/edit-photo",
+            url: "http://localhost:5000/users/edit-avatar",
             data: fd,
             processData: false,
             contentType: false,
