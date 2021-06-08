@@ -111,7 +111,10 @@ class ManageCourseDescription extends React.Component {
           return browserHistory.push("/");
         } else if (data.code == 200) {
           this.props.dispatch(
-            setCoursePreviewVideo(data.previewvideo, Number(this.props.params.id))
+            setCoursePreviewVideo(
+              data.previewvideo,
+              Number(this.props.params.id)
+            )
           );
           document.getElementById("video-" + this.props.params.id).load();
         }
@@ -156,6 +159,8 @@ class ManageCourseDescription extends React.Component {
           this.props.dispatch(setGetMyCourses(false));
           return browserHistory.push("/");
         } else if (data.code == 200) {
+          console.log("data.course.coverphoto");
+          console.log(data.course.coverphoto);
           this.props.dispatch(setCourseDescription(data.course));
         }
         let alertlogin = $(".alert:first");
@@ -364,8 +369,9 @@ class ManageCourseDescription extends React.Component {
 ManageCourseDescription = connect((state, props) => {
   if (state.user.mycourses) {
     let course = _.find(state.user.mycourses, { _id: Number(props.params.id) });
+    console.log(state.user.mycourses);
     if (course) {
-      console.log(course.coverphoto);
+      console.log(course);
       return {
         course_previewvideo: course.previewvideo,
         course_name: course.name,

@@ -124,7 +124,9 @@ class ManageCourseLecture extends React.Component {
           return browserHistory.push("/");
         }
         if (data.code == 200) {
-          this.props.dispatch(addLecture(data.lecture, Number(this.props.params.id)));
+          this.props.dispatch(
+            addLecture(data.lecture, Number(this.props.params.id))
+          );
           return this.refs.modalAddLecture.setState({
             isSubmitting: false,
             lecturename: "",
@@ -160,7 +162,9 @@ class ManageCourseLecture extends React.Component {
           return browserHistory.push("/");
         }
         if (data.code == 200) {
-          this.props.dispatch(deleteLecture(lectureid, Number(this.props.params.id)));
+          this.props.dispatch(
+            deleteLecture(lectureid, Number(this.props.params.id))
+          );
         }
       }
     );
@@ -212,11 +216,11 @@ class ManageCourseLecture extends React.Component {
       processData: false,
       contentType: false,
       success: (data, status) => {
-        console.log(data);
         if (data.code == 1001) {
           this.props.dispatch(setUser({}));
           return browserHistory.push("/");
         } else if (data.code == 200) {
+          console.log(data.lecture);
           this.props.dispatch(
             setLectureVideo(data.lecture, Number(this.props.params.id))
           );
@@ -277,22 +281,11 @@ class ManageCourseLecture extends React.Component {
                 id={"video-" + lecture._id}
                 className="video-js center-block"
                 controls
-                preload="auto"
+                preload="false"
                 width="640"
                 height="auto"
               >
-                <source
-                  src={
-                    // // "/api/resource/play-video-lecturer/" +
-                    // "http://localhost:5000/resources/play-video-lecturer/" +
-                    // lecture._id +
-                    // "?path=" +
-                    // lecture.video
-                    `${lecture.video}`
-                  }
-                  type="video/mp4"
-                />
-                
+                <source src={lecture.video} type="video/mp4" />
               </video>
               <br />
             </div>

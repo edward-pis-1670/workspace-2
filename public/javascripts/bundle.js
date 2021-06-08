@@ -24472,10 +24472,10 @@
 /* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	exports.setViewCourses = exports.setGetMyCourses = exports.setGenres = exports.setUser = exports.showModal = undefined;
 
@@ -24486,276 +24486,293 @@
 	var _ = __webpack_require__(221);
 
 	var setUser = function setUser() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	    var action = arguments[1];
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	  var action = arguments[1];
 
-	    var newState = Object.assign({}, state);
-	    switch (action.type) {
-	        case _constants.ActionTypes.SET_USER:
-	            return action.user;
-	        case _constants.ActionTypes.SET_PHOTO:
-	            newState.photo = action.photo;
-	            return newState;
-	        case _constants.ActionTypes.SET_PROFILE:
-	            newState.username = action.profile.username;
-	            newState.biography = action.profile.biography;
-	            newState.website = action.profile.website;
-	            newState.twitter = action.profile.twitter;
-	            newState.linkedin = action.profile.linkedin;
-	            newState.youtube = action.profile.youtube;
-	            return newState;
-	        case _constants.ActionTypes.CREATE_COURSE:
-	            if (newState.mycourses) newState.mycourses = [action.course].concat(_toConsumableArray(newState.mycourses));else newState.mycourses = [action.course];
-	            return newState;
-	        case _constants.ActionTypes.GET_ALL_MYCOURSES:
-	            newState.mycourses = action.mycourses;
-	            return newState;
-	        case _constants.ActionTypes.SET_COURSE_GOALS:
-	            if (!newState.mycourses || newState.mycourses.length == 0) {
-	                newState.mycourses = [];
-	                newState.mycourses[0] = action.course;
-	            } else {
-	                var _index = _.findIndex(newState.mycourses, { '_id': action.course._id });
-	                if (_index < 0) {
-	                    newState.mycourses = [action.course].concat(_toConsumableArray(newState.mycourses));
-	                } else {
-	                    newState.mycourses[_index].needtoknow = action.course.needtoknow;
-	                    newState.mycourses[_index].targetstudent = action.course.targetstudent;
-	                    newState.mycourses[_index].willableto = action.course.willableto;
-	                }
-	            }
-	            return newState;
-	        case _constants.ActionTypes.SET_COURSE_DESCRIPTION:
-	            if (!newState.mycourses || newState.mycourses.length == 0) {
-	                newState.mycourses = [];
-	                newState.mycourses[0] = action.course;
-	            } else {
-	                var _index2 = _.findIndex(newState.mycourses, { '_id': action.course._id });
-	                if (_index2 < 0) {
-	                    newState.mycourses = [action.course].concat(_toConsumableArray(newState.mycourses));
-	                } else {
-	                    newState.mycourses[_index2].name = action.course.name;
-	                    newState.mycourses[_index2].description = action.course.description;
-	                    if (action.course.previewvideo) newState.mycourses[_index2].previewvideo = action.course.previewvideo;
-	                    newState.mycourses[_index2].coverphoto = action.course.coverphoto;
-	                    newState.mycourses[_index2].genre = action.course.genre;
-	                    newState.mycourses[_index2].subgenre = action.course.subgenre;
-	                    newState.mycourses[_index2].level = action.course.level;
-	                }
-	            }
-	            return newState;
-	        case _constants.ActionTypes.SET_COURSE_PRICE:
-	            if (!newState.mycourses || newState.mycourses.length == 0) {
-	                newState.mycourses = [];
-	                newState.mycourses[0] = action.course;
-	            } else {
-	                var _index3 = _.findIndex(newState.mycourses, { '_id': action.course._id });
-	                if (_index3 < 0) {
-	                    newState.mycourses = [action.course].concat(_toConsumableArray(newState.mycourses));
-	                } else {
-	                    newState.mycourses[_index3].cost = action.course.cost;
-	                }
-	            }
-	            return newState;
-	        case _constants.ActionTypes.SET_COURSE_PREVIEW_VIDEO:
-	            if (!newState.mycourses || newState.mycourses.length == 0) {
-	                newState.mycourses = [];
-	                newState.mycourses[0] = { _id: action.courseid, previewvideo: action.previewvideo };
-	            } else {
-	                var _index4 = _.findIndex(newState.mycourses, { '_id': action.courseid });
-	                if (_index4 < 0) {
-	                    newState.mycourses = [{ _id: action.courseid, previewvideo: action.previewvideo }].concat(_toConsumableArray(newState.mycourses));
-	                } else {
-	                    newState.mycourses[_index4].previewvideo = action.previewvideo;
-	                }
-	            }
-	            return newState;
-	        case _constants.ActionTypes.SET_COURSE_LECTURES:
-	            if (!newState.mycourses || newState.mycourses.length == 0) {
-	                newState.mycourses = [];
-	                newState.mycourses[0] = action.course;
-	            } else {
-	                var _index5 = _.findIndex(newState.mycourses, { '_id': action.course._id });
-	                if (_index5 < 0) {
-	                    newState.mycourses = [action.course].concat(_toConsumableArray(newState.mycourses));
-	                } else {
-	                    newState.mycourses[_index5].lectures = action.course.lectures;
-	                }
-	            }
-	            return newState;
-	        case _constants.ActionTypes.ADD_LECTURE:
-	            var index = _.findIndex(newState.mycourses, { '_id': action.courseid });
-	            if (newState.mycourses[index].lectures) newState.mycourses[index].lectures = [].concat(_toConsumableArray(newState.mycourses[index].lectures), [action.lecture]);else newState.mycourses[index].lectures = [action.lecture];
-	            return newState;
-	        case _constants.ActionTypes.DELETE_LECTURE:
-	            var indexc = _.findIndex(newState.mycourses, { '_id': action.courseid });
-	            var indexl = _.findIndex(newState.mycourses[indexc].lectures, { '_id': action.lectureid });
-	            newState.mycourses[indexc].lectures = [].concat(_toConsumableArray(newState.mycourses[indexc].lectures.slice(0, indexl)), _toConsumableArray(newState.mycourses[indexc].lectures.slice(indexl + 1)));
-	            return newState;
-	        case _constants.ActionTypes.SET_LECTURE_VIDEO:
-	            var idc = _.findIndex(newState.mycourses, { '_id': action.courseid });
-	            var idl = _.findIndex(newState.mycourses[idc].lectures, { '_id': action.lecture._id });
-	            var lecture = newState.mycourses[idc].lectures[idl];
-	            lecture.video = action.lecture.video;
-	            newState.mycourses[idc].lectures = [].concat(_toConsumableArray(newState.mycourses[idc].lectures.slice(0, idl)), [lecture], _toConsumableArray(newState.mycourses[idc].lectures.slice(idl + 1)));
-	            return newState;
-	        case _constants.ActionTypes.SET_LECTURE_NAME:
-	            var idcn = _.findIndex(newState.mycourses, { '_id': action.courseid });
-	            var idln = _.findIndex(newState.mycourses[idcn].lectures, { '_id': action.lecture._id });
-	            var lecturen = newState.mycourses[idcn].lectures[idln];
-	            lecturen.name = action.lecture.name;
-	            newState.mycourses[idcn].lectures = [].concat(_toConsumableArray(newState.mycourses[idcn].lectures.slice(0, idln)), [lecturen], _toConsumableArray(newState.mycourses[idcn].lectures.slice(idln + 1)));
-	            return newState;
-	        case _constants.ActionTypes.SET_LECTURE_PREVIEW:
-	            var idcp = _.findIndex(newState.mycourses, { '_id': action.courseid });
-	            var idlp = _.findIndex(newState.mycourses[idcp].lectures, { '_id': action.lecture._id });
-	            var lecturep = newState.mycourses[idcp].lectures[idlp];
-	            lecturep.preview = action.lecture.preview;
-	            newState.mycourses[idcp].lectures = [].concat(_toConsumableArray(newState.mycourses[idcp].lectures.slice(0, idlp)), [lecturep], _toConsumableArray(newState.mycourses[idcp].lectures.slice(idlp + 1)));
-	            return newState;
-	        case _constants.ActionTypes.SET_COURSE:
-	            if (!newState.mycourses || newState.mycourses.length == 0) {
-	                newState.mycourses = [];
-	                newState.mycourses[0] = action.course;
-	            } else {
-	                var _index6 = _.findIndex(newState.mycourses, { '_id': action.course._id });
-	                if (_index6 < 0) {
-	                    newState.mycourses = [action.course].concat(_toConsumableArray(newState.mycourses));
-	                } else {
-	                    newState.mycourses[_index6].name = action.course.name;
-	                    newState.mycourses[_index6].public = action.course.public;
-	                    newState.mycourses[_index6].cost = action.course.cost;
-	                }
-	            }
-	            return newState;
-	        case _constants.ActionTypes.PUBLISH_COURSE:
-	            if (!newState.mycourses || newState.mycourses.length == 0) {
-	                newState.mycourses = [];
-	                newState.mycourses[0] = action.course;
-	            } else {
-	                var _index7 = _.findIndex(newState.mycourses, { '_id': action.course._id });
-	                if (_index7 < 0) {
-	                    newState.mycourses = [action.course].concat(_toConsumableArray(newState.mycourses));
-	                } else {
-	                    newState.mycourses[_index7].review = true;
-	                }
-	            }
-	            return newState;
-	        case _constants.ActionTypes.DELETE_COURSE:
-	            if (newState.mycourses && newState.mycourses.length > 0) {
-	                var _index8 = _.findIndex(newState.mycourses, { '_id': action.courseid });
-	                if (_index8 >= 0) {
-	                    newState.mycourses = [].concat(_toConsumableArray(newState.mycourses.slice(0, _index8)), _toConsumableArray(newState.mycourses.slice(_index8 + 1)));
-	                }
-	            }
-	            return newState;
-	        case _constants.ActionTypes.CHANGE_WISHLIST:
-	            if (action.typeAction == 'add') {
-	                newState.mywishlist = [].concat(_toConsumableArray(newState.mywishlist), [action.courseid]);
-	            } else if (action.typeAction == 'remove') {
-	                var _index9 = _.findIndex(newState.mywishlist, function (o) {
-	                    return o == action.courseid;
-	                });
-	                if (_index9 >= 0) {
-	                    newState.mywishlist = [].concat(_toConsumableArray(newState.mywishlist.slice(0, _index9)), _toConsumableArray(newState.mywishlist.slice(_index9 + 1)));
-	                }
-	            }
-	            return newState;
-	        case _constants.ActionTypes.TAKE_COURSE:
-	            if (!newState.mylearningcourses || newState.mylearningcourses.length == 0) {
-	                newState.mylearningcourses = [];
-	                newState.mylearningcourses[0] = action.courseid;
-	                newState.creditbalance = newState.creditbalance - action.cost;
-	            } else {
-	                if (!_.includes(newState.mylearningcourses, action.courseid)) {
-	                    newState.mylearningcourses = [].concat(_toConsumableArray(newState.mylearningcourses), [action.courseid]);
-	                    newState.creditbalance = newState.creditbalance - action.cost;
-	                }
-	            }
-	            return newState;
-	        case _constants.ActionTypes.MARK_ALL_AS_READ:
-	            newState.notis = newState.notis.map(function (noti) {
-	                noti.seen = true;
-	                return noti;
-	            });
-	            return newState;
-	        case _constants.ActionTypes.MARK_READ:
-	            if (newState.notis) {
-	                var i = _.findIndex(newState.notis, function (o) {
-	                    return !o.seen && o._id == action.id;
-	                });
-	                if (i < 0) return newState;
-	                var noti = newState.notis[i];
-	                noti.seen = true;
-	                newState.notis = [].concat(_toConsumableArray(newState.notis.slice(0, i)), [noti], _toConsumableArray(newState.notis.slice(i + 1)));
-	            }
-	            return newState;
-	        case _constants.ActionTypes.DEPOSIT_FUNDS:
-	            newState.creditbalance = newState.creditbalance + action.money;
-	            return newState;
-	        case _constants.ActionTypes.WITH_DRAW:
-	            newState.creditbalance = newState.creditbalance - action.money;
-	            return newState;
-	        case _constants.ActionTypes.SET_PAYPALID:
-	            newState.paypalid = action.paypalid;
-	            return newState;
-	        default:
-	            return state;
-	    }
+	  var newState = Object.assign({}, state);
+	  switch (action.type) {
+	    case _constants.ActionTypes.SET_USER:
+	      return action.user;
+	    case _constants.ActionTypes.SET_PHOTO:
+	      newState.photo = action.photo;
+	      return newState;
+	    case _constants.ActionTypes.SET_PROFILE:
+	      newState.username = action.profile.username;
+	      newState.biography = action.profile.biography;
+	      newState.website = action.profile.website;
+	      newState.twitter = action.profile.twitter;
+	      newState.linkedin = action.profile.linkedin;
+	      newState.youtube = action.profile.youtube;
+	      return newState;
+	    case _constants.ActionTypes.CREATE_COURSE:
+	      if (newState.mycourses) newState.mycourses = [action.course].concat(_toConsumableArray(newState.mycourses));else newState.mycourses = [action.course];
+	      return newState;
+	    case _constants.ActionTypes.GET_ALL_MYCOURSES:
+	      newState.mycourses = action.mycourses;
+	      return newState;
+	    case _constants.ActionTypes.SET_COURSE_GOALS:
+	      if (!newState.mycourses || newState.mycourses.length == 0) {
+	        newState.mycourses = [];
+	        newState.mycourses[0] = action.course;
+	      } else {
+	        var _index = _.findIndex(newState.mycourses, { _id: action.course._id });
+	        if (_index < 0) {
+	          newState.mycourses = [action.course].concat(_toConsumableArray(newState.mycourses));
+	        } else {
+	          newState.mycourses[_index].needtoknow = action.course.needtoknow;
+	          newState.mycourses[_index].targetstudent = action.course.targetstudent;
+	          newState.mycourses[_index].willableto = action.course.willableto;
+	        }
+	      }
+	      return newState;
+	    case _constants.ActionTypes.SET_COURSE_DESCRIPTION:
+	      console.log("SET_COURSE_DESCRIPTION");
+	      if (!newState.mycourses || newState.mycourses.length == 0) {
+	        newState.mycourses = [];
+	        newState.mycourses[0] = action.course;
+	      } else {
+	        console.log("SET_COURSE_DESCRIPTION2222222");
+	        var _index2 = _.findIndex(newState.mycourses, { _id: action.course._id });
+	        if (_index2 < 0) {
+	          console.log(action.course);
+	          console.log("SET_COURSE_DESCRIPTION333333");
+	          newState.mycourses = [action.course].concat(_toConsumableArray(newState.mycourses));
+	        } else {
+	          newState.mycourses[_index2].name = action.course.name;
+	          newState.mycourses[_index2].description = action.course.description;
+	          if (action.course.previewvideo) newState.mycourses[_index2].previewvideo = action.course.previewvideo;
+	          console.log("action.course.coverphoto");
+	          console.log(action.course.coverphoto);
+	          newState.mycourses[_index2].coverphoto = action.course.coverphoto;
+	          newState.mycourses[_index2].genre = action.course.genre;
+	          newState.mycourses[_index2].subgenre = action.course.subgenre;
+	          newState.mycourses[_index2].level = action.course.level;
+	        }
+	      }
+	      return newState;
+	    case _constants.ActionTypes.SET_COURSE_PRICE:
+	      if (!newState.mycourses || newState.mycourses.length == 0) {
+	        newState.mycourses = [];
+	        newState.mycourses[0] = action.course;
+	      } else {
+	        var _index3 = _.findIndex(newState.mycourses, { _id: action.course._id });
+	        if (_index3 < 0) {
+	          newState.mycourses = [action.course].concat(_toConsumableArray(newState.mycourses));
+	        } else {
+	          newState.mycourses[_index3].cost = action.course.cost;
+	        }
+	      }
+	      return newState;
+	    case _constants.ActionTypes.SET_COURSE_PREVIEW_VIDEO:
+	      if (!newState.mycourses || newState.mycourses.length == 0) {
+	        newState.mycourses = [];
+	        newState.mycourses[0] = {
+	          _id: action.courseid,
+	          previewvideo: action.previewvideo
+	        };
+	      } else {
+	        var _index4 = _.findIndex(newState.mycourses, { _id: action.courseid });
+	        if (_index4 < 0) {
+	          newState.mycourses = [{ _id: action.courseid, previewvideo: action.previewvideo }].concat(_toConsumableArray(newState.mycourses));
+	        } else {
+	          newState.mycourses[_index4].previewvideo = action.previewvideo;
+	        }
+	      }
+	      return newState;
+	    case _constants.ActionTypes.SET_COURSE_LECTURES:
+	      if (!newState.mycourses || newState.mycourses.length == 0) {
+	        newState.mycourses = [];
+	        newState.mycourses[0] = action.course;
+	      } else {
+	        var _index5 = _.findIndex(newState.mycourses, { _id: action.course._id });
+	        if (_index5 < 0) {
+	          newState.mycourses = [action.course].concat(_toConsumableArray(newState.mycourses));
+	        } else {
+	          newState.mycourses[_index5].lectures = action.course.lectures;
+	        }
+	      }
+	      return newState;
+	    case _constants.ActionTypes.ADD_LECTURE:
+	      var index = _.findIndex(newState.mycourses, { _id: action.courseid });
+	      if (newState.mycourses[index].lectures) newState.mycourses[index].lectures = [].concat(_toConsumableArray(newState.mycourses[index].lectures), [action.lecture]);else newState.mycourses[index].lectures = [action.lecture];
+	      return newState;
+	    case _constants.ActionTypes.DELETE_LECTURE:
+	      var indexc = _.findIndex(newState.mycourses, { _id: action.courseid });
+	      var indexl = _.findIndex(newState.mycourses[indexc].lectures, {
+	        _id: action.lectureid
+	      });
+	      newState.mycourses[indexc].lectures = [].concat(_toConsumableArray(newState.mycourses[indexc].lectures.slice(0, indexl)), _toConsumableArray(newState.mycourses[indexc].lectures.slice(indexl + 1)));
+	      return newState;
+	    case _constants.ActionTypes.SET_LECTURE_VIDEO:
+	      var idc = _.findIndex(newState.mycourses, { _id: action.courseid });
+	      var idl = _.findIndex(newState.mycourses[idc].lectures, {
+	        _id: action.lecture._id
+	      });
+	      var lecture = newState.mycourses[idc].lectures[idl];
+	      lecture.video = action.lecture.video;
+	      newState.mycourses[idc].lectures = [].concat(_toConsumableArray(newState.mycourses[idc].lectures.slice(0, idl)), [lecture], _toConsumableArray(newState.mycourses[idc].lectures.slice(idl + 1)));
+	      return newState;
+	    case _constants.ActionTypes.SET_LECTURE_NAME:
+	      var idcn = _.findIndex(newState.mycourses, { _id: action.courseid });
+	      var idln = _.findIndex(newState.mycourses[idcn].lectures, {
+	        _id: action.lecture._id
+	      });
+	      var lecturen = newState.mycourses[idcn].lectures[idln];
+	      lecturen.name = action.lecture.name;
+	      newState.mycourses[idcn].lectures = [].concat(_toConsumableArray(newState.mycourses[idcn].lectures.slice(0, idln)), [lecturen], _toConsumableArray(newState.mycourses[idcn].lectures.slice(idln + 1)));
+	      return newState;
+	    case _constants.ActionTypes.SET_LECTURE_PREVIEW:
+	      var idcp = _.findIndex(newState.mycourses, { _id: action.courseid });
+	      var idlp = _.findIndex(newState.mycourses[idcp].lectures, {
+	        _id: action.lecture._id
+	      });
+	      var lecturep = newState.mycourses[idcp].lectures[idlp];
+	      lecturep.preview = action.lecture.preview;
+	      newState.mycourses[idcp].lectures = [].concat(_toConsumableArray(newState.mycourses[idcp].lectures.slice(0, idlp)), [lecturep], _toConsumableArray(newState.mycourses[idcp].lectures.slice(idlp + 1)));
+	      return newState;
+	    case _constants.ActionTypes.SET_COURSE:
+	      if (!newState.mycourses || newState.mycourses.length == 0) {
+	        newState.mycourses = [];
+	        newState.mycourses[0] = action.course;
+	      } else {
+	        var _index6 = _.findIndex(newState.mycourses, { _id: action.course._id });
+	        if (_index6 < 0) {
+	          newState.mycourses = [action.course].concat(_toConsumableArray(newState.mycourses));
+	        } else {
+	          newState.mycourses[_index6].name = action.course.name;
+	          newState.mycourses[_index6].public = action.course.public;
+	          newState.mycourses[_index6].cost = action.course.cost;
+	        }
+	      }
+	      return newState;
+	    case _constants.ActionTypes.PUBLISH_COURSE:
+	      if (!newState.mycourses || newState.mycourses.length == 0) {
+	        newState.mycourses = [];
+	        newState.mycourses[0] = action.course;
+	      } else {
+	        var _index7 = _.findIndex(newState.mycourses, { _id: action.course._id });
+	        if (_index7 < 0) {
+	          newState.mycourses = [action.course].concat(_toConsumableArray(newState.mycourses));
+	        } else {
+	          newState.mycourses[_index7].review = true;
+	        }
+	      }
+	      return newState;
+	    case _constants.ActionTypes.DELETE_COURSE:
+	      if (newState.mycourses && newState.mycourses.length > 0) {
+	        var _index8 = _.findIndex(newState.mycourses, { _id: action.courseid });
+	        if (_index8 >= 0) {
+	          newState.mycourses = [].concat(_toConsumableArray(newState.mycourses.slice(0, _index8)), _toConsumableArray(newState.mycourses.slice(_index8 + 1)));
+	        }
+	      }
+	      return newState;
+	    case _constants.ActionTypes.CHANGE_WISHLIST:
+	      if (action.typeAction == "add") {
+	        newState.mywishlist = [].concat(_toConsumableArray(newState.mywishlist), [action.courseid]);
+	      } else if (action.typeAction == "remove") {
+	        var _index9 = _.findIndex(newState.mywishlist, function (o) {
+	          return o == action.courseid;
+	        });
+	        if (_index9 >= 0) {
+	          newState.mywishlist = [].concat(_toConsumableArray(newState.mywishlist.slice(0, _index9)), _toConsumableArray(newState.mywishlist.slice(_index9 + 1)));
+	        }
+	      }
+	      return newState;
+	    case _constants.ActionTypes.TAKE_COURSE:
+	      if (!newState.mylearningcourses || newState.mylearningcourses.length == 0) {
+	        newState.mylearningcourses = [];
+	        newState.mylearningcourses[0] = action.courseid;
+	        newState.creditbalance = newState.creditbalance - action.cost;
+	      } else {
+	        if (!_.includes(newState.mylearningcourses, action.courseid)) {
+	          newState.mylearningcourses = [].concat(_toConsumableArray(newState.mylearningcourses), [action.courseid]);
+	          newState.creditbalance = newState.creditbalance - action.cost;
+	        }
+	      }
+	      return newState;
+	    case _constants.ActionTypes.MARK_ALL_AS_READ:
+	      newState.notis = newState.notis.map(function (noti) {
+	        noti.seen = true;
+	        return noti;
+	      });
+	      return newState;
+	    case _constants.ActionTypes.MARK_READ:
+	      if (newState.notis) {
+	        var i = _.findIndex(newState.notis, function (o) {
+	          return !o.seen && o._id == action.id;
+	        });
+	        if (i < 0) return newState;
+	        var noti = newState.notis[i];
+	        noti.seen = true;
+	        newState.notis = [].concat(_toConsumableArray(newState.notis.slice(0, i)), [noti], _toConsumableArray(newState.notis.slice(i + 1)));
+	      }
+	      return newState;
+	    case _constants.ActionTypes.DEPOSIT_FUNDS:
+	      newState.creditbalance = newState.creditbalance + action.money;
+	      return newState;
+	    case _constants.ActionTypes.WITH_DRAW:
+	      newState.creditbalance = newState.creditbalance - action.money;
+	      return newState;
+	    case _constants.ActionTypes.SET_PAYPALID:
+	      newState.paypalid = action.paypalid;
+	      return newState;
+	    default:
+	      return state;
+	  }
 	};
 
 	var showModal = function showModal() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-	    var action = arguments[1];
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+	  var action = arguments[1];
 
-	    switch (action.type) {
-	        case _constants.ActionTypes.SHOW_MODAL:
-	            return action.id;
-	        default:
-	            return state;
-	    }
+	  switch (action.type) {
+	    case _constants.ActionTypes.SHOW_MODAL:
+	      return action.id;
+	    default:
+	      return state;
+	  }
 	};
 	var setGenres = function setGenres() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-	    var action = arguments[1];
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	  var action = arguments[1];
 
-	    switch (action.type) {
-	        case _constants.ActionTypes.SET_GENRES:
-	            return action.genres;
-	        default:
-	            return state;
-	    }
+	  switch (action.type) {
+	    case _constants.ActionTypes.SET_GENRES:
+	      return action.genres;
+	    default:
+	      return state;
+	  }
 	};
 	var setGetMyCourses = function setGetMyCourses() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-	    var action = arguments[1];
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	  var action = arguments[1];
 
-	    switch (action.type) {
-	        case _constants.ActionTypes.SET_GETMYCOURSES:
-	            return action.done;
-	        default:
-	            return state;
-	    }
+	  switch (action.type) {
+	    case _constants.ActionTypes.SET_GETMYCOURSES:
+	      return action.done;
+	    default:
+	      return state;
+	  }
 	};
 	var setViewCourses = function setViewCourses() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-	    var action = arguments[1];
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	  var action = arguments[1];
 
-	    switch (action.type) {
-	        case _constants.ActionTypes.ADD_VIEW_COURSE:
-	            return [].concat(_toConsumableArray(state), [action.course]);
-	        case _constants.ActionTypes.TAKE_COURSE:
-	            var index = _.findIndex(state, function (o) {
-	                return o == action.courseid;
-	            });
-	            if (index >= 0) {
-	                var course = state[index];
-	                course.numberofstudent += 1;
-	                return [].concat(_toConsumableArray(state.splice(0, index)), [course], _toConsumableArray(state.splice(index + 1)));
-	            }
-	        default:
-	            return state;
-	    }
+	  switch (action.type) {
+	    case _constants.ActionTypes.ADD_VIEW_COURSE:
+	      return [].concat(_toConsumableArray(state), [action.course]);
+	    case _constants.ActionTypes.TAKE_COURSE:
+	      var index = _.findIndex(state, function (o) {
+	        return o == action.courseid;
+	      });
+	      if (index >= 0) {
+	        var course = state[index];
+	        course.numberofstudent += 1;
+	        return [].concat(_toConsumableArray(state.splice(0, index)), [course], _toConsumableArray(state.splice(index + 1)));
+	      }
+	    default:
+	      return state;
+	  }
 	};
 	exports.showModal = showModal;
 	exports.setUser = setUser;
@@ -106534,7 +106551,7 @@
 	            { className: "container" },
 	            _react2.default.createElement("img", {
 	              className: "managecourse-header-image",
-	              src: "/api/resource/images?src=" + this.props.course.coverphoto + "&w=130&h=73"
+	              src: this.props.course.coverphoto
 	            }),
 	            _react2.default.createElement(
 	              "div",
@@ -106676,17 +106693,18 @@
 	ManageCourse = (0, _reactRedux.connect)(function (state, props) {
 	  if (state.user.mycourses) {
 	    var course = _.find(state.user.mycourses, { _id: Number(props.params.id) });
-	    console.log(state.user.mycourses);
-	    if (course) return {
-	      course: {
-	        _id: course._id,
-	        name: course.name,
-	        public: course.public,
-	        coverphoto: course.coverphoto,
-	        review: course.review
-	      },
-	      username: state.user.username
-	    };
+	    if (course) {
+	      return {
+	        course: {
+	          _id: course._id,
+	          name: course.name,
+	          public: course.public,
+	          coverphoto: course.coverphoto,
+	          review: course.review
+	        },
+	        username: state.user.username
+	      };
+	    }
 	  }
 	  return props;
 	})(ManageCourse);
@@ -107369,6 +107387,8 @@
 	            _this5.props.dispatch((0, _actions.setGetMyCourses)(false));
 	            return _reactRouter.browserHistory.push("/");
 	          } else if (data.code == 200) {
+	            console.log("data.course.coverphoto");
+	            console.log(data.course.coverphoto);
 	            _this5.props.dispatch((0, _actions.setCourseDescription)(data.course));
 	          }
 	          var alertlogin = $(".alert:first");
@@ -107692,8 +107712,9 @@
 	ManageCourseDescription = (0, _reactRedux.connect)(function (state, props) {
 	  if (state.user.mycourses) {
 	    var course = _.find(state.user.mycourses, { _id: Number(props.params.id) });
+	    console.log(state.user.mycourses);
 	    if (course) {
-	      console.log(course.coverphoto);
+	      console.log(course);
 	      return {
 	        course_previewvideo: course.previewvideo,
 	        course_name: course.name,
@@ -108169,11 +108190,11 @@
 	        processData: false,
 	        contentType: false,
 	        success: function success(data, status) {
-	          console.log(data);
 	          if (data.code == 1001) {
 	            _this7.props.dispatch((0, _actions.setUser)({}));
 	            return _reactRouter.browserHistory.push("/");
 	          } else if (data.code == 200) {
+	            console.log(data.lecture);
 	            _this7.props.dispatch((0, _actions.setLectureVideo)(data.lecture, Number(_this7.props.params.id)));
 	            document.getElementById("video-" + lectureid).load();
 	          }
@@ -108233,20 +108254,11 @@
 	                  id: "video-" + lecture._id,
 	                  className: "video-js center-block",
 	                  controls: true,
-	                  preload: "auto",
+	                  preload: "false",
 	                  width: "640",
 	                  height: "auto"
 	                },
-	                _react2.default.createElement("source", {
-	                  src:
-	                  // // "/api/resource/play-video-lecturer/" +
-	                  // "http://localhost:5000/resources/play-video-lecturer/" +
-	                  // lecture._id +
-	                  // "?path=" +
-	                  // lecture.video
-	                  "" + lecture.video,
-	                  type: "video/mp4"
-	                })
+	                _react2.default.createElement("source", { src: lecture.video, type: "video/mp4" })
 	              ),
 	              _react2.default.createElement("br", null)
 	            );
@@ -113310,10 +113322,10 @@
 /* 1122 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -113337,118 +113349,137 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Admin = function (_Component) {
-	    _inherits(Admin, _Component);
+	  _inherits(Admin, _Component);
 
-	    function Admin(props) {
-	        _classCallCheck(this, Admin);
+	  function Admin(props) {
+	    _classCallCheck(this, Admin);
 
-	        var _this = _possibleConstructorReturn(this, (Admin.__proto__ || Object.getPrototypeOf(Admin)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Admin.__proto__ || Object.getPrototypeOf(Admin)).call(this, props));
 
-	        _this.state = {
-	            headerColor: ['lightseagreen', 'teal', 'forestgreen', 'green', 'sienna', 'peru', 'indigo'][Math.floor(Math.random() * 7)]
-	        };
-	        return _this;
-	    }
+	    _this.state = {
+	      headerColor: ["lightseagreen", "teal", "forestgreen", "green", "sienna", "peru", "indigo"][Math.floor(Math.random() * 7)]
+	    };
+	    return _this;
+	  }
 
-	    _createClass(Admin, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
+	  _createClass(Admin, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement("link", { rel: "stylesheet", href: "/stylesheets/semantic.min.css" }),
+	        _react2.default.createElement(
+	          "div",
+	          {
+	            className: "genre-info-box",
+	            style: { backgroundColor: this.state.headerColor }
+	          },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "container" },
+	            _react2.default.createElement(
+	              _reactBootstrap.Breadcrumb,
+	              null,
+	              _react2.default.createElement(
+	                _reactBootstrap.Breadcrumb.Item,
+	                {
+	                  onClick: function onClick(e) {
+	                    e.preventDefault();
+	                    _reactRouter.browserHistory.push("/courses");
+	                  }
+	                },
+	                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "home" })
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Breadcrumb.Item,
+	                { active: true },
+	                "Admin"
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "p",
+	              { className: "genre-title" },
+	              "Admin Dashboard"
+	            ),
+	            _react2.default.createElement(
+	              "ul",
+	              { className: "mycourses-navbar" },
+	              _react2.default.createElement(
+	                "li",
 	                null,
-	                _react2.default.createElement('link', { rel: 'stylesheet', href: '/stylesheets/semantic.min.css' }),
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'genre-info-box', style: { backgroundColor: this.state.headerColor } },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'container' },
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Breadcrumb,
-	                            null,
-	                            _react2.default.createElement(
-	                                _reactBootstrap.Breadcrumb.Item,
-	                                { onClick: function onClick(e) {
-	                                        e.preventDefault();_reactRouter.browserHistory.push('/courses');
-	                                    } },
-	                                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'home' })
-	                            ),
-	                            _react2.default.createElement(
-	                                _reactBootstrap.Breadcrumb.Item,
-	                                { active: true },
-	                                'Admin'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'p',
-	                            { className: 'genre-title' },
-	                            'Admin Dashboard'
-	                        ),
-	                        _react2.default.createElement(
-	                            'ul',
-	                            { className: 'mycourses-navbar' },
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { activeClassName: 'active',
-	                                        onlyActiveOnIndex: true, to: '/admin/users' },
-	                                    'User'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { activeClassName: 'active',
-	                                        onlyActiveOnIndex: true, to: '/admin/courses' },
-	                                    'Courses'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { activeClassName: 'active',
-	                                        onlyActiveOnIndex: true, to: '/admin/review-courses' },
-	                                    'Review Courses'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { activeClassName: 'active',
-	                                        onlyActiveOnIndex: true, to: '/admin/credit' },
-	                                    'Credit Card'
-	                                )
-	                            )
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'container' },
-	                    this.props.children
+	                  _reactRouter.Link,
+	                  {
+	                    activeClassName: "active",
+	                    onlyActiveOnIndex: true,
+	                    to: "/admin/users"
+	                  },
+	                  "User"
 	                )
-	            );
-	        }
-	    }]);
+	              ),
+	              _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  {
+	                    activeClassName: "active",
+	                    onlyActiveOnIndex: true,
+	                    to: "/admin/courses"
+	                  },
+	                  "Courses"
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  {
+	                    activeClassName: "active",
+	                    onlyActiveOnIndex: true,
+	                    to: "/admin/review-courses"
+	                  },
+	                  "Review Courses"
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  {
+	                    activeClassName: "active",
+	                    onlyActiveOnIndex: true,
+	                    to: "/admin/credit"
+	                  },
+	                  "Credit Card"
+	                )
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "container" },
+	          this.props.children
+	        )
+	      );
+	    }
+	  }]);
 
-	    return Admin;
+	  return Admin;
 	}(_react.Component);
 
 	Admin = (0, _reactRedux.connect)(function (state, props) {
-	    if (state.hasOwnProperty('user') && state.user.hasOwnProperty('username')) {
-	        return {
-	            islogged: true
-	        };
-	    }
-	    return props;
+	  console.log(state.user);
+	  if (state.hasOwnProperty("user") && state.user.hasOwnProperty("username")) {
+	    return {
+	      islogged: true
+	    };
+	  }
+	  return props;
 	})(Admin);
 
 	exports.default = Admin;
@@ -113457,10 +113488,10 @@
 /* 1123 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -113494,1058 +113525,1223 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var ModalAddUser = function (_Component) {
-	    _inherits(ModalAddUser, _Component);
+	  _inherits(ModalAddUser, _Component);
 
-	    function ModalAddUser(props) {
-	        _classCallCheck(this, ModalAddUser);
+	  function ModalAddUser(props) {
+	    _classCallCheck(this, ModalAddUser);
 
-	        var _this = _possibleConstructorReturn(this, (ModalAddUser.__proto__ || Object.getPrototypeOf(ModalAddUser)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (ModalAddUser.__proto__ || Object.getPrototypeOf(ModalAddUser)).call(this, props));
 
-	        _this.state = {
-	            username: '',
-	            password: '',
-	            email: '',
-	            creditbalance: 0,
-	            role: 0,
-	            youtube: '',
-	            twitter: '',
-	            linkedin: '',
-	            website: '',
-	            modalOpen: false
-	        };
-	        return _this;
+	    _this.state = {
+	      username: "",
+	      password: "",
+	      email: "",
+	      creditbalance: 0,
+	      role: 0,
+	      youtube: "",
+	      twitter: "",
+	      linkedin: "",
+	      website: "",
+	      modalOpen: false
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ModalAddUser, [{
+	    key: "handleOpen",
+	    value: function handleOpen(e) {
+	      this.setState({
+	        modalOpen: true
+	      });
 	    }
+	  }, {
+	    key: "handleClose",
+	    value: function handleClose(e) {
+	      this.setState({
+	        modalOpen: false
+	      });
+	    }
+	  }, {
+	    key: "onSubmit",
+	    value: function onSubmit(e) {
+	      e.preventDefault();
+	    }
+	  }, {
+	    key: "handleUsername",
+	    value: function handleUsername(e) {
+	      this.setState({ username: e.target.value });
+	    }
+	  }, {
+	    key: "handlePassword",
+	    value: function handlePassword(e) {
+	      this.setState({ password: e.target.value });
+	    }
+	  }, {
+	    key: "handleEmail",
+	    value: function handleEmail(e) {
+	      this.setState({ email: e.target.value });
+	    }
+	  }, {
+	    key: "handleYoutube",
+	    value: function handleYoutube(e) {
+	      this.setState({ youtube: e.target.value });
+	    }
+	  }, {
+	    key: "handleLinkedin",
+	    value: function handleLinkedin(e) {
+	      this.setState({ linkedin: e.target.value });
+	    }
+	  }, {
+	    key: "handleTwitter",
+	    value: function handleTwitter(e) {
+	      this.setState({ twitter: e.target.value });
+	    }
+	  }, {
+	    key: "handleWebsite",
+	    value: function handleWebsite(e) {
+	      this.setState({ website: e.target.value });
+	    }
+	  }, {
+	    key: "handleCredit",
+	    value: function handleCredit(e) {
+	      this.setState({ creditbalance: e.target.value });
+	    }
+	  }, {
+	    key: "handleRole",
+	    value: function handleRole(e) {
+	      this.setState({ role: e.target.value });
+	    }
+	  }, {
+	    key: "Process",
+	    value: function Process() {
+	      var _this2 = this;
 
-	    _createClass(ModalAddUser, [{
-	        key: 'handleOpen',
-	        value: function handleOpen(e) {
-	            this.setState({
-	                modalOpen: true
-	            });
+	      $.post("/api/admin/add-user", this.state, function (data, status) {
+	        if (data.code == 200) {
+	          _this2.setState({ modalOpen: false });
+	        } else if (data.code == 1001) {
+	          _this2.props.dispatch((0, _actions.setUser)({}));
+	          _this2.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          _reactRouter.browserHistory.push("/courses");
 	        }
-	    }, {
-	        key: 'handleClose',
-	        value: function handleClose(e) {
-	            this.setState({
-	                modalOpen: false
-	            });
-	        }
-	    }, {
-	        key: 'onSubmit',
-	        value: function onSubmit(e) {
-	            e.preventDefault();
-	        }
-	    }, {
-	        key: 'handleUsername',
-	        value: function handleUsername(e) {
-	            this.setState({ username: e.target.value });
-	        }
-	    }, {
-	        key: 'handlePassword',
-	        value: function handlePassword(e) {
-	            this.setState({ password: e.target.value });
-	        }
-	    }, {
-	        key: 'handleEmail',
-	        value: function handleEmail(e) {
-	            this.setState({ email: e.target.value });
-	        }
-	    }, {
-	        key: 'handleYoutube',
-	        value: function handleYoutube(e) {
-	            this.setState({ youtube: e.target.value });
-	        }
-	    }, {
-	        key: 'handleLinkedin',
-	        value: function handleLinkedin(e) {
-	            this.setState({ linkedin: e.target.value });
-	        }
-	    }, {
-	        key: 'handleTwitter',
-	        value: function handleTwitter(e) {
-	            this.setState({ twitter: e.target.value });
-	        }
-	    }, {
-	        key: 'handleWebsite',
-	        value: function handleWebsite(e) {
-	            this.setState({ website: e.target.value });
-	        }
-	    }, {
-	        key: 'handleCredit',
-	        value: function handleCredit(e) {
-	            this.setState({ creditbalance: e.target.value });
-	        }
-	    }, {
-	        key: 'handleRole',
-	        value: function handleRole(e) {
-	            this.setState({ role: e.target.value });
-	        }
-	    }, {
-	        key: 'Process',
-	        value: function Process() {
-	            var _this2 = this;
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this3 = this;
 
-	            $.post('/api/admin/add-user', this.state, function (data, status) {
-	                if (data.code == 200) {
-	                    _this2.setState({ modalOpen: false });
-	                } else if (data.code == 1001) {
-	                    _this2.props.dispatch((0, _actions.setUser)({}));
-	                    _this2.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    _reactRouter.browserHistory.push('/courses');
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this3 = this;
-
-	            return _react2.default.createElement(
-	                _semanticUiReact.Modal,
-	                { trigger: _react2.default.createElement(
-	                        _semanticUiReact.Button,
-	                        { onClick: this.handleOpen.bind(this), positive: true, size: 'large', type: 'button' },
-	                        'Add New User'
-	                    ),
-	                    open: this.state.modalOpen,
-	                    onClose: this.handleClose.bind(this) },
+	      return _react2.default.createElement(
+	        _semanticUiReact.Modal,
+	        {
+	          trigger: _react2.default.createElement(
+	            _semanticUiReact.Button,
+	            {
+	              onClick: this.handleOpen.bind(this),
+	              positive: true,
+	              size: "large",
+	              type: "button"
+	            },
+	            "Add New User"
+	          ),
+	          open: this.state.modalOpen,
+	          onClose: this.handleClose.bind(this)
+	        },
+	        _react2.default.createElement(
+	          _semanticUiReact.Modal.Header,
+	          null,
+	          "ADD NEW USER"
+	        ),
+	        _react2.default.createElement(
+	          _semanticUiReact.Modal.Content,
+	          { image: true },
+	          _react2.default.createElement(
+	            "form",
+	            { role: "form", onSubmit: this.onSubmit.bind(this) },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "label",
+	                null,
+	                "Username: "
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement("span", { className: "input-group-addon glyphicon glyphicon-user" }),
+	                _react2.default.createElement("input", {
+	                  type: "text",
+	                  name: "username",
+	                  required: true,
+	                  className: "form-control",
+	                  placeholder: "Username",
+	                  value: this.state.username,
+	                  onChange: function onChange(e) {
+	                    return _this3.handleUsername(e);
+	                  }
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "label",
+	                null,
+	                "Email: "
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "envelope", className: "input-group-addon" }),
+	                _react2.default.createElement("input", {
+	                  type: "email",
+	                  name: "email",
+	                  required: true,
+	                  className: "form-control",
+	                  placeholder: "Email",
+	                  value: this.state.email,
+	                  onChange: function onChange(e) {
+	                    return _this3.handleEmail(e);
+	                  }
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "label",
+	                null,
+	                "Password: "
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "lock", className: "input-group-addon" }),
+	                _react2.default.createElement("input", {
+	                  type: "password",
+	                  name: "password",
+	                  required: true,
+	                  className: "form-control",
+	                  placeholder: "Password",
+	                  value: this.state.password,
+	                  onChange: function onChange(e) {
+	                    return _this3.handlePassword(e);
+	                  }
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "label",
+	                null,
+	                "Link: "
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement("span", { className: "input-group-addon glyphicon glyphicon-globe" }),
+	                _react2.default.createElement("input", {
+	                  type: "url",
+	                  className: "form-control",
+	                  placeholder: "Website (http(s)://..)",
+	                  value: this.state.website,
+	                  onChange: function onChange(e) {
+	                    return _this3.handleWebsite(e);
+	                  }
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement("span", {
+	                  className: "input-group-addon fa fa-twitter",
+	                  style: { display: "table-cell" }
+	                }),
 	                _react2.default.createElement(
-	                    _semanticUiReact.Modal.Header,
-	                    null,
-	                    'ADD NEW USER'
+	                  "span",
+	                  { className: "input-group-addon" },
+	                  "http://twitter.com/"
 	                ),
+	                _react2.default.createElement("input", {
+	                  type: "text",
+	                  className: "form-control",
+	                  placeholder: "Twitter Profile",
+	                  value: this.state.twitter,
+	                  onChange: function onChange(e) {
+	                    return _this3.handleTwitter(e);
+	                  }
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement("span", {
+	                  className: "input-group-addon fa fa-linkedin",
+	                  style: { display: "table-cell" }
+	                }),
 	                _react2.default.createElement(
-	                    _semanticUiReact.Modal.Content,
-	                    { image: true },
-	                    _react2.default.createElement(
-	                        'form',
-	                        { role: 'form', onSubmit: this.onSubmit.bind(this) },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Username: '
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement('span', { className: 'input-group-addon glyphicon glyphicon-user' }),
-	                                _react2.default.createElement('input', { type: 'text', name: 'username', required: true, className: 'form-control', placeholder: 'Username',
-	                                    value: this.state.username, onChange: function onChange(e) {
-	                                        return _this3.handleUsername(e);
-	                                    } })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Email: '
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'envelope', className: 'input-group-addon' }),
-	                                _react2.default.createElement('input', { type: 'email', name: 'email', required: true, className: 'form-control', placeholder: 'Email',
-	                                    value: this.state.email, onChange: function onChange(e) {
-	                                        return _this3.handleEmail(e);
-	                                    } })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Password: '
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'lock', className: 'input-group-addon' }),
-	                                _react2.default.createElement('input', { type: 'password', name: 'password', required: true, className: 'form-control', placeholder: 'Password',
-	                                    value: this.state.password, onChange: function onChange(e) {
-	                                        return _this3.handlePassword(e);
-	                                    } })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Link: '
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement('span', { className: 'input-group-addon glyphicon glyphicon-globe' }),
-	                                _react2.default.createElement('input', { type: 'url', className: 'form-control', placeholder: 'Website (http(s)://..)',
-	                                    value: this.state.website, onChange: function onChange(e) {
-	                                        return _this3.handleWebsite(e);
-	                                    } })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement('span', { className: 'input-group-addon fa fa-twitter', style: { display: 'table-cell' } }),
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'input-group-addon' },
-	                                    'http://twitter.com/'
-	                                ),
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Twitter Profile',
-	                                    value: this.state.twitter, onChange: function onChange(e) {
-	                                        return _this3.handleTwitter(e);
-	                                    } })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement('span', { className: 'input-group-addon fa fa-linkedin', style: { display: 'table-cell' } }),
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'input-group-addon' },
-	                                    'http://www.linkedin.com/'
-	                                ),
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Linkedin Profile',
-	                                    value: this.state.linkedin, onChange: function onChange(e) {
-	                                        return _this3.handleLinkedin(e);
-	                                    } })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement('span', { className: 'input-group-addon fa fa-youtube', style: { display: 'table-cell' } }),
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'input-group-addon' },
-	                                    'http://www.youtube.com/'
-	                                ),
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Youtube Profile',
-	                                    value: this.state.youtube, onChange: function onChange(e) {
-	                                        return _this3.handleYoutube(e);
-	                                    } })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Credit Balance: '
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'usd', className: 'input-group-addon' }),
-	                                _react2.default.createElement('input', { type: 'number', className: 'form-control', placeholder: 'Username',
-	                                    value: this.state.creditbalance, onChange: function onChange(e) {
-	                                        return _this3.handleCredit(e);
-	                                    } })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Role: '
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'fire', className: 'input-group-addon' }),
-	                                _react2.default.createElement(
-	                                    'select',
-	                                    { className: 'form-control', value: this.state.role, onChange: function onChange(e) {
-	                                            return _this3.handleRole(e);
-	                                        } },
-	                                    _react2.default.createElement(
-	                                        'option',
-	                                        { value: '0' },
-	                                        'User'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'option',
-	                                        { value: '1' },
-	                                        'Admin'
-	                                    )
-	                                )
-	                            )
-	                        )
-	                    )
+	                  "span",
+	                  { className: "input-group-addon" },
+	                  "http://www.linkedin.com/"
 	                ),
+	                _react2.default.createElement("input", {
+	                  type: "text",
+	                  className: "form-control",
+	                  placeholder: "Linkedin Profile",
+	                  value: this.state.linkedin,
+	                  onChange: function onChange(e) {
+	                    return _this3.handleLinkedin(e);
+	                  }
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement("span", {
+	                  className: "input-group-addon fa fa-youtube",
+	                  style: { display: "table-cell" }
+	                }),
 	                _react2.default.createElement(
-	                    _semanticUiReact.Modal.Actions,
-	                    null,
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Button,
-	                        { primary: true, onClick: function onClick(e) {
-	                                return _this3.Process(e);
-	                            } },
-	                        'Proceed ',
-	                        _react2.default.createElement(_semanticUiReact.Icon, { name: 'right chevron' })
-	                    )
+	                  "span",
+	                  { className: "input-group-addon" },
+	                  "http://www.youtube.com/"
+	                ),
+	                _react2.default.createElement("input", {
+	                  type: "text",
+	                  className: "form-control",
+	                  placeholder: "Youtube Profile",
+	                  value: this.state.youtube,
+	                  onChange: function onChange(e) {
+	                    return _this3.handleYoutube(e);
+	                  }
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "label",
+	                null,
+	                "Credit Balance: "
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "usd", className: "input-group-addon" }),
+	                _react2.default.createElement("input", {
+	                  type: "number",
+	                  className: "form-control",
+	                  placeholder: "Username",
+	                  value: this.state.creditbalance,
+	                  onChange: function onChange(e) {
+	                    return _this3.handleCredit(e);
+	                  }
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "label",
+	                null,
+	                "Role: "
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "fire", className: "input-group-addon" }),
+	                _react2.default.createElement(
+	                  "select",
+	                  {
+	                    className: "form-control",
+	                    value: this.state.role,
+	                    onChange: function onChange(e) {
+	                      return _this3.handleRole(e);
+	                    }
+	                  },
+	                  _react2.default.createElement(
+	                    "option",
+	                    { value: "0" },
+	                    "User"
+	                  ),
+	                  _react2.default.createElement(
+	                    "option",
+	                    { value: "1" },
+	                    "Admin"
+	                  )
 	                )
-	            );
-	        }
-	    }]);
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _semanticUiReact.Modal.Actions,
+	          null,
+	          _react2.default.createElement(
+	            _semanticUiReact.Button,
+	            { primary: true, onClick: function onClick(e) {
+	                return _this3.Process(e);
+	              } },
+	            "Proceed ",
+	            _react2.default.createElement(_semanticUiReact.Icon, { name: "right chevron" })
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	    return ModalAddUser;
+	  return ModalAddUser;
 	}(_react.Component);
 
 	var ModalEditUser = function (_Component2) {
-	    _inherits(ModalEditUser, _Component2);
+	  _inherits(ModalEditUser, _Component2);
 
-	    function ModalEditUser(props) {
-	        _classCallCheck(this, ModalEditUser);
+	  function ModalEditUser(props) {
+	    _classCallCheck(this, ModalEditUser);
 
-	        var _this4 = _possibleConstructorReturn(this, (ModalEditUser.__proto__ || Object.getPrototypeOf(ModalEditUser)).call(this, props));
+	    var _this4 = _possibleConstructorReturn(this, (ModalEditUser.__proto__ || Object.getPrototypeOf(ModalEditUser)).call(this, props));
 
-	        _this4.state = {
-	            modalOpen: false,
-	            user: {}
-	        };
-	        return _this4;
+	    _this4.state = {
+	      modalOpen: false,
+	      user: {}
+	    };
+	    return _this4;
+	  }
+
+	  _createClass(ModalEditUser, [{
+	    key: "handleClose",
+	    value: function handleClose(e) {
+	      this.setState({ modalOpen: false });
 	    }
+	  }, {
+	    key: "handleOpen",
+	    value: function handleOpen(e, user) {
+	      this.setState({ modalOpen: true, user: user });
+	    }
+	  }, {
+	    key: "onSubmit",
+	    value: function onSubmit(e) {
+	      e.preventDefault();
+	    }
+	  }, {
+	    key: "handleUsername",
+	    value: function handleUsername(e) {
+	      var user = this.state.user;
+	      user.username = e.target.value;
+	      this.setState({ user: user });
+	    }
+	  }, {
+	    key: "handleEmail",
+	    value: function handleEmail(e) {
+	      var user = this.state.user;
+	      user.email = e.target.value;
+	      this.setState({ user: user });
+	    }
+	  }, {
+	    key: "handleYoutube",
+	    value: function handleYoutube(e) {
+	      var user = this.state.user;
+	      user.youtube = e.target.value;
+	      this.setState({ user: user });
+	    }
+	  }, {
+	    key: "handleLinkedin",
+	    value: function handleLinkedin(e) {
+	      var user = this.state.user;
+	      user.linkedin = e.target.value;
+	      this.setState({ user: user });
+	    }
+	  }, {
+	    key: "handleTwitter",
+	    value: function handleTwitter(e) {
+	      var user = this.state.user;
+	      user.twitter = e.target.value;
+	      this.setState({ user: user });
+	    }
+	  }, {
+	    key: "handleWebsite",
+	    value: function handleWebsite(e) {
+	      var user = this.state.user;
+	      user.website = e.target.value;
+	      this.setState({ user: user });
+	    }
+	  }, {
+	    key: "handleCredit",
+	    value: function handleCredit(e) {
+	      var user = this.state.user;
+	      user.creditbalance = e.target.value;
+	      this.setState({ user: user });
+	    }
+	  }, {
+	    key: "handleRole",
+	    value: function handleRole(e) {
+	      var user = this.state.user;
+	      user.role = e.target.value;
+	      this.setState({ user: user });
+	    }
+	  }, {
+	    key: "Process",
+	    value: function Process() {
+	      var _this5 = this;
 
-	    _createClass(ModalEditUser, [{
-	        key: 'handleClose',
-	        value: function handleClose(e) {
-	            this.setState({ modalOpen: false });
+	      $.post("/api/admin/edit-user", this.state.user, function (data, status) {
+	        if (data.code == 200) {
+	          _this5.setState({ modalOpen: false });
+	          _this5.props.onEditSuccess(null);
+	        } else if (data.code == 1001) {
+	          _this5.props.dispatch((0, _actions.setUser)({}));
+	          _this5.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          _reactRouter.browserHistory.push("/courses");
 	        }
-	    }, {
-	        key: 'handleOpen',
-	        value: function handleOpen(e, user) {
-	            this.setState({ modalOpen: true, user: user });
-	        }
-	    }, {
-	        key: 'onSubmit',
-	        value: function onSubmit(e) {
-	            e.preventDefault();
-	        }
-	    }, {
-	        key: 'handleUsername',
-	        value: function handleUsername(e) {
-	            var user = this.state.user;
-	            user.username = e.target.value;
-	            this.setState({ user: user });
-	        }
-	    }, {
-	        key: 'handleEmail',
-	        value: function handleEmail(e) {
-	            var user = this.state.user;
-	            user.email = e.target.value;
-	            this.setState({ user: user });
-	        }
-	    }, {
-	        key: 'handleYoutube',
-	        value: function handleYoutube(e) {
-	            var user = this.state.user;
-	            user.youtube = e.target.value;
-	            this.setState({ user: user });
-	        }
-	    }, {
-	        key: 'handleLinkedin',
-	        value: function handleLinkedin(e) {
-	            var user = this.state.user;
-	            user.linkedin = e.target.value;
-	            this.setState({ user: user });
-	        }
-	    }, {
-	        key: 'handleTwitter',
-	        value: function handleTwitter(e) {
-	            var user = this.state.user;
-	            user.twitter = e.target.value;
-	            this.setState({ user: user });
-	        }
-	    }, {
-	        key: 'handleWebsite',
-	        value: function handleWebsite(e) {
-	            var user = this.state.user;
-	            user.website = e.target.value;
-	            this.setState({ user: user });
-	        }
-	    }, {
-	        key: 'handleCredit',
-	        value: function handleCredit(e) {
-	            var user = this.state.user;
-	            user.creditbalance = e.target.value;
-	            this.setState({ user: user });
-	        }
-	    }, {
-	        key: 'handleRole',
-	        value: function handleRole(e) {
-	            var user = this.state.user;
-	            user.role = e.target.value;
-	            this.setState({ user: user });
-	        }
-	    }, {
-	        key: 'Process',
-	        value: function Process() {
-	            var _this5 = this;
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this6 = this;
 
-	            $.post('/api/admin/edit-user', this.state.user, function (data, status) {
-	                if (data.code == 200) {
-	                    _this5.setState({ modalOpen: false });
-	                    _this5.props.onEditSuccess(null);
-	                } else if (data.code == 1001) {
-	                    _this5.props.dispatch((0, _actions.setUser)({}));
-	                    _this5.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    _reactRouter.browserHistory.push('/courses');
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this6 = this;
-
-	            return _react2.default.createElement(
-	                _semanticUiReact.Modal,
-	                { open: this.state.modalOpen,
-	                    onClose: this.handleClose.bind(this) },
+	      return _react2.default.createElement(
+	        _semanticUiReact.Modal,
+	        { open: this.state.modalOpen, onClose: this.handleClose.bind(this) },
+	        _react2.default.createElement(
+	          _semanticUiReact.Modal.Header,
+	          null,
+	          this.state.user.username
+	        ),
+	        _react2.default.createElement(
+	          _semanticUiReact.Modal.Content,
+	          { image: true },
+	          _react2.default.createElement(
+	            "form",
+	            { role: "form", onSubmit: function onSubmit(e) {
+	                return _this6.onSubmit(e);
+	              } },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "label",
+	                null,
+	                "Username: "
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement("span", { className: "input-group-addon glyphicon glyphicon-user" }),
+	                _react2.default.createElement("input", {
+	                  type: "text",
+	                  name: "username",
+	                  required: true,
+	                  className: "form-control",
+	                  placeholder: "Username",
+	                  value: this.state.user.username || "",
+	                  onChange: function onChange(e) {
+	                    return _this6.handleUsername(e);
+	                  }
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "label",
+	                null,
+	                "Email: "
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "envelope", className: "input-group-addon" }),
+	                _react2.default.createElement("input", {
+	                  type: "email",
+	                  name: "email",
+	                  required: true,
+	                  className: "form-control",
+	                  placeholder: "Email",
+	                  value: this.state.user.email || "",
+	                  onChange: function onChange(e) {
+	                    return _this6.handleEmail(e);
+	                  }
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "label",
+	                null,
+	                "Link: "
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement("span", { className: "input-group-addon glyphicon glyphicon-globe" }),
+	                _react2.default.createElement("input", {
+	                  type: "url",
+	                  className: "form-control",
+	                  placeholder: "Website (http(s)://..)",
+	                  value: this.state.user.website || "",
+	                  onChange: function onChange(e) {
+	                    return _this6.handleWebsite(e);
+	                  }
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement("span", {
+	                  className: "input-group-addon fa fa-twitter",
+	                  style: { display: "table-cell" }
+	                }),
 	                _react2.default.createElement(
-	                    _semanticUiReact.Modal.Header,
-	                    null,
-	                    this.state.user.username
+	                  "span",
+	                  { className: "input-group-addon" },
+	                  "http://twitter.com/"
 	                ),
+	                _react2.default.createElement("input", {
+	                  type: "text",
+	                  className: "form-control",
+	                  placeholder: "Twitter Profile",
+	                  value: this.state.user.twitter || "",
+	                  onChange: function onChange(e) {
+	                    return _this6.handleTwitter(e);
+	                  }
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement("span", {
+	                  className: "input-group-addon fa fa-linkedin",
+	                  style: { display: "table-cell" }
+	                }),
 	                _react2.default.createElement(
-	                    _semanticUiReact.Modal.Content,
-	                    { image: true },
-	                    _react2.default.createElement(
-	                        'form',
-	                        { role: 'form', onSubmit: function onSubmit(e) {
-	                                return _this6.onSubmit(e);
-	                            } },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Username: '
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement('span', { className: 'input-group-addon glyphicon glyphicon-user' }),
-	                                _react2.default.createElement('input', { type: 'text', name: 'username', required: true, className: 'form-control', placeholder: 'Username',
-	                                    value: this.state.user.username || '', onChange: function onChange(e) {
-	                                        return _this6.handleUsername(e);
-	                                    } })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Email: '
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'envelope', className: 'input-group-addon' }),
-	                                _react2.default.createElement('input', { type: 'email', name: 'email', required: true, className: 'form-control', placeholder: 'Email',
-	                                    value: this.state.user.email || '', onChange: function onChange(e) {
-	                                        return _this6.handleEmail(e);
-	                                    } })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Link: '
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement('span', { className: 'input-group-addon glyphicon glyphicon-globe' }),
-	                                _react2.default.createElement('input', { type: 'url', className: 'form-control', placeholder: 'Website (http(s)://..)',
-	                                    value: this.state.user.website || '', onChange: function onChange(e) {
-	                                        return _this6.handleWebsite(e);
-	                                    } })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement('span', { className: 'input-group-addon fa fa-twitter', style: { display: 'table-cell' } }),
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'input-group-addon' },
-	                                    'http://twitter.com/'
-	                                ),
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Twitter Profile',
-	                                    value: this.state.user.twitter || '', onChange: function onChange(e) {
-	                                        return _this6.handleTwitter(e);
-	                                    } })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement('span', { className: 'input-group-addon fa fa-linkedin', style: { display: 'table-cell' } }),
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'input-group-addon' },
-	                                    'http://www.linkedin.com/'
-	                                ),
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Linkedin Profile',
-	                                    value: this.state.user.linkedin || '', onChange: function onChange(e) {
-	                                        return _this6.handleLinkedin(e);
-	                                    } })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement('span', { className: 'input-group-addon fa fa-youtube', style: { display: 'table-cell' } }),
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'input-group-addon' },
-	                                    'http://www.youtube.com/'
-	                                ),
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Youtube Profile',
-	                                    value: this.state.user.youtube || '', onChange: function onChange(e) {
-	                                        return _this6.handleYoutube(e);
-	                                    } })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Credit Balance: '
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'usd', className: 'input-group-addon' }),
-	                                _react2.default.createElement('input', { type: 'number', className: 'form-control', placeholder: 'Username',
-	                                    value: this.state.user.creditbalance || 0, onChange: function onChange(e) {
-	                                        return _this6.handleCredit(e);
-	                                    } })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Role: '
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'fire', className: 'input-group-addon' }),
-	                                _react2.default.createElement(
-	                                    'select',
-	                                    { className: 'form-control', value: this.state.user.role || 0, onChange: function onChange(e) {
-	                                            return _this6.handleRole(e);
-	                                        } },
-	                                    _react2.default.createElement(
-	                                        'option',
-	                                        { value: '0' },
-	                                        'User'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'option',
-	                                        { value: '1' },
-	                                        'Admin'
-	                                    )
-	                                )
-	                            )
-	                        )
-	                    )
+	                  "span",
+	                  { className: "input-group-addon" },
+	                  "http://www.linkedin.com/"
 	                ),
+	                _react2.default.createElement("input", {
+	                  type: "text",
+	                  className: "form-control",
+	                  placeholder: "Linkedin Profile",
+	                  value: this.state.user.linkedin || "",
+	                  onChange: function onChange(e) {
+	                    return _this6.handleLinkedin(e);
+	                  }
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement("span", {
+	                  className: "input-group-addon fa fa-youtube",
+	                  style: { display: "table-cell" }
+	                }),
 	                _react2.default.createElement(
-	                    _semanticUiReact.Modal.Actions,
-	                    null,
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Button,
-	                        { primary: true, onClick: function onClick(e) {
-	                                return _this6.Process(e);
-	                            } },
-	                        'Save ',
-	                        _react2.default.createElement(_semanticUiReact.Icon, { name: 'right chevron' })
-	                    )
+	                  "span",
+	                  { className: "input-group-addon" },
+	                  "http://www.youtube.com/"
+	                ),
+	                _react2.default.createElement("input", {
+	                  type: "text",
+	                  className: "form-control",
+	                  placeholder: "Youtube Profile",
+	                  value: this.state.user.youtube || "",
+	                  onChange: function onChange(e) {
+	                    return _this6.handleYoutube(e);
+	                  }
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "label",
+	                null,
+	                "Credit Balance: "
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "usd", className: "input-group-addon" }),
+	                _react2.default.createElement("input", {
+	                  type: "number",
+	                  className: "form-control",
+	                  placeholder: "Username",
+	                  value: this.state.user.creditbalance || 0,
+	                  onChange: function onChange(e) {
+	                    return _this6.handleCredit(e);
+	                  }
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "label",
+	                null,
+	                "Role: "
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "fire", className: "input-group-addon" }),
+	                _react2.default.createElement(
+	                  "select",
+	                  {
+	                    className: "form-control",
+	                    value: this.state.user.role || 0,
+	                    onChange: function onChange(e) {
+	                      return _this6.handleRole(e);
+	                    }
+	                  },
+	                  _react2.default.createElement(
+	                    "option",
+	                    { value: "0" },
+	                    "User"
+	                  ),
+	                  _react2.default.createElement(
+	                    "option",
+	                    { value: "1" },
+	                    "Admin"
+	                  )
 	                )
-	            );
-	        }
-	    }]);
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _semanticUiReact.Modal.Actions,
+	          null,
+	          _react2.default.createElement(
+	            _semanticUiReact.Button,
+	            { primary: true, onClick: function onClick(e) {
+	                return _this6.Process(e);
+	              } },
+	            "Save ",
+	            _react2.default.createElement(_semanticUiReact.Icon, { name: "right chevron" })
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	    return ModalEditUser;
+	  return ModalEditUser;
 	}(_react.Component);
 
 	var AdminUser = function (_Component3) {
-	    _inherits(AdminUser, _Component3);
+	  _inherits(AdminUser, _Component3);
 
-	    function AdminUser(props) {
-	        _classCallCheck(this, AdminUser);
+	  function AdminUser(props) {
+	    _classCallCheck(this, AdminUser);
 
-	        var _this7 = _possibleConstructorReturn(this, (AdminUser.__proto__ || Object.getPrototypeOf(AdminUser)).call(this, props));
+	    var _this7 = _possibleConstructorReturn(this, (AdminUser.__proto__ || Object.getPrototypeOf(AdminUser)).call(this, props));
 
-	        _this7.state = {
-	            searchQuery: '',
-	            users: []
-	        };
-	        return _this7;
+	    _this7.state = {
+	      searchQuery: "",
+	      users: []
+	    };
+	    return _this7;
+	  }
+
+	  _createClass(AdminUser, [{
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      var _this8 = this;
+
+	      this.setState({ searchQuery: this.props.location.query.searchQuery || "" });
+	      $.post("http://localhost:5000/admin/get-users", this.props.location.query, function (data, status) {
+	        if (data.code == 200) {
+	          _this8.setState({ users: data.users });
+	        } else if (data.code == 1001) {
+	          _this8.props.dispatch((0, _actions.setUser)({}));
+	          _this8.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          _reactRouter.browserHistory.push("/courses");
+	        }
+	      });
 	    }
+	  }, {
+	    key: "componentWillReceiveProps",
+	    value: function componentWillReceiveProps(nextProps) {
+	      var _this9 = this;
 
-	    _createClass(AdminUser, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this8 = this;
+	      if (this.props.location.query != nextProps.location.query) {
+	        this.setState({
+	          searchQuery: nextProps.location.query.searchQuery || ""
+	        });
+	        $.post("http://localhost:5000/admin/get-users", nextProps.location.query, function (data, status) {
+	          if (data.code == 200) {
+	            _this9.setState({ users: data.users });
+	          } else if (data.code == 1001) {
+	            _this9.props.dispatch((0, _actions.setUser)({}));
+	            _this9.props.dispatch((0, _actions.setGetMyCourses)(false));
+	            _reactRouter.browserHistory.push("/courses");
+	          }
+	        });
+	      }
+	    }
+	  }, {
+	    key: "onClickPrev",
+	    value: function onClickPrev(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page || query.page <= 1) {
+	        return;
+	      }
+	      var url = "/admin/users" + "?page=" + (query.page - 1) + (query.searchQuery ? "&searchQuery=" + query.searchQuery : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onClickNext",
+	    value: function onClickNext(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/admin/users" + "?page=" + (parseInt(query.page) + 1) + (query.searchQuery ? "&searchQuery=" + query.searchQuery : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onChangeFilterSort",
+	    value: function onChangeFilterSort(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/admin/users" + "?page=" + query.page + (query.searchQuery ? "&searchQuery=" + query.searchQuery : "") + "&sort=" + e.target.value;
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onSubmitFormSearch",
+	    value: function onSubmitFormSearch(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/admin/users" + "?page=" + query.page + (this.state.searchQuery != "" ? "&searchQuery=" + this.state.searchQuery : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "handleSearchQuery",
+	    value: function handleSearchQuery(e) {
+	      this.setState({ searchQuery: e.target.value });
+	      if (e.target.value == "") {
+	        var query = this.props.location.query;
+	        if (!query.page) {
+	          query.page = 1;
+	        }
+	        var url = "/admin/users" + "?page=" + query.page + (query.sort ? "&sort=" + query.sort : "");
+	        _reactRouter.browserHistory.push(url);
+	      }
+	    }
+	  }, {
+	    key: "deleteUser",
+	    value: function deleteUser(_id) {
+	      var _this10 = this;
 
-	            this.setState({ searchQuery: this.props.location.query.searchQuery || '' });
-	            $.post('/api/admin/get-users', this.props.location.query, function (data, status) {
-	                if (data.code == 200) {
-	                    _this8.setState({ users: data.users });
-	                } else if (data.code == 1001) {
-	                    _this8.props.dispatch((0, _actions.setUser)({}));
-	                    _this8.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    _reactRouter.browserHistory.push('/courses');
+	      $.post("/api/admin/delete-user", { _id: _id }, function (data, status) {
+	        if (data.code == 200) {
+	          var users = _this10.state.users;
+	          var index = _lodash2.default.findIndex(users, function (o) {
+	            return o._id == _id;
+	          });
+	          _this10.setState({
+	            users: [].concat(_toConsumableArray(users.slice(0, index)), _toConsumableArray(users.slice(index + 1)))
+	          });
+	        } else if (data.code == 1001) {
+	          _reactRouter.browserHistory.push("/courses");
+	        }
+	      });
+	    }
+	  }, {
+	    key: "editUser",
+	    value: function editUser(e, user) {
+	      this.modalEditUser.handleOpen(e, user);
+	    }
+	  }, {
+	    key: "onEditSuccess",
+	    value: function onEditSuccess(e) {
+	      var users = this.state.users;
+	      var user = this.modalEditUser.state.user;
+	      var index = _lodash2.default.findIndex(users, function (o) {
+	        return o._id == user._id;
+	      });
+	      this.setState({
+	        users: [].concat(_toConsumableArray(users.slice(0, index)), [user], _toConsumableArray(users.slice(index + 1)))
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this11 = this;
+
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	          "form",
+	          {
+	            className: "form-inline",
+	            style: { marginBottom: "20px" },
+	            onSubmit: function onSubmit(e) {
+	              _this11.onSubmitFormSearch(e);
+	            }
+	          },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "form-group form-group-lg" },
+	            _react2.default.createElement(
+	              "label",
+	              { className: "control-label" },
+	              "Sort by:"
+	            ),
+	            " ",
+	            _react2.default.createElement(
+	              "select",
+	              {
+	                style: { fontWeight: "bold" },
+	                className: "form-control",
+	                value: this.props.location.query.sort || "1",
+	                onChange: function onChange(e) {
+	                  _this11.onChangeFilterSort(e);
 	                }
-	            });
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            var _this9 = this;
-
-	            if (this.props.location.query != nextProps.location.query) {
-	                this.setState({
-	                    searchQuery: nextProps.location.query.searchQuery || ''
-	                });
-	                $.post('/api/admin/get-users', nextProps.location.query, function (data, status) {
-	                    if (data.code == 200) {
-	                        _this9.setState({ users: data.users });
-	                    } else if (data.code == 1001) {
-	                        _this9.props.dispatch((0, _actions.setUser)({}));
-	                        _this9.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                        _reactRouter.browserHistory.push('/courses');
-	                    }
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'onClickPrev',
-	        value: function onClickPrev(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page || query.page <= 1) {
-	                return;
-	            }
-	            var url = '/admin/users' + '?page=' + (query.page - 1) + (query.searchQuery ? '&searchQuery=' + query.searchQuery : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onClickNext',
-	        value: function onClickNext(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/admin/users' + '?page=' + (parseInt(query.page) + 1) + (query.searchQuery ? '&searchQuery=' + query.searchQuery : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onChangeFilterSort',
-	        value: function onChangeFilterSort(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/admin/users' + '?page=' + query.page + (query.searchQuery ? '&searchQuery=' + query.searchQuery : '') + '&sort=' + e.target.value;
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onSubmitFormSearch',
-	        value: function onSubmitFormSearch(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/admin/users' + '?page=' + query.page + (this.state.searchQuery != '' ? '&searchQuery=' + this.state.searchQuery : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'handleSearchQuery',
-	        value: function handleSearchQuery(e) {
-	            this.setState({ searchQuery: e.target.value });
-	            if (e.target.value == '') {
-	                var query = this.props.location.query;
-	                if (!query.page) {
-	                    query.page = 1;
+	              },
+	              _react2.default.createElement(
+	                "option",
+	                { value: "1", style: { fontWeight: "bold" } },
+	                "Name: A-to-Z"
+	              ),
+	              _react2.default.createElement(
+	                "option",
+	                { value: "2", style: { fontWeight: "bold" } },
+	                "Name: Z-to-A"
+	              )
+	            )
+	          ),
+	          " ",
+	          _react2.default.createElement(
+	            "div",
+	            { className: "form-group form-group-lg" },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "input-group input-group-lg" },
+	              _react2.default.createElement("input", {
+	                type: "text",
+	                className: "form-control",
+	                value: this.state.searchQuery,
+	                placeholder: "Search name or email",
+	                onChange: function onChange(e) {
+	                  _this11.handleSearchQuery(e);
 	                }
-	                var url = '/admin/users' + '?page=' + query.page + (query.sort ? '&sort=' + query.sort : '');
-	                _reactRouter.browserHistory.push(url);
-	            }
-	        }
-	    }, {
-	        key: 'deleteUser',
-	        value: function deleteUser(_id) {
-	            var _this10 = this;
-
-	            $.post('/api/admin/delete-user', { _id: _id }, function (data, status) {
-	                if (data.code == 200) {
-	                    var users = _this10.state.users;
-	                    var index = _lodash2.default.findIndex(users, function (o) {
-	                        return o._id == _id;
-	                    });
-	                    _this10.setState({ users: [].concat(_toConsumableArray(users.slice(0, index)), _toConsumableArray(users.slice(index + 1))) });
-	                } else if (data.code == 1001) {
-	                    _reactRouter.browserHistory.push('/courses');
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'editUser',
-	        value: function editUser(e, user) {
-	            this.modalEditUser.handleOpen(e, user);
-	        }
-	    }, {
-	        key: 'onEditSuccess',
-	        value: function onEditSuccess(e) {
-	            var users = this.state.users;
-	            var user = this.modalEditUser.state.user;
-	            var index = _lodash2.default.findIndex(users, function (o) {
-	                return o._id == user._id;
-	            });
-	            this.setState({ users: [].concat(_toConsumableArray(users.slice(0, index)), [user], _toConsumableArray(users.slice(index + 1))) });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this11 = this;
-
-	            return _react2.default.createElement(
-	                'div',
+	              }),
+	              _react2.default.createElement(
+	                "span",
+	                { className: "input-group-btn" },
+	                _react2.default.createElement(
+	                  "button",
+	                  { className: "btn btn-default", type: "submit" },
+	                  _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "search" })
+	                )
+	              )
+	            )
+	          ),
+	          " ",
+	          _react2.default.createElement(
+	            "div",
+	            { className: "form-group form-group-lg" },
+	            _react2.default.createElement(ModalAddUser, null)
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _semanticUiReact.Table,
+	          { basic: "very", celled: true, collapsing: true },
+	          _react2.default.createElement(
+	            _semanticUiReact.Table.Header,
+	            null,
+	            _react2.default.createElement(
+	              _semanticUiReact.Table.Row,
+	              null,
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
 	                null,
+	                "User"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Email"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Facebook"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Links"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Credit Balance"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Admin"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Actived"
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _semanticUiReact.Table.Body,
+	            null,
+	            this.state.users.map(function (user, index) {
+	              return _react2.default.createElement(
+	                _semanticUiReact.Table.Row,
+	                { key: index },
 	                _react2.default.createElement(
-	                    'form',
-	                    { className: 'form-inline', style: { marginBottom: '20px' }, onSubmit: function onSubmit(e) {
-	                            _this11.onSubmitFormSearch(e);
-	                        } },
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  _react2.default.createElement(
+	                    _semanticUiReact.Header,
+	                    { as: "h4", image: true },
+	                    _react2.default.createElement(_semanticUiReact.Image, {
+	                      src: "/api/resource/images?src=" + user.photo + "&w=50&h=50",
+	                      shape: "rounded",
+	                      size: "mini"
+	                    }),
 	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group form-group-lg' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { className: 'control-label' },
-	                            'Sort by:'
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'select',
-	                            { style: { fontWeight: 'bold' }, className: 'form-control',
-	                                value: this.props.location.query.sort || '1', onChange: function onChange(e) {
-	                                    _this11.onChangeFilterSort(e);
-	                                } },
-	                            _react2.default.createElement(
-	                                'option',
-	                                { value: '1', style: { fontWeight: 'bold' } },
-	                                'Name: A-to-Z'
-	                            ),
-	                            _react2.default.createElement(
-	                                'option',
-	                                { value: '2', style: { fontWeight: 'bold' } },
-	                                'Name: Z-to-A'
-	                            )
-	                        )
-	                    ),
-	                    ' ',
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group form-group-lg' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'input-group input-group-lg' },
-	                            _react2.default.createElement('input', { type: 'text', className: 'form-control',
-	                                value: this.state.searchQuery, placeholder: 'Search name or email',
-	                                onChange: function onChange(e) {
-	                                    _this11.handleSearchQuery(e);
-	                                } }),
-	                            _react2.default.createElement(
-	                                'span',
-	                                { className: 'input-group-btn' },
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { className: 'btn btn-default', type: 'submit' },
-	                                    _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'search' })
-	                                )
-	                            )
-	                        )
-	                    ),
-	                    ' ',
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group form-group-lg' },
-	                        _react2.default.createElement(ModalAddUser, null)
+	                      _semanticUiReact.Header.Content,
+	                      null,
+	                      user.username
 	                    )
+	                  )
 	                ),
 	                _react2.default.createElement(
-	                    _semanticUiReact.Table,
-	                    { basic: 'very', celled: true, collapsing: true },
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Table.Header,
-	                        null,
-	                        _react2.default.createElement(
-	                            _semanticUiReact.Table.Row,
-	                            null,
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'User'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Email'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Facebook'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Links'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Credit Balance'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Admin'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Actived'
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Table.Body,
-	                        null,
-	                        this.state.users.map(function (user, index) {
-	                            return _react2.default.createElement(
-	                                _semanticUiReact.Table.Row,
-	                                { key: index },
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        _semanticUiReact.Header,
-	                                        { as: 'h4', image: true },
-	                                        _react2.default.createElement(_semanticUiReact.Image, { src: '/api/resource/images?src=' + user.photo + '&w=50&h=50', shape: 'rounded', size: 'mini' }),
-	                                        _react2.default.createElement(
-	                                            _semanticUiReact.Header.Content,
-	                                            null,
-	                                            user.username
-	                                        )
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    user.email ? _react2.default.createElement(
-	                                        'a',
-	                                        { target: '_blank', href: 'mailto:' + user.email },
-	                                        user.email + ''
-	                                    ) : ''
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    user.facebookid ? _react2.default.createElement(
-	                                        'a',
-	                                        { target: '_blank', href: 'https://www.facebook.com/' + user.facebookid },
-	                                        user.username
-	                                    ) : ''
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    user.website ? _react2.default.createElement(
-	                                        'div',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            'strong',
-	                                            null,
-	                                            'Website: ',
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { target: '_blank', href: user.website },
-	                                                user.website
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement('br', null)
-	                                    ) : '',
-	                                    user.twitter ? _react2.default.createElement(
-	                                        'div',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            'strong',
-	                                            null,
-	                                            'Twitter: ',
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { target: '_blank', href: 'http://twitter.com/' + user.twitter },
-	                                                'http://twitter.com/' + user.twitter
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement('br', null)
-	                                    ) : '',
-	                                    user.linkedin ? _react2.default.createElement(
-	                                        'div',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            'strong',
-	                                            null,
-	                                            'Linkedin: ',
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { target: '_blank', href: 'http://www.linkedin.com/' + user.linkedin },
-	                                                'http://www.linkedin.com/' + user.linkedin
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement('br', null)
-	                                    ) : '',
-	                                    user.youtube ? _react2.default.createElement(
-	                                        'div',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            'strong',
-	                                            null,
-	                                            'Youtube: ',
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { target: '_blank', href: 'http://www.youtube.com/' + user.youtube },
-	                                                'http://www.youtube.com/' + user.youtube
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement('br', null)
-	                                    ) : ''
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    user.creditbalance + ''
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    { textAlign: 'center' },
-	                                    user.role == 1 ? _react2.default.createElement(_semanticUiReact.Icon, { color: 'green', name: 'checkmark', size: 'large' }) : ''
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    { textAlign: 'center' },
-	                                    user.verified ? _react2.default.createElement(_semanticUiReact.Icon, { color: 'green', name: 'checkmark', size: 'large' }) : ''
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    { textAlign: 'center' },
-	                                    _react2.default.createElement(
-	                                        _semanticUiReact.Button.Group,
-	                                        { size: 'mini' },
-	                                        _react2.default.createElement(
-	                                            _semanticUiReact.Button,
-	                                            { positive: true, onClick: function onClick(e) {
-	                                                    return _this11.editUser(e, user);
-	                                                } },
-	                                            _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'pencil' })
-	                                        ),
-	                                        _react2.default.createElement(_semanticUiReact.Button.Or, null),
-	                                        _react2.default.createElement(
-	                                            _semanticUiReact.Button,
-	                                            { negative: true, onClick: function onClick(e) {
-	                                                    _this11.deleteUser(user._id);
-	                                                } },
-	                                            _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'trash' })
-	                                        )
-	                                    )
-	                                )
-	                            );
-	                        })
-	                    )
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  user.email ? _react2.default.createElement(
+	                    "a",
+	                    { target: "_blank", href: "mailto:" + user.email },
+	                    user.email + ""
+	                  ) : ""
 	                ),
-	                _react2.default.createElement(ModalEditUser, { ref: function ref(_ref) {
-	                        return _this11.modalEditUser = _ref;
-	                    }, onEditSuccess: function onEditSuccess(e) {
-	                        return _this11.onEditSuccess(e);
-	                    } }),
 	                _react2.default.createElement(
-	                    _reactBootstrap.Pager,
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  user.facebookid ? _react2.default.createElement(
+	                    "a",
+	                    {
+	                      target: "_blank",
+	                      href: "https://www.facebook.com/" + user.facebookid
+	                    },
+	                    user.username
+	                  ) : ""
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  user.website ? _react2.default.createElement(
+	                    "div",
 	                    null,
 	                    _react2.default.createElement(
-	                        _reactBootstrap.Pager.Item,
-	                        { disabled: !this.props.location.query.page || this.props.location.query.page == 1,
-	                            previous: true, onClick: function onClick(e) {
-	                                _this11.onClickPrev(e);
-	                            } },
-	                        '\u2190 Previous Page'
+	                      "strong",
+	                      null,
+	                      "Website:",
+	                      " ",
+	                      _react2.default.createElement(
+	                        "a",
+	                        { target: "_blank", href: user.website },
+	                        user.website
+	                      )
 	                    ),
+	                    _react2.default.createElement("br", null)
+	                  ) : "",
+	                  user.twitter ? _react2.default.createElement(
+	                    "div",
+	                    null,
 	                    _react2.default.createElement(
-	                        _reactBootstrap.Pager.Item,
-	                        { next: true, onClick: function onClick(e) {
-	                                _this11.onClickNext(e);
-	                            } },
-	                        'Next Page \u2192'
+	                      "strong",
+	                      null,
+	                      "Twitter:",
+	                      " ",
+	                      _react2.default.createElement(
+	                        "a",
+	                        {
+	                          target: "_blank",
+	                          href: "http://twitter.com/" + user.twitter
+	                        },
+	                        "http://twitter.com/" + user.twitter
+	                      )
+	                    ),
+	                    _react2.default.createElement("br", null)
+	                  ) : "",
+	                  user.linkedin ? _react2.default.createElement(
+	                    "div",
+	                    null,
+	                    _react2.default.createElement(
+	                      "strong",
+	                      null,
+	                      "Linkedin:",
+	                      " ",
+	                      _react2.default.createElement(
+	                        "a",
+	                        {
+	                          target: "_blank",
+	                          href: "http://www.linkedin.com/" + user.linkedin
+	                        },
+	                        "http://www.linkedin.com/" + user.linkedin
+	                      )
+	                    ),
+	                    _react2.default.createElement("br", null)
+	                  ) : "",
+	                  user.youtube ? _react2.default.createElement(
+	                    "div",
+	                    null,
+	                    _react2.default.createElement(
+	                      "strong",
+	                      null,
+	                      "Youtube:",
+	                      " ",
+	                      _react2.default.createElement(
+	                        "a",
+	                        {
+	                          target: "_blank",
+	                          href: "http://www.youtube.com/" + user.youtube
+	                        },
+	                        "http://www.youtube.com/" + user.youtube
+	                      )
+	                    ),
+	                    _react2.default.createElement("br", null)
+	                  ) : ""
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  user.creditbalance + ""
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  { textAlign: "center" },
+	                  user.role == 1 ? _react2.default.createElement(_semanticUiReact.Icon, { color: "green", name: "checkmark", size: "large" }) : ""
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  { textAlign: "center" },
+	                  user.verified ? _react2.default.createElement(_semanticUiReact.Icon, { color: "green", name: "checkmark", size: "large" }) : ""
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  { textAlign: "center" },
+	                  _react2.default.createElement(
+	                    _semanticUiReact.Button.Group,
+	                    { size: "mini" },
+	                    _react2.default.createElement(
+	                      _semanticUiReact.Button,
+	                      { positive: true, onClick: function onClick(e) {
+	                          return _this11.editUser(e, user);
+	                        } },
+	                      _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "pencil" })
+	                    ),
+	                    _react2.default.createElement(_semanticUiReact.Button.Or, null),
+	                    _react2.default.createElement(
+	                      _semanticUiReact.Button,
+	                      {
+	                        negative: true,
+	                        onClick: function onClick(e) {
+	                          _this11.deleteUser(user._id);
+	                        }
+	                      },
+	                      _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "trash" })
 	                    )
+	                  )
 	                )
-	            );
-	        }
-	    }]);
+	              );
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(ModalEditUser, {
+	          ref: function ref(_ref) {
+	            return _this11.modalEditUser = _ref;
+	          },
+	          onEditSuccess: function onEditSuccess(e) {
+	            return _this11.onEditSuccess(e);
+	          }
+	        }),
+	        _react2.default.createElement(
+	          _reactBootstrap.Pager,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Pager.Item,
+	            {
+	              disabled: !this.props.location.query.page || this.props.location.query.page == 1,
+	              previous: true,
+	              onClick: function onClick(e) {
+	                _this11.onClickPrev(e);
+	              }
+	            },
+	            "\u2190 Previous Page"
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Pager.Item,
+	            {
+	              next: true,
+	              onClick: function onClick(e) {
+	                _this11.onClickNext(e);
+	              }
+	            },
+	            "Next Page \u2192"
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	    return AdminUser;
+	  return AdminUser;
 	}(_react.Component);
 
 	AdminUser = (0, _reactRedux.connect)()(AdminUser);
@@ -114556,10 +114752,10 @@
 /* 1124 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -114593,527 +114789,573 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var ModalShowLectures = function (_Component) {
-	    _inherits(ModalShowLectures, _Component);
+	  _inherits(ModalShowLectures, _Component);
 
-	    function ModalShowLectures(props) {
-	        _classCallCheck(this, ModalShowLectures);
+	  function ModalShowLectures(props) {
+	    _classCallCheck(this, ModalShowLectures);
 
-	        var _this = _possibleConstructorReturn(this, (ModalShowLectures.__proto__ || Object.getPrototypeOf(ModalShowLectures)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (ModalShowLectures.__proto__ || Object.getPrototypeOf(ModalShowLectures)).call(this, props));
 
-	        _this.state = {
-	            modalOpen: false,
-	            course: {}
-	        };
-	        return _this;
+	    _this.state = {
+	      modalOpen: false,
+	      course: {}
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ModalShowLectures, [{
+	    key: "handleOpen",
+	    value: function handleOpen(e, course) {
+	      this.setState({
+	        modalOpen: true,
+	        course: course
+	      });
 	    }
-
-	    _createClass(ModalShowLectures, [{
-	        key: 'handleOpen',
-	        value: function handleOpen(e, course) {
-	            this.setState({
-	                modalOpen: true,
-	                course: course
-	            });
-	        }
-	    }, {
-	        key: 'handleClose',
-	        value: function handleClose(e) {
-	            this.setState({
-	                modalOpen: false
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
+	  }, {
+	    key: "handleClose",
+	    value: function handleClose(e) {
+	      this.setState({
+	        modalOpen: false
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _semanticUiReact.Modal,
+	        { open: this.state.modalOpen, onClose: this.handleClose.bind(this) },
+	        _react2.default.createElement(
+	          _semanticUiReact.Modal.Header,
+	          null,
+	          this.state.course.name
+	        ),
+	        _react2.default.createElement(
+	          _semanticUiReact.Modal.Content,
+	          null,
+	          this.state.course.lectures ? this.state.course.lectures.map(function (lecture, index) {
 	            return _react2.default.createElement(
-	                _semanticUiReact.Modal,
+	              "div",
+	              { key: index },
+	              _react2.default.createElement(
+	                "strong",
+	                null,
+	                "Lecture ",
+	                index + 1,
+	                ": ",
+	                lecture.name
+	              ),
+	              _react2.default.createElement(
+	                "video",
 	                {
-	                    open: this.state.modalOpen,
-	                    onClose: this.handleClose.bind(this) },
-	                _react2.default.createElement(
-	                    _semanticUiReact.Modal.Header,
-	                    null,
-	                    this.state.course.name
-	                ),
-	                _react2.default.createElement(
-	                    _semanticUiReact.Modal.Content,
-	                    null,
-	                    this.state.course.lectures ? this.state.course.lectures.map(function (lecture, index) {
-	                        return _react2.default.createElement(
-	                            'div',
-	                            { key: index },
-	                            _react2.default.createElement(
-	                                'strong',
-	                                null,
-	                                'Lecture ',
-	                                index + 1,
-	                                ': ',
-	                                lecture.name
-	                            ),
-	                            _react2.default.createElement(
-	                                'video',
-	                                { id: 'video-' + lecture._id, controls: true, preload: 'false',
-	                                    width: '100%', height: 'auto' },
-	                                _react2.default.createElement('source', { src: '/api/resource/play-video-admin/' + lecture._id, type: 'video/mp4' })
-	                            ),
-	                            _react2.default.createElement('hr', null)
-	                        );
-	                    }) : ''
-	                )
+	                  id: "video-" + lecture._id,
+	                  controls: true,
+	                  preload: "false",
+	                  width: "100%",
+	                  height: "auto"
+	                },
+	                _react2.default.createElement("source", {
+	                  src: "/api/resource/play-video-admin/" + lecture._id,
+	                  type: "video/mp4"
+	                })
+	              ),
+	              _react2.default.createElement("hr", null)
 	            );
-	        }
-	    }]);
+	          }) : ""
+	        )
+	      );
+	    }
+	  }]);
 
-	    return ModalShowLectures;
+	  return ModalShowLectures;
 	}(_react.Component);
 
 	var AdminCourse = function (_Component2) {
-	    _inherits(AdminCourse, _Component2);
+	  _inherits(AdminCourse, _Component2);
 
-	    function AdminCourse(props) {
-	        _classCallCheck(this, AdminCourse);
+	  function AdminCourse(props) {
+	    _classCallCheck(this, AdminCourse);
 
-	        var _this2 = _possibleConstructorReturn(this, (AdminCourse.__proto__ || Object.getPrototypeOf(AdminCourse)).call(this, props));
+	    var _this2 = _possibleConstructorReturn(this, (AdminCourse.__proto__ || Object.getPrototypeOf(AdminCourse)).call(this, props));
 
-	        _this2.state = {
-	            searchQuery: '',
-	            courses: []
-	        };
-	        return _this2;
+	    _this2.state = {
+	      searchQuery: "",
+	      courses: []
+	    };
+	    return _this2;
+	  }
+
+	  _createClass(AdminCourse, [{
+	    key: "viewCourse",
+	    value: function viewCourse(e, course) {
+	      this.modalViewCourse.handleOpen(e, course);
 	    }
+	  }, {
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      var _this3 = this;
 
-	    _createClass(AdminCourse, [{
-	        key: 'viewCourse',
-	        value: function viewCourse(e, course) {
-	            this.modalViewCourse.handleOpen(e, course);
+	      this.setState({ searchQuery: this.props.location.query.searchQuery || "" });
+	      $.post("http://localhost:5000/admin/get-courses", this.props.location.query, function (data, status) {
+	        if (data.code == 200) {
+	          _this3.setState({ courses: data.courses });
+	        } else if (data.code == 1001) {
+	          _this3.props.dispatch((0, _actions.setUser)({}));
+	          _this3.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          _reactRouter.browserHistory.push("/courses");
 	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this3 = this;
+	      });
+	    }
+	  }, {
+	    key: "componentWillReceiveProps",
+	    value: function componentWillReceiveProps(nextProps) {
+	      var _this4 = this;
 
-	            this.setState({ searchQuery: this.props.location.query.searchQuery || '' });
-	            $.post('/api/admin/get-courses', this.props.location.query, function (data, status) {
-	                if (data.code == 200) {
-	                    _this3.setState({ courses: data.courses });
-	                } else if (data.code == 1001) {
-	                    _this3.props.dispatch((0, _actions.setUser)({}));
-	                    _this3.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    _reactRouter.browserHistory.push('/courses');
+	      if (this.props.location.query != nextProps.location.query) {
+	        this.setState({
+	          searchQuery: nextProps.location.query.searchQuery || ""
+	        });
+	        $.post("http://localhost:5000/admin/get-courses", nextProps.location.query, function (data, status) {
+	          if (data.code == 200) {
+	            _this4.setState({ courses: data.courses });
+	          } else if (data.code == 1001) {
+	            _this4.props.dispatch((0, _actions.setUser)({}));
+	            _this4.props.dispatch((0, _actions.setGetMyCourses)(false));
+	            _reactRouter.browserHistory.push("/courses");
+	          }
+	        });
+	      }
+	    }
+	  }, {
+	    key: "onClickPrev",
+	    value: function onClickPrev(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page || query.page <= 1) {
+	        return;
+	      }
+	      var url = "/admin/courses" + "?page=" + (query.page - 1) + (query.searchQuery ? "&searchQuery=" + query.searchQuery : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onClickNext",
+	    value: function onClickNext(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/admin/courses" + "?page=" + (parseInt(query.page) + 1) + (query.searchQuery ? "&searchQuery=" + query.searchQuery : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onChangeFilterSort",
+	    value: function onChangeFilterSort(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/admin/courses" + "?page=" + query.page + (query.searchQuery ? "&searchQuery=" + query.searchQuery : "") + "&sort=" + e.target.value;
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onSubmitFormSearch",
+	    value: function onSubmitFormSearch(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/admin/courses" + "?page=" + query.page + (this.state.searchQuery != "" ? "&searchQuery=" + this.state.searchQuery : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "handleSearchQuery",
+	    value: function handleSearchQuery(e) {
+	      this.setState({ searchQuery: e.target.value });
+	      if (e.target.value == "") {
+	        var query = this.props.location.query;
+	        if (!query.page) {
+	          query.page = 1;
+	        }
+	        var url = "/admin/courses" + "?page=" + query.page + (query.sort ? "&sort=" + query.sort : "");
+	        _reactRouter.browserHistory.push(url);
+	      }
+	    }
+	  }, {
+	    key: "deleteCourse",
+	    value: function deleteCourse(_id) {
+	      var _this5 = this;
+
+	      $.post("/api/admin/delete-course", { _id: _id }, function (data, status) {
+	        if (data.code == 200) {
+	          var courses = _this5.state.courses;
+	          var index = _lodash2.default.findIndex(courses, function (o) {
+	            return o._id == _id;
+	          });
+	          _this5.setState({
+	            courses: [].concat(_toConsumableArray(courses.slice(0, index)), _toConsumableArray(courses.slice(index + 1)))
+	          });
+	        } else if (data.code == 1001) {
+	          _reactRouter.browserHistory.push("/courses");
+	        }
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this6 = this;
+
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	          "form",
+	          {
+	            className: "form-inline",
+	            style: { marginBottom: "20px" },
+	            onSubmit: function onSubmit(e) {
+	              return _this6.onSubmitFormSearch(e);
+	            }
+	          },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "form-group form-group-lg" },
+	            _react2.default.createElement(
+	              "label",
+	              { className: "control-label" },
+	              "Sort by:"
+	            ),
+	            " ",
+	            _react2.default.createElement(
+	              "select",
+	              {
+	                style: { fontWeight: "bold" },
+	                className: "form-control",
+	                value: this.props.location.query.sort || "1",
+	                onChange: function onChange(e) {
+	                  return _this6.onChangeFilterSort(e);
 	                }
-	            });
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            var _this4 = this;
-
-	            if (this.props.location.query != nextProps.location.query) {
-	                this.setState({
-	                    searchQuery: nextProps.location.query.searchQuery || ''
-	                });
-	                $.post('/api/admin/get-courses', nextProps.location.query, function (data, status) {
-	                    if (data.code == 200) {
-	                        _this4.setState({ courses: data.courses });
-	                    } else if (data.code == 1001) {
-	                        _this4.props.dispatch((0, _actions.setUser)({}));
-	                        _this4.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                        _reactRouter.browserHistory.push('/courses');
-	                    }
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'onClickPrev',
-	        value: function onClickPrev(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page || query.page <= 1) {
-	                return;
-	            }
-	            var url = '/admin/courses' + '?page=' + (query.page - 1) + (query.searchQuery ? '&searchQuery=' + query.searchQuery : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onClickNext',
-	        value: function onClickNext(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/admin/courses' + '?page=' + (parseInt(query.page) + 1) + (query.searchQuery ? '&searchQuery=' + query.searchQuery : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onChangeFilterSort',
-	        value: function onChangeFilterSort(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/admin/courses' + '?page=' + query.page + (query.searchQuery ? '&searchQuery=' + query.searchQuery : '') + '&sort=' + e.target.value;
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onSubmitFormSearch',
-	        value: function onSubmitFormSearch(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/admin/courses' + '?page=' + query.page + (this.state.searchQuery != '' ? '&searchQuery=' + this.state.searchQuery : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'handleSearchQuery',
-	        value: function handleSearchQuery(e) {
-	            this.setState({ searchQuery: e.target.value });
-	            if (e.target.value == '') {
-	                var query = this.props.location.query;
-	                if (!query.page) {
-	                    query.page = 1;
+	              },
+	              _react2.default.createElement(
+	                "option",
+	                { value: "1", style: { fontWeight: "bold" } },
+	                "Name: A-to-Z"
+	              ),
+	              _react2.default.createElement(
+	                "option",
+	                { value: "2", style: { fontWeight: "bold" } },
+	                "Name: Z-to-A"
+	              )
+	            )
+	          ),
+	          " ",
+	          _react2.default.createElement(
+	            "div",
+	            { className: "form-group form-group-lg" },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "input-group input-group-lg" },
+	              _react2.default.createElement("input", {
+	                type: "text",
+	                className: "form-control",
+	                value: this.state.searchQuery,
+	                placeholder: "Search course's name",
+	                onChange: function onChange(e) {
+	                  return _this6.handleSearchQuery(e);
 	                }
-	                var url = '/admin/courses' + '?page=' + query.page + (query.sort ? '&sort=' + query.sort : '');
-	                _reactRouter.browserHistory.push(url);
-	            }
-	        }
-	    }, {
-	        key: 'deleteCourse',
-	        value: function deleteCourse(_id) {
-	            var _this5 = this;
-
-	            $.post('/api/admin/delete-course', { _id: _id }, function (data, status) {
-	                if (data.code == 200) {
-	                    var courses = _this5.state.courses;
-	                    var index = _lodash2.default.findIndex(courses, function (o) {
-	                        return o._id == _id;
-	                    });
-	                    _this5.setState({ courses: [].concat(_toConsumableArray(courses.slice(0, index)), _toConsumableArray(courses.slice(index + 1))) });
-	                } else if (data.code == 1001) {
-	                    _reactRouter.browserHistory.push('/courses');
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this6 = this;
-
-	            return _react2.default.createElement(
-	                'div',
+	              }),
+	              _react2.default.createElement(
+	                "span",
+	                { className: "input-group-btn" },
+	                _react2.default.createElement(
+	                  "button",
+	                  { className: "btn btn-default", type: "submit" },
+	                  _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "search" })
+	                )
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _semanticUiReact.Table,
+	          { basic: "very", celled: true, collapsing: true },
+	          _react2.default.createElement(
+	            _semanticUiReact.Table.Header,
+	            null,
+	            _react2.default.createElement(
+	              _semanticUiReact.Table.Row,
+	              null,
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
 	                null,
+	                "Course"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Information"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Requirement"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Price"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Public"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Instructor"
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _semanticUiReact.Table.Body,
+	            null,
+	            this.state.courses.map(function (course, index) {
+	              return _react2.default.createElement(
+	                _semanticUiReact.Table.Row,
+	                { key: index },
 	                _react2.default.createElement(
-	                    'form',
-	                    { className: 'form-inline', style: { marginBottom: '20px' }, onSubmit: function onSubmit(e) {
-	                            return _this6.onSubmitFormSearch(e);
-	                        } },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group form-group-lg' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { className: 'control-label' },
-	                            'Sort by:'
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'select',
-	                            { style: { fontWeight: 'bold' }, className: 'form-control',
-	                                value: this.props.location.query.sort || '1', onChange: function onChange(e) {
-	                                    return _this6.onChangeFilterSort(e);
-	                                } },
-	                            _react2.default.createElement(
-	                                'option',
-	                                { value: '1', style: { fontWeight: 'bold' } },
-	                                'Name: A-to-Z'
-	                            ),
-	                            _react2.default.createElement(
-	                                'option',
-	                                { value: '2', style: { fontWeight: 'bold' } },
-	                                'Name: Z-to-A'
-	                            )
-	                        )
-	                    ),
-	                    ' ',
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group form-group-lg' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'input-group input-group-lg' },
-	                            _react2.default.createElement('input', { type: 'text', className: 'form-control',
-	                                value: this.state.searchQuery, placeholder: 'Search course\'s name',
-	                                onChange: function onChange(e) {
-	                                    return _this6.handleSearchQuery(e);
-	                                } }),
-	                            _react2.default.createElement(
-	                                'span',
-	                                { className: 'input-group-btn' },
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { className: 'btn btn-default', type: 'submit' },
-	                                    _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'search' })
-	                                )
-	                            )
-	                        )
-	                    )
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  course.name
 	                ),
 	                _react2.default.createElement(
-	                    _semanticUiReact.Table,
-	                    { basic: 'very', celled: true, collapsing: true },
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Table.Header,
-	                        null,
-	                        _react2.default.createElement(
-	                            _semanticUiReact.Table.Row,
-	                            null,
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Course'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Information'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Requirement'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Price'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Public'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Instructor'
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Table.Body,
-	                        null,
-	                        this.state.courses.map(function (course, index) {
-	                            return _react2.default.createElement(
-	                                _semanticUiReact.Table.Row,
-	                                { key: index },
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    course.name
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    course.genre ? _react2.default.createElement(
-	                                        'div',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            'strong',
-	                                            null,
-	                                            'Category :',
-	                                            ' ',
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { target: '_blank', href: '/courses/' + course.genre._id },
-	                                                course.genre.name
-	                                            ),
-	                                            ' ',
-	                                            '/',
-	                                            ' ',
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { target: '_blank', href: '/courses/' + course.genre._id + '/' + course.subgenre._id },
-	                                                course.subgenre.name
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement('br', null)
-	                                    ) : '',
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        null,
-	                                        'Skill Level : ',
-	                                        function () {
-	                                            switch (course.level) {
-	                                                case 0:
-	                                                    return 'All Levels';
-	                                                case 1:
-	                                                    return 'Beginner Level';
-	                                                case 2:
-	                                                    return 'Intermediate Level';
-	                                                case 3:
-	                                                    return 'Expert Level';
-	                                                default:
-	                                                    return 'All Levels';
-	                                            }
-	                                        }()
-	                                    ),
-	                                    _react2.default.createElement('br', null),
-	                                    _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'calendar' }),
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        null,
-	                                        ' Created ' + new Date(course.createdAt).toLocaleString()
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            'span',
-	                                            { className: 'course-rate' },
-	                                            _react2.default.createElement('span', { style: { width: (course.star || 0) * 20 + '%' } })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'span',
-	                                            { style: { fontWeight: 'bold' } },
-	                                            ' ' + (course.star ? course.star.toFixed(1) : 0) + '(' + course.numberofreviews + ' ratings) • ' + course.numberofstudent + ' students enrolled'
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement('hr', null),
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        { style: { color: '#5bc0de' } },
-	                                        'Description'
-	                                    ),
-	                                    _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: course.description } })
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        { style: { color: '#5bc0de' } },
-	                                        'What are the requirements?'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'ul',
-	                                        null,
-	                                        course.needtoknow.map(function (item, index) {
-	                                            return _react2.default.createElement(
-	                                                'li',
-	                                                { key: index },
-	                                                item
-	                                            );
-	                                        })
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        { style: { color: '#5bc0de' } },
-	                                        'What am I going to get from this course?'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'ul',
-	                                        null,
-	                                        course.willableto.map(function (item, index) {
-	                                            return _react2.default.createElement(
-	                                                'li',
-	                                                { key: index },
-	                                                item
-	                                            );
-	                                        })
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        { style: { color: '#5bc0de' } },
-	                                        'What is the target students?'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'ul',
-	                                        null,
-	                                        course.targetstudent.map(function (item, index) {
-	                                            return _react2.default.createElement(
-	                                                'li',
-	                                                { key: index },
-	                                                item
-	                                            );
-	                                        })
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    course.cost + '$'
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    { textAlign: 'center' },
-	                                    course.public ? _react2.default.createElement(_semanticUiReact.Icon, { color: 'green', name: 'checkmark', size: 'large' }) : ''
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'a',
-	                                        { target: '_blank', href: '/view-user/' + course.lecturer._id },
-	                                        course.lecturer.username + ''
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    { textAlign: 'center' },
-	                                    _react2.default.createElement(
-	                                        _semanticUiReact.Button.Group,
-	                                        { size: 'mini' },
-	                                        _react2.default.createElement(
-	                                            _semanticUiReact.Button,
-	                                            { positive: true, onClick: function onClick(e) {
-	                                                    return _this6.viewCourse(e, course);
-	                                                } },
-	                                            _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'eye-open' })
-	                                        ),
-	                                        _react2.default.createElement(_semanticUiReact.Button.Or, null),
-	                                        _react2.default.createElement(
-	                                            _semanticUiReact.Button,
-	                                            { negative: true, onClick: function onClick(e) {
-	                                                    return _this6.deleteCourse(course._id);
-	                                                } },
-	                                            _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'trash' })
-	                                        )
-	                                    )
-	                                )
-	                            );
-	                        })
-	                    )
-	                ),
-	                _react2.default.createElement(ModalShowLectures, { ref: function ref(_ref) {
-	                        return _this6.modalViewCourse = _ref;
-	                    } }),
-	                _react2.default.createElement(
-	                    _reactBootstrap.Pager,
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  course.genre ? _react2.default.createElement(
+	                    "div",
 	                    null,
 	                    _react2.default.createElement(
-	                        _reactBootstrap.Pager.Item,
-	                        { disabled: !this.props.location.query.page || this.props.location.query.page == 1,
-	                            previous: true, onClick: function onClick(e) {
-	                                _this6.onClickPrev(e);
-	                            } },
-	                        '\u2190 Previous Page'
+	                      "strong",
+	                      null,
+	                      "Category :",
+	                      " ",
+	                      _react2.default.createElement(
+	                        "a",
+	                        {
+	                          target: "_blank",
+	                          href: "/courses/" + course.genre._id
+	                        },
+	                        course.genre.name
+	                      ),
+	                      " ",
+	                      "/",
+	                      " ",
+	                      _react2.default.createElement(
+	                        "a",
+	                        {
+	                          target: "_blank",
+	                          href: "/courses/" + course.genre._id + "/" + course.subgenre._id
+	                        },
+	                        course.subgenre.name
+	                      )
+	                    ),
+	                    _react2.default.createElement("br", null)
+	                  ) : "",
+	                  _react2.default.createElement(
+	                    "strong",
+	                    null,
+	                    "Skill Level :",
+	                    " ",
+	                    function () {
+	                      switch (course.level) {
+	                        case 0:
+	                          return "All Levels";
+	                        case 1:
+	                          return "Beginner Level";
+	                        case 2:
+	                          return "Intermediate Level";
+	                        case 3:
+	                          return "Expert Level";
+	                        default:
+	                          return "All Levels";
+	                      }
+	                    }()
+	                  ),
+	                  _react2.default.createElement("br", null),
+	                  _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "calendar" }),
+	                  _react2.default.createElement(
+	                    "span",
+	                    null,
+	                    " Created " + new Date(course.createdAt).toLocaleString()
+	                  ),
+	                  _react2.default.createElement(
+	                    "div",
+	                    null,
+	                    _react2.default.createElement(
+	                      "span",
+	                      { className: "course-rate" },
+	                      _react2.default.createElement("span", {
+	                        style: { width: (course.star || 0) * 20 + "%" }
+	                      })
 	                    ),
 	                    _react2.default.createElement(
-	                        _reactBootstrap.Pager.Item,
-	                        { next: true, onClick: function onClick(e) {
-	                                _this6.onClickNext(e);
-	                            } },
-	                        'Next Page \u2192'
+	                      "span",
+	                      { style: { fontWeight: "bold" } },
+	                      " " + (course.star ? course.star.toFixed(1) : 0) + "(" + course.numberofreviews + " ratings) • " + course.numberofstudent + " students enrolled"
 	                    )
+	                  ),
+	                  _react2.default.createElement("hr", null),
+	                  _react2.default.createElement(
+	                    "strong",
+	                    { style: { color: "#5bc0de" } },
+	                    "Description"
+	                  ),
+	                  _react2.default.createElement("div", {
+	                    dangerouslySetInnerHTML: { __html: course.description }
+	                  })
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  _react2.default.createElement(
+	                    "strong",
+	                    { style: { color: "#5bc0de" } },
+	                    "What are the requirements?"
+	                  ),
+	                  _react2.default.createElement(
+	                    "ul",
+	                    null,
+	                    course.needtoknow.map(function (item, index) {
+	                      return _react2.default.createElement(
+	                        "li",
+	                        { key: index },
+	                        item
+	                      );
+	                    })
+	                  ),
+	                  _react2.default.createElement(
+	                    "strong",
+	                    { style: { color: "#5bc0de" } },
+	                    "What am I going to get from this course?"
+	                  ),
+	                  _react2.default.createElement(
+	                    "ul",
+	                    null,
+	                    course.willableto.map(function (item, index) {
+	                      return _react2.default.createElement(
+	                        "li",
+	                        { key: index },
+	                        item
+	                      );
+	                    })
+	                  ),
+	                  _react2.default.createElement(
+	                    "strong",
+	                    { style: { color: "#5bc0de" } },
+	                    "What is the target students?"
+	                  ),
+	                  _react2.default.createElement(
+	                    "ul",
+	                    null,
+	                    course.targetstudent.map(function (item, index) {
+	                      return _react2.default.createElement(
+	                        "li",
+	                        { key: index },
+	                        item
+	                      );
+	                    })
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  course.cost + "$"
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  { textAlign: "center" },
+	                  course.public ? _react2.default.createElement(_semanticUiReact.Icon, { color: "green", name: "checkmark", size: "large" }) : ""
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  _react2.default.createElement(
+	                    "a",
+	                    {
+	                      target: "_blank",
+	                      href: "/view-user/" + course.lecturer._id
+	                    },
+	                    course.lecturer.username + ""
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  { textAlign: "center" },
+	                  _react2.default.createElement(
+	                    _semanticUiReact.Button.Group,
+	                    { size: "mini" },
+	                    _react2.default.createElement(
+	                      _semanticUiReact.Button,
+	                      {
+	                        positive: true,
+	                        onClick: function onClick(e) {
+	                          return _this6.viewCourse(e, course);
+	                        }
+	                      },
+	                      _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "eye-open" })
+	                    ),
+	                    _react2.default.createElement(_semanticUiReact.Button.Or, null),
+	                    _react2.default.createElement(
+	                      _semanticUiReact.Button,
+	                      {
+	                        negative: true,
+	                        onClick: function onClick(e) {
+	                          return _this6.deleteCourse(course._id);
+	                        }
+	                      },
+	                      _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "trash" })
+	                    )
+	                  )
 	                )
-	            );
-	        }
-	    }]);
+	              );
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(ModalShowLectures, { ref: function ref(_ref) {
+	            return _this6.modalViewCourse = _ref;
+	          } }),
+	        _react2.default.createElement(
+	          _reactBootstrap.Pager,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Pager.Item,
+	            {
+	              disabled: !this.props.location.query.page || this.props.location.query.page == 1,
+	              previous: true,
+	              onClick: function onClick(e) {
+	                _this6.onClickPrev(e);
+	              }
+	            },
+	            "\u2190 Previous Page"
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Pager.Item,
+	            {
+	              next: true,
+	              onClick: function onClick(e) {
+	                _this6.onClickNext(e);
+	              }
+	            },
+	            "Next Page \u2192"
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	    return AdminCourse;
+	  return AdminCourse;
 	}(_react.Component);
 
 	AdminCourse = (0, _reactRedux.connect)()(AdminCourse);

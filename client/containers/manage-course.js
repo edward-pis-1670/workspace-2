@@ -64,11 +64,7 @@ class ManageCourse extends React.Component {
           <div className="container">
             <img
               className="managecourse-header-image"
-              src={
-                "/api/resource/images?src=" +
-                this.props.course.coverphoto +
-                "&w=130&h=73"
-              }
+              src={this.props.course.coverphoto}
             />
             {
               <div className="managecourse-header-detail">
@@ -90,7 +86,9 @@ class ManageCourse extends React.Component {
             <ul className="menu-profile">
               <li>
                 <Link
-                  to={"/managecourse/" + Number(this.props.course._id) + "/goals"}
+                  to={
+                    "/managecourse/" + Number(this.props.course._id) + "/goals"
+                  }
                   activeClassName="active"
                   onlyActiveOnIndex={true}
                 >
@@ -100,7 +98,11 @@ class ManageCourse extends React.Component {
               </li>
               <li>
                 <Link
-                  to={"/managecourse/" + Number(this.props.course._id) + "/lectures"}
+                  to={
+                    "/managecourse/" +
+                    Number(this.props.course._id) +
+                    "/lectures"
+                  }
                   activeClassName="active"
                   onlyActiveOnIndex={true}
                 >
@@ -110,7 +112,11 @@ class ManageCourse extends React.Component {
               </li>
               <li>
                 <Link
-                  to={"/managecourse/" + Number(this.props.course._id) + "/description"}
+                  to={
+                    "/managecourse/" +
+                    Number(this.props.course._id) +
+                    "/description"
+                  }
                   activeClassName="active"
                   onlyActiveOnIndex={true}
                 >
@@ -120,7 +126,9 @@ class ManageCourse extends React.Component {
               </li>
               <li>
                 <Link
-                  to={"/managecourse/" + Number(this.props.course._id) + "/price"}
+                  to={
+                    "/managecourse/" + Number(this.props.course._id) + "/price"
+                  }
                   activeClassName="active"
                   onlyActiveOnIndex={true}
                 >
@@ -130,7 +138,11 @@ class ManageCourse extends React.Component {
               </li>
               <li>
                 <Link
-                  to={"/managecourse/" + Number(this.props.course._id) + "/danger-zone"}
+                  to={
+                    "/managecourse/" +
+                    Number(this.props.course._id) +
+                    "/danger-zone"
+                  }
                   activeClassName="active"
                   onlyActiveOnIndex={true}
                 >
@@ -161,8 +173,7 @@ class ManageCourse extends React.Component {
 ManageCourse = connect((state, props) => {
   if (state.user.mycourses) {
     let course = _.find(state.user.mycourses, { _id: Number(props.params.id) });
-    console.log(state.user.mycourses);
-    if (course)
+    if (course) {
       return {
         course: {
           _id: course._id,
@@ -173,6 +184,7 @@ ManageCourse = connect((state, props) => {
         },
         username: state.user.username,
       };
+    }
   }
   return props;
 })(ManageCourse);
