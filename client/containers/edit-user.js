@@ -8,7 +8,7 @@ class SidebarControl extends React.Component {
             return (
                 <div className="container">
                     <div className="col-xs-2 col-sm-2 col-md-2 col-lg-2 sidebar-profile">
-                        <div className="photo-profile" style={{ backgroundImage: 'url(' + ('/api/resource/images?src=' + this.props.photo + '&w=200&h=200') + ')' }}></div>
+                        <div className="photo-profile" style={{ backgroundImage: 'url(' + ( this.props.photo ) + ')' }}></div>
                         <p className="username-profile">
                             {this.props.username}
                         </p>

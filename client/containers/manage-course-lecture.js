@@ -206,7 +206,7 @@ class ManageCourseLecture extends React.Component {
     fd.append("lectureid", Number(lectureid));
     $.ajax({
       method: "POST",
-      // url: "/api/user/upload-video-lecture",
+      // url: "/api/user/-lecture",
       url: "http://localhost:5000/users/upload-video-lecture",
       data: fd,
       processData: false,

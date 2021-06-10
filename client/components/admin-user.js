@@ -224,7 +224,8 @@ class ModalEditUser extends Component {
         this.setState({ user: user })
     }
     Process() {
-        $.post('/api/admin/edit-user',
+        // $.post('/api/admin/edit-user',
+        $.post('http://localhost:5000/admin/edit-user',
             this.state.user, (data, status) => {
                 if (data.code == 200) {
                     this.setState({ modalOpen: false })
@@ -330,7 +331,8 @@ class AdminUser extends Component {
     }
     componentDidMount() {
         this.setState({ searchQuery: this.props.location.query.searchQuery || '' })
-        $.post('/api/admin/get-users',
+        // $.post('/api/admin/get-users',
+        $.post('http://localhost:5000/admin/get-users',
             this.props.location.query, (data, status) => {
                 if (data.code == 200) {
                     this.setState({ users: data.users })
@@ -341,12 +343,15 @@ class AdminUser extends Component {
                 }
             })
     }
+    
     componentWillReceiveProps(nextProps) {
         if (this.props.location.query != nextProps.location.query) {
             this.setState({
                 searchQuery: nextProps.location.query.searchQuery || ''
             })
-            $.post('/api/admin/get-users',
+            // $.post('/api/admin/get-users',
+            $.post('http://localhost:5000/admin/get-users',
+
                 nextProps.location.query, (data, status) => {
                     if (data.code == 200) {
                         this.setState({ users: data.users })
@@ -415,7 +420,8 @@ class AdminUser extends Component {
         }
     }
     deleteUser(_id) {
-        $.post('/api/admin/delete-user',
+        // $.post('/api/admin/delete-user',
+        $.post('http://localhost:5000/admin/delete-user',
             { _id: _id }, (data, status) => {
                 if (data.code == 200) {
                     let users = this.state.users
@@ -478,7 +484,7 @@ class AdminUser extends Component {
                         return <Table.Row key={index}>
                             <Table.Cell>
                                 <Header as='h4' image>
-                                    <Image src={'/api/resource/images?src=' + user.photo + '&w=50&h=50'} shape='rounded' size='mini' />
+                                    <Image src={user.photo} shape='rounded' size='mini' />
                                     <Header.Content>{user.username}</Header.Content>
                                 </Header>
                             </Table.Cell>

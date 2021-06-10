@@ -31,7 +31,7 @@ class Course extends React.Component {
 			<OverlayTrigger trigger={['hover', 'focus']} placement={this.props.popoverPlacement} overlay={popover}>
 				<Link to={'/course/' + this.props.course._id} className='course'>
 					<div style={{ backgroundColor: 'black' }}>
-						<img className='course-img' src={'/api/resource/images?src=' + this.props.course.coverphoto + '&w=240&h=135'} />
+						<img className='course-img' src={this.props.course.coverphoto} />
 					</div>
 					<div className='course-info'>
 						<span className='course-title'>{this.props.course.name}</span>
@@ -53,7 +53,7 @@ class Course extends React.Component {
 						</button>
 					</OverlayTrigger>
 					<div className='course-author'>
-						<img src={'/api/resource/images?src=' + this.props.course.lecturer.photo + '&w=50&h=50'} />
+						<img src={this.props.course.lecturer.photo} />
 						<span>{this.props.course.lecturer.username}</span>
 					</div>
 				</Link>

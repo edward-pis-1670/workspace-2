@@ -16,7 +16,7 @@ class Notifications extends React.Component {
         }
     }
     componentDidMount() {
-        $.post('/api/user/get-notis', { page: this.state.page }, (data, status) => {
+        $.post('http://localhost:5000/users/get-notification', { page: this.state.page }, (data, status) => {
             if (data.code == 1001) {
                 this.props.dispatch(setUser({}))
                 this.props.dispatch(setGetMyCourses(false))
@@ -44,7 +44,7 @@ class Notifications extends React.Component {
     onClickPrev() {
         if (this.props.page <= 1) return
         let page = this.state.page - 1
-        $.post('/api/user/get-notis', { page: page }, (data, status) => {
+        $.post('http://localhost:5000/users/get-notification', { page: page }, (data, status) => {
             if (data.code == 1001) {
                 this.props.dispatch(setUser({}))
                 this.props.dispatch(setGetMyCourses(false))
@@ -57,7 +57,7 @@ class Notifications extends React.Component {
     }
     onClickNext() {
         let page = this.state.page + 1
-        $.post('/api/user/get-notis', { page: page }, (data, status) => {
+        $.post('http://localhost:5000/users/get-notification', { page: page }, (data, status) => {
             if (data.code == 1001) {
                 this.props.dispatch(setUser({}))
                 this.props.dispatch(setGetMyCourses(false))
@@ -91,7 +91,7 @@ class Notifications extends React.Component {
                                 <Row className='relative'>
                                     <Link onClick={(e) => { this.onClickNoti(e, noti, index) } }>
                                         <Col xs={2}>
-                                            <img src={'/api/resource/images?src=' + noti.from.photo + '&w=50&h=50'} />
+                                            <img src={noti.from.photo} />
                                         </Col>
                                         <Col xs={9}>
                                             <p className="noti-message">{noti.title}:

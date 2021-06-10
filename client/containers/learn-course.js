@@ -111,8 +111,11 @@ class LearnCourse extends React.Component {
     );
   }
   render() {
-    if (!this.props.course || this.props.course.lectures.length == 0)
-      return <div></div>;
+    if (!this.props.course || this.props.course.lectures.length == 0){
+
+      // console.log(this.props.course.lectures)
+        return <div></div>;
+    }
     return (
       <div>
         <link

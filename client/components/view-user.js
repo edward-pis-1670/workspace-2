@@ -47,7 +47,7 @@ class ViewUser extends React.Component {
                     <div className="panel-body">
                         <div className='row'>
                             <div className='col-xs-2 col-md-1' style={{ paddingLeft: '0px', paddingRight: '0px' }}>
-                                <div className="photo-profile" style={{ backgroundImage: 'url(' + ('/api/resource/images?src=' + this.state.user.photo + '&w=100&h=100') + ')' }}></div>
+                                <div className="photo-profile" style={{ backgroundImage: 'url(' + (this.state.user.photo) + ')' }}></div>
                             </div>
                             <div className='col-xs-10 col-md-11' >
                                 <Link to={'/view-user/' + this.state.user._id} className='lecturer-name'>{this.state.user.username}</Link>

@@ -64,7 +64,9 @@ class Navbar extends React.Component {
     this.setState({ coursename: e.target.value });
   }
   markAllAsRead() {
-    $.get("/api/user/mark-all-read-noti", (data, status) => {});
+    // $.get("/api/user/mark-all-read-noti",
+    $.get("http://localhost:5000/users/mark-read-all-notification",
+     (data, status) => {});
     this.props.dispatch(markAllAsRead());
   }
   markAsRead(e, noti) {

@@ -60,7 +60,8 @@ class AdminCourse extends Component {
     }
     componentDidMount() {
         this.setState({ searchQuery: this.props.location.query.searchQuery || '' })
-        $.post('/api/admin/get-courses',
+        // $.post('/api/admin/get-courses',
+        $.post('http://localhost:5000/admin/get-courses',
             this.props.location.query, (data, status) => {
                 if (data.code == 200) {
                     this.setState({ courses: data.courses })
@@ -76,7 +77,8 @@ class AdminCourse extends Component {
             this.setState({
                 searchQuery: nextProps.location.query.searchQuery || ''
             })
-            $.post('/api/admin/get-courses',
+            // $.post('/api/admin/get-courses',
+            $.post('http://localhost:5000/admin/get-courses',
                 nextProps.location.query, (data, status) => {
                     if (data.code == 200) {
                         this.setState({ courses: data.courses })

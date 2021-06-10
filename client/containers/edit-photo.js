@@ -102,7 +102,7 @@ class EditPhoto extends React.Component {
 
 EditPhoto = connect((state) => {
     return {
-        imagePreviewUrl: '/api/resource/images?src='+state.user.photo+'&w=300&h=300'
+        imagePreviewUrl: state.user.photo
     }
 })(EditPhoto)
 

@@ -42153,7 +42153,8 @@
 	  }, {
 	    key: "markAllAsRead",
 	    value: function markAllAsRead() {
-	      $.get("/api/user/mark-all-read-noti", function (data, status) {});
+	      // $.get("/api/user/mark-all-read-noti",
+	      $.get("http://localhost:5000/users/mark-read-all-notification", function (data, status) {});
 	      this.props.dispatch((0, _actions.markAllAsRead)());
 	    }
 	  }, {
@@ -70034,7 +70035,7 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'col-xs-2 col-sm-2 col-md-2 col-lg-2 sidebar-profile' },
-	                        _react2.default.createElement('div', { className: 'photo-profile', style: { backgroundImage: 'url(' + ('/api/resource/images?src=' + this.props.photo + '&w=200&h=200') + ')' } }),
+	                        _react2.default.createElement('div', { className: 'photo-profile', style: { backgroundImage: 'url(' + this.props.photo + ')' } }),
 	                        _react2.default.createElement(
 	                            'p',
 	                            { className: 'username-profile' },
@@ -70603,7 +70604,7 @@
 
 	EditPhoto = (0, _reactRedux.connect)(function (state) {
 	    return {
-	        imagePreviewUrl: '/api/resource/images?src=' + state.user.photo + '&w=300&h=300'
+	        imagePreviewUrl: state.user.photo
 	    };
 	})(EditPhoto);
 
@@ -106362,7 +106363,7 @@
 	                _react2.default.createElement(
 	                    _reactRouter.Link,
 	                    { to: '/managecourse/' + this.props.course._id + '/goals', className: 'course-instructor' },
-	                    _react2.default.createElement('img', { className: 'course-instructor-image', src: '/api/resource/images?src=' + this.props.course.coverphoto + '&w=130&h=73' }),
+	                    _react2.default.createElement('img', { className: 'course-instructor-image', src: this.props.course.coverphoto }),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'course-instructor-detail' },
@@ -106534,7 +106535,7 @@
 	            { className: "container" },
 	            _react2.default.createElement("img", {
 	              className: "managecourse-header-image",
-	              src: "/api/resource/images?src=" + this.props.course.coverphoto + "&w=130&h=73"
+	              src: this.props.course.coverphoto
 	            }),
 	            _react2.default.createElement(
 	              "div",
@@ -108163,7 +108164,7 @@
 	      fd.append("lectureid", Number(lectureid));
 	      $.ajax({
 	        method: "POST",
-	        // url: "/api/user/upload-video-lecture",
+	        // url: "/api/user/-lecture",
 	        url: "http://localhost:5000/users/upload-video-lecture",
 	        data: fd,
 	        processData: false,
@@ -109478,7 +109479,7 @@
 	                    _react2.default.createElement("div", {
 	                      className: "photo-profile",
 	                      style: {
-	                        backgroundImage: "url(" + ("/api/resource/images?src=" + this.props.course.lecturer.photo + "&w=100&h=100") + ")"
+	                        backgroundImage: "url(" + this.props.course.lecturer.photo + ")"
 	                      }
 	                    })
 	                  ),
@@ -109646,7 +109647,7 @@
 	                        { className: "info-rate", key: index },
 	                        _react2.default.createElement("img", {
 	                          className: "avatar-rate",
-	                          src: "/api/resource/images?src=" + review.user.photo + "&w=50&h=50"
+	                          src: review.user.photo
 	                        }),
 	                        _react2.default.createElement(
 	                          "div",
@@ -109774,6 +109775,7 @@
 	ViewCourse = (0, _reactRedux.connect)(function (state, props) {
 	  var course = _.find(state.viewCourses, { _id: Number(props.params.id) });
 	  if (course) {
+	    console.log(state);
 	    return {
 	      course: course,
 	      islearning: _.includes(state.user.mylearningcourses, Number(props.params.id)),
@@ -109868,7 +109870,7 @@
 						_react2.default.createElement(
 							'div',
 							{ style: { backgroundColor: 'black' } },
-							_react2.default.createElement('img', { className: 'course-img', src: '/api/resource/images?src=' + this.props.course.coverphoto + '&w=240&h=135' })
+							_react2.default.createElement('img', { className: 'course-img', src: this.props.course.coverphoto })
 						),
 						_react2.default.createElement(
 							'div',
@@ -109920,7 +109922,7 @@
 						_react2.default.createElement(
 							'div',
 							{ className: 'course-author' },
-							_react2.default.createElement('img', { src: '/api/resource/images?src=' + this.props.course.lecturer.photo + '&w=50&h=50' }),
+							_react2.default.createElement('img', { src: this.props.course.lecturer.photo }),
 							_react2.default.createElement(
 								'span',
 								null,
@@ -110203,7 +110205,11 @@
 	    value: function render() {
 	      var _this6 = this;
 
-	      if (!this.props.course || this.props.course.lectures.length == 0) return _react2.default.createElement("div", null);
+	      if (!this.props.course || this.props.course.lectures.length == 0) {
+
+	        // console.log(this.props.course.lectures)
+	        return _react2.default.createElement("div", null);
+	      }
 	      return _react2.default.createElement(
 	        "div",
 	        null,
@@ -112977,7 +112983,7 @@
 	                                _react2.default.createElement(
 	                                    'div',
 	                                    { className: 'col-xs-2 col-md-1', style: { paddingLeft: '0px', paddingRight: '0px' } },
-	                                    _react2.default.createElement('div', { className: 'photo-profile', style: { backgroundImage: 'url(' + ('/api/resource/images?src=' + this.state.user.photo + '&w=100&h=100') + ')' } })
+	                                    _react2.default.createElement('div', { className: 'photo-profile', style: { backgroundImage: 'url(' + this.state.user.photo + ')' } })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
@@ -113118,7 +113124,7 @@
 	        value: function componentDidMount() {
 	            var _this2 = this;
 
-	            $.post('/api/user/get-notis', { page: this.state.page }, function (data, status) {
+	            $.post('http://localhost:5000/users/get-notification', { page: this.state.page }, function (data, status) {
 	                if (data.code == 1001) {
 	                    _this2.props.dispatch((0, _actions.setUser)({}));
 	                    _this2.props.dispatch((0, _actions.setGetMyCourses)(false));
@@ -113153,7 +113159,7 @@
 
 	            if (this.props.page <= 1) return;
 	            var page = this.state.page - 1;
-	            $.post('/api/user/get-notis', { page: page }, function (data, status) {
+	            $.post('http://localhost:5000/users/get-notification', { page: page }, function (data, status) {
 	                if (data.code == 1001) {
 	                    _this3.props.dispatch((0, _actions.setUser)({}));
 	                    _this3.props.dispatch((0, _actions.setGetMyCourses)(false));
@@ -113169,7 +113175,7 @@
 	            var _this4 = this;
 
 	            var page = this.state.page + 1;
-	            $.post('/api/user/get-notis', { page: page }, function (data, status) {
+	            $.post('http://localhost:5000/users/get-notification', { page: page }, function (data, status) {
 	                if (data.code == 1001) {
 	                    _this4.props.dispatch((0, _actions.setUser)({}));
 	                    _this4.props.dispatch((0, _actions.setGetMyCourses)(false));
@@ -113237,7 +113243,7 @@
 	                                        _react2.default.createElement(
 	                                            _reactBootstrap.Col,
 	                                            { xs: 2 },
-	                                            _react2.default.createElement('img', { src: '/api/resource/images?src=' + noti.from.photo + '&w=50&h=50' })
+	                                            _react2.default.createElement('img', { src: noti.from.photo })
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            _reactBootstrap.Col,
@@ -113906,7 +113912,8 @@
 	        value: function Process() {
 	            var _this5 = this;
 
-	            $.post('/api/admin/edit-user', this.state.user, function (data, status) {
+	            // $.post('/api/admin/edit-user',
+	            $.post('http://localhost:5000/admin/edit-user', this.state.user, function (data, status) {
 	                if (data.code == 200) {
 	                    _this5.setState({ modalOpen: false });
 	                    _this5.props.onEditSuccess(null);
@@ -114137,7 +114144,8 @@
 	            var _this8 = this;
 
 	            this.setState({ searchQuery: this.props.location.query.searchQuery || '' });
-	            $.post('/api/admin/get-users', this.props.location.query, function (data, status) {
+	            // $.post('/api/admin/get-users',
+	            $.post('http://localhost:5000/admin/get-users', this.props.location.query, function (data, status) {
 	                if (data.code == 200) {
 	                    _this8.setState({ users: data.users });
 	                } else if (data.code == 1001) {
@@ -114156,7 +114164,8 @@
 	                this.setState({
 	                    searchQuery: nextProps.location.query.searchQuery || ''
 	                });
-	                $.post('/api/admin/get-users', nextProps.location.query, function (data, status) {
+	                // $.post('/api/admin/get-users',
+	                $.post('http://localhost:5000/admin/get-users', nextProps.location.query, function (data, status) {
 	                    if (data.code == 200) {
 	                        _this9.setState({ users: data.users });
 	                    } else if (data.code == 1001) {
@@ -114229,7 +114238,8 @@
 	        value: function deleteUser(_id) {
 	            var _this10 = this;
 
-	            $.post('/api/admin/delete-user', { _id: _id }, function (data, status) {
+	            // $.post('/api/admin/delete-user',
+	            $.post('http://localhost:5000/admin/delete-user', { _id: _id }, function (data, status) {
 	                if (data.code == 200) {
 	                    var users = _this10.state.users;
 	                    var index = _lodash2.default.findIndex(users, function (o) {
@@ -114385,7 +114395,7 @@
 	                                    _react2.default.createElement(
 	                                        _semanticUiReact.Header,
 	                                        { as: 'h4', image: true },
-	                                        _react2.default.createElement(_semanticUiReact.Image, { src: '/api/resource/images?src=' + user.photo + '&w=50&h=50', shape: 'rounded', size: 'mini' }),
+	                                        _react2.default.createElement(_semanticUiReact.Image, { src: user.photo, shape: 'rounded', size: 'mini' }),
 	                                        _react2.default.createElement(
 	                                            _semanticUiReact.Header.Content,
 	                                            null,
@@ -114693,7 +114703,8 @@
 	            var _this3 = this;
 
 	            this.setState({ searchQuery: this.props.location.query.searchQuery || '' });
-	            $.post('/api/admin/get-courses', this.props.location.query, function (data, status) {
+	            // $.post('/api/admin/get-courses',
+	            $.post('http://localhost:5000/admin/get-courses', this.props.location.query, function (data, status) {
 	                if (data.code == 200) {
 	                    _this3.setState({ courses: data.courses });
 	                } else if (data.code == 1001) {
@@ -114712,7 +114723,8 @@
 	                this.setState({
 	                    searchQuery: nextProps.location.query.searchQuery || ''
 	                });
-	                $.post('/api/admin/get-courses', nextProps.location.query, function (data, status) {
+	                // $.post('/api/admin/get-courses',
+	                $.post('http://localhost:5000/admin/get-courses', nextProps.location.query, function (data, status) {
 	                    if (data.code == 200) {
 	                        _this4.setState({ courses: data.courses });
 	                    } else if (data.code == 1001) {
@@ -115261,7 +115273,8 @@
 	            var _this3 = this;
 
 	            this.setState({ searchQuery: this.props.location.query.searchQuery || '' });
-	            $.post('/api/admin/get-review-courses', this.props.location.query, function (data, status) {
+	            // $.post('/api/admin/get-review-courses',
+	            $.post('http://localhost:5000/admin/get-reviews-course', this.props.location.query, function (data, status) {
 	                if (data.code == 200) {
 	                    _this3.setState({ courses: data.courses });
 	                } else if (data.code == 1001) {
@@ -115280,7 +115293,8 @@
 	                this.setState({
 	                    searchQuery: nextProps.location.query.searchQuery || ''
 	                });
-	                $.post('/api/admin/get-review-courses', nextProps.location.query, function (data, status) {
+	                // $.post('/api/admin/get-review-courses',
+	                $.post('http://localhost:5000/admin/get-reviews-course', nextProps.location.query, function (data, status) {
 	                    if (data.code == 200) {
 	                        _this4.setState({ courses: data.courses });
 	                    } else if (data.code == 1001) {
@@ -115353,7 +115367,8 @@
 	        value: function acceptCourse(e, _id) {
 	            var _this5 = this;
 
-	            $.post('/api/admin/accept-course', { _id: _id }, function (data, status) {
+	            // $.post('/api/admin/accept-course',
+	            $.post('http://localhost:5000/admin/accept-course', { _id: _id }, function (data, status) {
 	                if (data.code == 200) {
 	                    var courses = _this5.state.courses;
 	                    var index = _lodash2.default.findIndex(courses, function (o) {

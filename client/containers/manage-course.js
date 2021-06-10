@@ -65,9 +65,7 @@ class ManageCourse extends React.Component {
             <img
               className="managecourse-header-image"
               src={
-                "/api/resource/images?src=" +
-                this.props.course.coverphoto +
-                "&w=130&h=73"
+                this.props.course.coverphoto
               }
             />
             {

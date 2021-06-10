@@ -664,9 +664,7 @@ class ViewCourse extends React.Component {
                       style={{
                         backgroundImage:
                           "url(" +
-                          ("/api/resource/images?src=" +
-                            this.props.course.lecturer.photo +
-                            "&w=100&h=100") +
+                          (this.props.course.lecturer.photo) +
                           ")",
                       }}
                     ></div>
@@ -833,9 +831,7 @@ class ViewCourse extends React.Component {
                               <img
                                 className="avatar-rate"
                                 src={
-                                  "/api/resource/images?src=" +
-                                  review.user.photo +
-                                  "&w=50&h=50"
+                                  review.user.photo
                                 }
                               />
                               <div
@@ -946,6 +942,7 @@ class ViewCourse extends React.Component {
 ViewCourse = connect((state, props) => {
   let course = _.find(state.viewCourses, { _id: Number(props.params.id) });
   if (course) {
+    console.log(state)
     return {
       course: course,
       islearning: _.includes(state.user.mylearningcourses, Number(props.params.id)),

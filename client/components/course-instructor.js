@@ -14,7 +14,7 @@ class CourseInstructor extends React.Component {
         return (
             <div className="col-sm-6">
                 <Link to={'/managecourse/' + this.props.course._id + '/goals'} className="course-instructor">
-                    <img className="course-instructor-image" src={'/api/resource/images?src=' + this.props.course.coverphoto + '&w=130&h=73'} />
+                    <img className="course-instructor-image" src={this.props.course.coverphoto} />
                     <div className="course-instructor-detail">
                         <h4 className='course-name'><strong>{this.props.course.name}</strong></h4>
                         <h5 className="text-success">{this.props.username}</h5>

@@ -60,7 +60,8 @@ class AdminReviewCourse extends Component {
     }
     componentDidMount() {
         this.setState({ searchQuery: this.props.location.query.searchQuery || '' })
-        $.post('/api/admin/get-review-courses',
+        // $.post('/api/admin/get-review-courses',
+        $.post('http://localhost:5000/admin/get-reviews-course',
             this.props.location.query, (data, status) => {
                 if (data.code == 200) {
                     this.setState({ courses: data.courses })
@@ -77,7 +78,8 @@ class AdminReviewCourse extends Component {
             this.setState({
                 searchQuery: nextProps.location.query.searchQuery || ''
             })
-            $.post('/api/admin/get-review-courses',
+            // $.post('/api/admin/get-review-courses',
+            $.post('http://localhost:5000/admin/get-reviews-course',
                 nextProps.location.query, (data, status) => {
                     if (data.code == 200) {
                         this.setState({ courses: data.courses })
@@ -146,7 +148,8 @@ class AdminReviewCourse extends Component {
         }
     }
     acceptCourse(e, _id) {
-        $.post('/api/admin/accept-course',
+        // $.post('/api/admin/accept-course',
+        $.post('http://localhost:5000/admin/accept-course',
             { _id: _id },
             (data, status) => {
                 if (data.code == 200) {
