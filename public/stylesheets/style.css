@@ -362,6 +362,7 @@ img.managecourse-header-image {
 }
 .img-review img {
   border-radius: 50%;
+  width: 50px;
 }
 .title-review {
   font-size: x-large;

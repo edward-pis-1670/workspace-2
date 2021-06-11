@@ -106678,7 +106678,6 @@
 	ManageCourse = (0, _reactRedux.connect)(function (state, props) {
 	  if (state.user.mycourses) {
 	    var course = _.find(state.user.mycourses, { _id: Number(props.params.id) });
-	    console.log(state.user.mycourses);
 	    if (course) return {
 	      course: {
 	        _id: course._id,
@@ -107693,9 +107692,9 @@
 
 	ManageCourseDescription = (0, _reactRedux.connect)(function (state, props) {
 	  if (state.user.mycourses) {
+	    console.log(state.user);
 	    var course = _.find(state.user.mycourses, { _id: Number(props.params.id) });
 	    if (course) {
-	      console.log(course.coverphoto);
 	      return {
 	        course_previewvideo: course.previewvideo,
 	        course_name: course.name,
@@ -110557,10 +110556,10 @@
 /* 1111 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -110588,173 +110587,206 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Review = function (_React$Component) {
-	    _inherits(Review, _React$Component);
+	  _inherits(Review, _React$Component);
 
-	    function Review(props) {
-	        _classCallCheck(this, Review);
+	  function Review(props) {
+	    _classCallCheck(this, Review);
 
-	        var _this = _possibleConstructorReturn(this, (Review.__proto__ || Object.getPrototypeOf(Review)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Review.__proto__ || Object.getPrototypeOf(Review)).call(this, props));
 
-	        _this.state = {
-	            show: false,
-	            content: '',
-	            star: 5,
-	            starTemp: 5
-	        };
-	        return _this;
+	    _this.state = {
+	      show: false,
+	      content: "",
+	      star: 5,
+	      starTemp: 5
+	    };
+	    return _this;
+	  }
+
+	  _createClass(Review, [{
+	    key: "onHide",
+	    value: function onHide() {
+	      this.setState({ show: false });
 	    }
+	  }, {
+	    key: "onSubmit",
+	    value: function onSubmit(e) {
+	      var _this2 = this;
 
-	    _createClass(Review, [{
-	        key: 'onHide',
-	        value: function onHide() {
-	            this.setState({ show: false });
+	      e.preventDefault();
+	      (0, _courses.addReview)({
+	        courseid: Number(this.props.course._id),
+	        content: this.state.content,
+	        star: this.state.star
+	      }, function (data, status) {
+	        if (data.code == 404) return _this2.setState({ show: false });
+	        if (data.code == 200) {
+	          _this2.setState({ show: false, content: "" });
+	          _this2.props.onSubmitReviewSuccess();
 	        }
-	    }, {
-	        key: 'onSubmit',
-	        value: function onSubmit(e) {
-	            var _this2 = this;
+	      });
+	    }
+	  }, {
+	    key: "onChange",
+	    value: function onChange(e) {
+	      this.setState({ content: e.target.value });
+	    }
+	  }, {
+	    key: "onHover",
+	    value: function onHover(star) {
+	      this.setState({ starTemp: star });
+	    }
+	  }, {
+	    key: "onMouseOut",
+	    value: function onMouseOut() {
+	      this.setState({ starTemp: this.state.star });
+	    }
+	  }, {
+	    key: "onClick",
+	    value: function onClick(star) {
+	      this.setState({ starTemp: star, star: star });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this3 = this;
 
-	            e.preventDefault();
-	            (0, _courses.addReview)({
-	                courseid: Number(this.props.course._id),
-	                content: this.state.content,
-	                star: this.state.star
-	            }, function (data, status) {
-	                if (data.code == 404) return _this2.setState({ show: false });
-	                if (data.code == 200) {
-	                    _this2.setState({ show: false, content: '' });
-	                    _this2.props.onSubmitReviewSuccess();
+	      return _react2.default.createElement(
+	        _reactBootstrap.Modal,
+	        { show: this.state.show, onHide: this.onHide.bind(this) },
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Header,
+	          { closeButton: true },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "img-review" },
+	            _react2.default.createElement("img", { src: this.props.user.photo })
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "title-review" },
+	            "Review by ",
+	            this.props.user.username
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "form",
+	          {
+	            onSubmit: function onSubmit(e) {
+	              _this3.onSubmit(e);
+	            }
+	          },
+	          _react2.default.createElement(
+	            _reactBootstrap.Modal.Body,
+	            { style: { overflow: "auto" } },
+	            _react2.default.createElement("textarea", {
+	              className: "form-control",
+	              rows: "5",
+	              placeholder: "Tell others what you think about this course. Would you recommend it, and why?",
+	              value: this.state.content,
+	              onChange: function onChange(e) {
+	                _this3.onChange(e);
+	              }
+	            }),
+	            _react2.default.createElement(
+	              "div",
+	              {
+	                onMouseOut: function onMouseOut() {
+	                  _this3.onMouseOut();
 	                }
-	            });
-	        }
-	    }, {
-	        key: 'onChange',
-	        value: function onChange(e) {
-	            this.setState({ content: e.target.value });
-	        }
-	    }, {
-	        key: 'onHover',
-	        value: function onHover(star) {
-	            this.setState({ starTemp: star });
-	        }
-	    }, {
-	        key: 'onMouseOut',
-	        value: function onMouseOut() {
-	            this.setState({ starTemp: this.state.star });
-	        }
-	    }, {
-	        key: 'onClick',
-	        value: function onClick(star) {
-	            this.setState({ starTemp: star, star: star });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this3 = this;
+	              },
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                {
+	                  onMouseOver: function onMouseOver() {
+	                    _this3.onHover(1);
+	                  },
+	                  onClick: function onClick() {
+	                    _this3.onClick(1);
+	                  },
+	                  className: "btn-rate"
+	                },
+	                _react2.default.createElement(_reactBootstrap.Glyphicon, {
+	                  glyph: this.state.starTemp >= 1 ? "star" : "star-empty"
+	                })
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                {
+	                  onMouseOver: function onMouseOver() {
+	                    _this3.onHover(2);
+	                  },
+	                  onClick: function onClick() {
+	                    _this3.onClick(2);
+	                  },
+	                  className: "btn-rate"
+	                },
+	                _react2.default.createElement(_reactBootstrap.Glyphicon, {
+	                  glyph: this.state.starTemp >= 2 ? "star" : "star-empty"
+	                })
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                {
+	                  onMouseOver: function onMouseOver() {
+	                    _this3.onHover(3);
+	                  },
+	                  onClick: function onClick() {
+	                    _this3.onClick(3);
+	                  },
+	                  className: "btn-rate"
+	                },
+	                _react2.default.createElement(_reactBootstrap.Glyphicon, {
+	                  glyph: this.state.starTemp >= 3 ? "star" : "star-empty"
+	                })
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                {
+	                  onMouseOver: function onMouseOver() {
+	                    _this3.onHover(4);
+	                  },
+	                  onClick: function onClick() {
+	                    _this3.onClick(4);
+	                  },
+	                  className: "btn-rate"
+	                },
+	                _react2.default.createElement(_reactBootstrap.Glyphicon, {
+	                  glyph: this.state.starTemp >= 4 ? "star" : "star-empty"
+	                })
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                {
+	                  onMouseOver: function onMouseOver() {
+	                    _this3.onHover(5);
+	                  },
+	                  onClick: function onClick() {
+	                    _this3.onClick(5);
+	                  },
+	                  className: "btn-rate"
+	                },
+	                _react2.default.createElement(_reactBootstrap.Glyphicon, {
+	                  glyph: this.state.starTemp >= 5 ? "star" : "star-empty"
+	                })
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Modal.Footer,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Button,
+	              { bsStyle: "primary", type: "submit" },
+	              "Submit"
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	            return _react2.default.createElement(
-	                _reactBootstrap.Modal,
-	                { show: this.state.show, onHide: this.onHide.bind(this) },
-	                _react2.default.createElement(
-	                    _reactBootstrap.Modal.Header,
-	                    { closeButton: true },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'img-review' },
-	                        _react2.default.createElement('img', { src: '/api/resource/images?src=' + this.props.user.photo + '&w=50&h=50' })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'title-review' },
-	                        'Review by ',
-	                        this.props.user.username
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'form',
-	                    { onSubmit: function onSubmit(e) {
-	                            _this3.onSubmit(e);
-	                        } },
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Modal.Body,
-	                        { style: { overflow: 'auto' } },
-	                        _react2.default.createElement('textarea', { className: 'form-control', rows: '5',
-	                            placeholder: 'Tell others what you think about this course. Would you recommend it, and why?',
-	                            value: this.state.content, onChange: function onChange(e) {
-	                                _this3.onChange(e);
-	                            } }),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { onMouseOut: function onMouseOut() {
-	                                    _this3.onMouseOut();
-	                                } },
-	                            _react2.default.createElement(
-	                                _reactBootstrap.Button,
-	                                { onMouseOver: function onMouseOver() {
-	                                        _this3.onHover(1);
-	                                    }, onClick: function onClick() {
-	                                        _this3.onClick(1);
-	                                    },
-	                                    className: 'btn-rate' },
-	                                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: this.state.starTemp >= 1 ? 'star' : 'star-empty' })
-	                            ),
-	                            _react2.default.createElement(
-	                                _reactBootstrap.Button,
-	                                { onMouseOver: function onMouseOver() {
-	                                        _this3.onHover(2);
-	                                    }, onClick: function onClick() {
-	                                        _this3.onClick(2);
-	                                    },
-	                                    className: 'btn-rate' },
-	                                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: this.state.starTemp >= 2 ? 'star' : 'star-empty' })
-	                            ),
-	                            _react2.default.createElement(
-	                                _reactBootstrap.Button,
-	                                { onMouseOver: function onMouseOver() {
-	                                        _this3.onHover(3);
-	                                    }, onClick: function onClick() {
-	                                        _this3.onClick(3);
-	                                    },
-	                                    className: 'btn-rate' },
-	                                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: this.state.starTemp >= 3 ? 'star' : 'star-empty' })
-	                            ),
-	                            _react2.default.createElement(
-	                                _reactBootstrap.Button,
-	                                { onMouseOver: function onMouseOver() {
-	                                        _this3.onHover(4);
-	                                    }, onClick: function onClick() {
-	                                        _this3.onClick(4);
-	                                    },
-	                                    className: 'btn-rate' },
-	                                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: this.state.starTemp >= 4 ? 'star' : 'star-empty' })
-	                            ),
-	                            _react2.default.createElement(
-	                                _reactBootstrap.Button,
-	                                { onMouseOver: function onMouseOver() {
-	                                        _this3.onHover(5);
-	                                    }, onClick: function onClick() {
-	                                        _this3.onClick(5);
-	                                    },
-	                                    className: 'btn-rate' },
-	                                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: this.state.starTemp >= 5 ? 'star' : 'star-empty' })
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Modal.Footer,
-	                        null,
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Button,
-	                            { bsStyle: 'primary', type: 'submit' },
-	                            'Submit'
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return Review;
+	  return Review;
 	}(_react2.default.Component);
 
 	exports.default = Review;
