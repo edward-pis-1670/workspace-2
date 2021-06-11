@@ -24749,6 +24749,7 @@
 	                return o == action.courseid;
 	            });
 	            if (index >= 0) {
+	                console.log(courseid);
 	                var course = state[index];
 	                course.numberofstudent += 1;
 	                return [].concat(_toConsumableArray(state.splice(0, index)), [course], _toConsumableArray(state.splice(index + 1)));
@@ -69732,7 +69733,7 @@
 	                null,
 	                _react2.default.createElement(
 	                    _reactRouter.Link,
-	                    { to: '/courses/' + this.props.genreId + '/' + this.props.subgenre._id },
+	                    { to: '/courses/' + this.props.genreId + '/' + Number(this.props.subgenre._id) },
 	                    this.props.subgenre.name
 	                )
 	            );
@@ -106492,7 +106493,7 @@
 
 	      if (this.props.params.id != nextProps.params.id) {
 	        // $.post('/api/user/get-course',
-	        $.post("http://localhost:5000/users/get-course", { courseid: nextProps.params.id }, function (data, status) {
+	        $.post("http://localhost:5000/users/get-course", { courseid: Number(nextProps.params.id) }, function (data, status) {
 	          if (data.code == 200) {
 	            _this3.props.dispatch((0, _actions.setCourse)(data.course));
 	          }
@@ -108807,7 +108808,7 @@
 	            {
 	              disabled: this.state.isSubmitting,
 	              onClick: function onClick() {
-	                _this3.onClickPay(_this3.props.courseId);
+	                _this3.onClickPay(Number(_this3.props.courseId));
 	              },
 	              className: "btn btn-success center-block"
 	            },
@@ -108873,7 +108874,7 @@
 	      $.post("http://localhost:5000/users/change-wishlist", {
 	        courseid: courseid
 	      }, function (data, status) {
-	        _this5.props.dispatch((0, _actions.changeWishlist)(data.action, courseid));
+	        _this5.props.dispatch((0, _actions.changeWishlist)(data.action, Number(courseid)));
 	      });
 	    }
 	  }, {
@@ -108883,7 +108884,7 @@
 	        return this.props.dispatch((0, _actions.showModal)(1));
 	      }
 	      if (this.props.islearning) {
-	        return _reactRouter.browserHistory.push("/course/" + courseid + "/learning");
+	        return _reactRouter.browserHistory.push("/course/" + Number(courseid) + "/learning");
 	      }
 	      this.refs.modalPurchase.setState({ show: true });
 	    }
@@ -108908,7 +108909,7 @@
 	        return;
 	      }
 	      (0, _courses.getCourseIntro)({
-	        courseid: nextProps.params.id
+	        courseid: Number(nextProps.params.id)
 	      }, function (data, status) {
 	        if (data.code == 1001) {
 	          _this6.props.dispatch((0, _actions.setUser)({}));
@@ -108988,8 +108989,8 @@
 	      var _this8 = this;
 
 	      (0, _courses.getCoursesRelateLecture)({
-	        lecturerid: lecturerid,
-	        courseid: courseid
+	        lecturerid: Number(lecturerid),
+	        courseid: Number(courseid)
 	      }, function (data, status) {
 	        if (data.code == 200) _this8.setState({ coursesRelatedLecturer: data.courses });
 	      });
@@ -109148,7 +109149,7 @@
 	            _react2.default.createElement(
 	              _reactRouter.Link,
 	              {
-	                to: "/courses/" + this.props.course.genre._id + "/" + this.props.course.subgenre._id
+	                to: "/courses/" + this.props.course.genre._id + "/" + Number(this.props.course.subgenre._id)
 	              },
 	              _react2.default.createElement(
 	                "strong",
@@ -109756,7 +109757,7 @@
 	            creditBalance: this.props.creditBalance,
 	            onTakeCourseSuccess: function onTakeCourseSuccess() {
 	              _this11.props.dispatch((0, _actions.takeCourse)(Number(_this11.props.params.id), _this11.props.course.cost));
-	              _reactRouter.browserHistory.push("/course/" + _this11.props.params.id + "/learning");
+	              _reactRouter.browserHistory.push("/course/" + Number(_this11.props.params.id) + "/learning");
 	            },
 	            onTakeCourseNotLoggedIn: function onTakeCourseNotLoggedIn() {
 	              _this11.props.dispatch((0, _actions.setUser)({}));
@@ -109775,7 +109776,6 @@
 	ViewCourse = (0, _reactRedux.connect)(function (state, props) {
 	  var course = _.find(state.viewCourses, { _id: Number(props.params.id) });
 	  if (course) {
-	    console.log(state);
 	    return {
 	      course: course,
 	      islearning: _.includes(state.user.mylearningcourses, Number(props.params.id)),
@@ -109848,7 +109848,7 @@
 					courseid: Number(this.props.course._id)
 				}, function (data, status) {
 					console.log(_this2.props.course._id);
-					_this2.props.dispatch((0, _actions.changeWishlist)(data.action, _this2.props.course._id));
+					_this2.props.dispatch((0, _actions.changeWishlist)(data.action, Number(_this2.props.course._id)));
 				});
 			}
 		}, {
@@ -109858,7 +109858,7 @@
 
 				var popover = _react2.default.createElement(
 					_reactBootstrap.Popover,
-					{ className: 'hidden-xs', id: 'popover-' + this.props.course._id, title: 'Course Description' },
+					{ className: 'hidden-xs', id: 'popover-' + Number(this.props.course._id), title: 'Course Description' },
 					_react2.default.createElement('div', { className: 'popover-course', dangerouslySetInnerHTML: { __html: this.props.course.description } })
 				);
 				return _react2.default.createElement(
@@ -109866,7 +109866,7 @@
 					{ trigger: ['hover', 'focus'], placement: this.props.popoverPlacement, overlay: popover },
 					_react2.default.createElement(
 						_reactRouter.Link,
-						{ to: '/course/' + this.props.course._id, className: 'course' },
+						{ to: '/course/' + Number(this.props.course._id), className: 'course' },
 						_react2.default.createElement(
 							'div',
 							{ style: { backgroundColor: 'black' } },
@@ -109908,7 +109908,7 @@
 							_reactBootstrap.OverlayTrigger,
 							{ placement: 'left', overlay: _react2.default.createElement(
 									_reactBootstrap.Tooltip,
-									{ id: this.props.course._id },
+									{ id: Number(this.props.course._id) },
 									'Wishlist'
 								) },
 							_react2.default.createElement(
@@ -109941,7 +109941,7 @@
 		if (state.hasOwnProperty('user') && state.user.hasOwnProperty('username')) {
 			return {
 				islogged: true,
-				wishlisted: _.includes(state.user.mywishlist, props.course._id)
+				wishlisted: _.includes(state.user.mywishlist, Number(props.course._id))
 			};
 		}
 		return {
@@ -110616,7 +110616,7 @@
 
 	            e.preventDefault();
 	            (0, _courses.addReview)({
-	                courseid: this.props.course._id,
+	                courseid: Number(this.props.course._id),
 	                content: this.state.content,
 	                star: this.state.star
 	            }, function (data, status) {
@@ -110927,7 +110927,7 @@
 	                    _react2.default.createElement(
 	                        _reactBootstrap.Button,
 	                        { onClick: function onClick() {
-	                                _reactRouter.browserHistory.push('/courses/' + _this2.props.id + (_this2.props.subid ? '/' + _this2.props.subid : ''));
+	                                _reactRouter.browserHistory.push('/courses/' + _this2.props.id + (_this2.props.subid ? '/' + Number(_this2.props.subid) : ''));
 	                            }, style: { marginLeft: '20px' } },
 	                        _react2.default.createElement(
 	                            'strong',
@@ -111245,7 +111245,7 @@
 	                    bsStyle: ['success', 'info', 'warning', 'danger'][Math.floor(Math.random() * 4)]
 	                });
 	                (0, _courses.getCoursesBySubGenre)({
-	                    subgenreid: nextProps.params.subgenreid,
+	                    subgenreid: Number(nextProps.params.subgenreid),
 	                    data: nextProps.location.query,
 	                    success: function success(data, status) {
 	                        if (data.code == 200) {
@@ -111277,7 +111277,7 @@
 	            var _this3 = this;
 
 	            (0, _courses.getCoursesBySubGenre)({
-	                subgenreid: this.props.params.subgenreid,
+	                subgenreid: Number(this.props.params.subgenreid),
 	                data: this.props.location.query,
 	                success: function success(data, status) {
 	                    if (data.code == 200) {
@@ -111310,7 +111310,7 @@
 	            if (!query.page || query.page <= 1) {
 	                return;
 	            }
-	            var url = '/courses/' + this.props.params.genreid + '/' + this.props.params.subgenreid + '?page=' + (query.page - 1) + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
+	            var url = '/courses/' + this.props.params.genreid + '/' + Number(this.props.params.subgenreid) + '?page=' + (query.page - 1) + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
 	            _reactRouter.browserHistory.push(url);
 	        }
 	    }, {
@@ -111321,7 +111321,7 @@
 	            if (!query.page) {
 	                query.page = 1;
 	            }
-	            var url = '/courses/' + this.props.params.genreid + '/' + this.props.params.subgenreid + '?page=' + (parseInt(query.page) + 1) + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
+	            var url = '/courses/' + this.props.params.genreid + '/' + Number(this.props.params.subgenreid) + '?page=' + (parseInt(query.page) + 1) + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
 	            _reactRouter.browserHistory.push(url);
 	        }
 	    }, {
@@ -111332,7 +111332,7 @@
 	            if (!query.page) {
 	                query.page = 1;
 	            }
-	            var url = '/courses/' + this.props.params.genreid + '/' + this.props.params.subgenreid + '?page=' + query.page + (query.level ? '&level=' + query.level : '') + (e.target.value == 'none' ? '' : '&free=' + e.target.value) + (query.sort ? '&sort=' + query.sort : '');
+	            var url = '/courses/' + this.props.params.genreid + '/' + Number(this.props.params.subgenreid) + '?page=' + query.page + (query.level ? '&level=' + query.level : '') + (e.target.value == 'none' ? '' : '&free=' + e.target.value) + (query.sort ? '&sort=' + query.sort : '');
 	            _reactRouter.browserHistory.push(url);
 	        }
 	    }, {
@@ -111343,7 +111343,7 @@
 	            if (!query.page) {
 	                query.page = 1;
 	            }
-	            var url = '/courses/' + this.props.params.genreid + '/' + this.props.params.subgenreid + '?page=' + query.page + (e.target.value == 'none' ? '' : '&level=' + e.target.value) + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
+	            var url = '/courses/' + this.props.params.genreid + '/' + Number(this.props.params.subgenreid) + '?page=' + query.page + (e.target.value == 'none' ? '' : '&level=' + e.target.value) + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
 	            _reactRouter.browserHistory.push(url);
 	        }
 	    }, {
@@ -111354,7 +111354,7 @@
 	            if (!query.page) {
 	                query.page = 1;
 	            }
-	            var url = '/courses/' + this.props.params.genreid + '/' + this.props.params.subgenreid + '?page=' + query.page + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + '&sort=' + e.target.value;
+	            var url = '/courses/' + this.props.params.genreid + '/' + Number(this.props.params.subgenreid) + '?page=' + query.page + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + '&sort=' + e.target.value;
 	            _reactRouter.browserHistory.push(url);
 	        }
 	    }, {
@@ -113591,7 +113591,8 @@
 	        value: function Process() {
 	            var _this2 = this;
 
-	            $.post('/api/admin/add-user', this.state, function (data, status) {
+	            // $.post('/api/admin/add-user',
+	            $.post('http://localhost:5000/admin/add-new-user-by-admin', this.state, function (data, status) {
 	                if (data.code == 200) {
 	                    _this2.setState({ modalOpen: false });
 	                } else if (data.code == 1001) {

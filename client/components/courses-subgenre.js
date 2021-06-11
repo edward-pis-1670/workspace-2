@@ -27,7 +27,7 @@ class CoursesSubgenre extends React.Component {
                 bsStyle: ['success', 'info', 'warning', 'danger'][Math.floor(Math.random() * 4)],
             })
             getCoursesBySubGenre({
-                subgenreid: nextProps.params.subgenreid,
+                subgenreid: Number(nextProps.params.subgenreid),
                 data: nextProps.location.query,
                 success: (data, status) => {
                     if (data.code == 200) {
@@ -55,7 +55,7 @@ class CoursesSubgenre extends React.Component {
     }
     componentDidMount() {
         getCoursesBySubGenre({
-            subgenreid: this.props.params.subgenreid,
+            subgenreid: Number(this.props.params.subgenreid),
             data: this.props.location.query,
             success: (data, status) => {
                 if (data.code == 200) {
@@ -86,7 +86,7 @@ class CoursesSubgenre extends React.Component {
         if (!query.page || query.page <= 1) {
             return
         }
-        let url = '/courses/' + this.props.params.genreid + '/' + this.props.params.subgenreid + '?page=' + (query.page - 1)
+        let url = '/courses/' + this.props.params.genreid + '/' + Number(this.props.params.subgenreid) + '?page=' + (query.page - 1)
             + (query.level ? ('&level=' + query.level) : '') + (query.free ? ('&free=' + query.free) : '')
             + (query.sort ? ('&sort=' + query.sort) : '')
         browserHistory.push(url)
@@ -97,7 +97,7 @@ class CoursesSubgenre extends React.Component {
         if (!query.page) {
             query.page = 1
         }
-        let url = '/courses/' + this.props.params.genreid + '/' + this.props.params.subgenreid + '?page=' + (parseInt(query.page) + 1)
+        let url = '/courses/' + this.props.params.genreid + '/' + Number(this.props.params.subgenreid) + '?page=' + (parseInt(query.page) + 1)
             + (query.level ? ('&level=' + query.level) : '') + (query.free ? ('&free=' + query.free) : '')
             + (query.sort ? ('&sort=' + query.sort) : '')
         browserHistory.push(url)
@@ -108,7 +108,7 @@ class CoursesSubgenre extends React.Component {
         if (!query.page) {
             query.page = 1
         }
-        let url = '/courses/' + this.props.params.genreid + '/' + this.props.params.subgenreid + '?page=' + query.page
+        let url = '/courses/' + this.props.params.genreid + '/' + Number(this.props.params.subgenreid) + '?page=' + query.page
             + (query.level ? ('&level=' + query.level) : '') + (e.target.value == 'none' ? '' : ('&free=' + e.target.value))
             + (query.sort ? ('&sort=' + query.sort) : '')
         browserHistory.push(url)
@@ -119,7 +119,7 @@ class CoursesSubgenre extends React.Component {
         if (!query.page) {
             query.page = 1
         }
-        let url = '/courses/' + this.props.params.genreid + '/' + this.props.params.subgenreid + '?page=' + query.page
+        let url = '/courses/' + this.props.params.genreid + '/' + Number(this.props.params.subgenreid) + '?page=' + query.page
             + (e.target.value == 'none' ? '' : ('&level=' + e.target.value)) + (query.free ? ('&free=' + query.free) : '')
             + (query.sort ? ('&sort=' + query.sort) : '')
         browserHistory.push(url)
@@ -130,7 +130,7 @@ class CoursesSubgenre extends React.Component {
         if (!query.page) {
             query.page = 1
         }
-        let url = '/courses/' + this.props.params.genreid + '/' + this.props.params.subgenreid + '?page=' + query.page
+        let url = '/courses/' + this.props.params.genreid + '/' + Number(this.props.params.subgenreid) + '?page=' + query.page
             + (query.level ? ('&level=' + query.level) : '') + (query.free ? ('&free=' + query.free) : '')
             + '&sort=' + e.target.value
         browserHistory.push(url)

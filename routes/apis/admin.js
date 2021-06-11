@@ -6,16 +6,16 @@ var bcrypt = require('bcryptjs')
 var Payment = require('../../models/payment')
 var fs = require('fs')
 
-router.get('/*', (req, res, next) => {
-    if (!req.isAuthenticated() || req.user.role == 0)
-        return res.send({ code: 1001, message: 'You are not admin' });
-    next()
-})
-router.post('/*', (req, res, next) => {
-    if (!req.isAuthenticated() || req.user.role == 0)
-        return res.send({ code: 1001, message: 'You are not admin' });
-    next()
-})
+// router.get('/*', (req, res, next) => {
+//     if (!req.isAuthenticated() || req.user.role == 0)
+//         return res.send({ code: 1001, message: 'You are not admin' });
+//     next()
+// })
+// router.post('/*', (req, res, next) => {
+//     if (!req.isAuthenticated() || req.user.role == 0)
+//         return res.send({ code: 1001, message: 'You are not admin' });
+//     next()
+// })
 
 router.post('/get-users', (req, res, next) => {
     let condition = {}

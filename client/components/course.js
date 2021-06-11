@@ -19,17 +19,17 @@ class Course extends React.Component {
 				courseid: Number(this.props.course._id)
 			}, (data, status) => {
 				console.log(this.props.course._id)
-				this.props.dispatch(changeWishlist(data.action, this.props.course._id))
+				this.props.dispatch(changeWishlist(data.action, Number(this.props.course._id)))
 			}
 		)
 	}
 	render() {
-		let popover = <Popover className='hidden-xs' id={'popover-' + this.props.course._id} title="Course Description">
+		let popover = <Popover className='hidden-xs' id={'popover-' + Number(this.props.course._id)} title="Course Description">
 			<div className='popover-course' dangerouslySetInnerHTML={{ __html: this.props.course.description }}></div>
 		</Popover>
 		return (
 			<OverlayTrigger trigger={['hover', 'focus']} placement={this.props.popoverPlacement} overlay={popover}>
-				<Link to={'/course/' + this.props.course._id} className='course'>
+				<Link to={'/course/' + Number(this.props.course._id)} className='course'>
 					<div style={{ backgroundColor: 'black' }}>
 						<img className='course-img' src={this.props.course.coverphoto} />
 					</div>
@@ -47,7 +47,7 @@ class Course extends React.Component {
 							<strong>{(!this.props.course.cost || this.props.course.cost == 0) ? 'Free' : ('$' + this.props.course.cost)}</strong>
 						</div>
 					</div>
-					<OverlayTrigger placement="left" overlay={<Tooltip id={this.props.course._id}>Wishlist</Tooltip>}>
+					<OverlayTrigger placement="left" overlay={<Tooltip id={Number(this.props.course._id)}>Wishlist</Tooltip>}>
 						<button type="button" className="course-wishlist" onClick={(e) => { this.onClickAddOrRemoveWishlist(e) } }>
 							<span className={'glyphicon glyphicon-heart' + (this.props.wishlisted ? ' active' : '')}></span>
 						</button>
@@ -66,7 +66,7 @@ Course = connect((state, props) => {
 	if (state.hasOwnProperty('user') && state.user.hasOwnProperty('username')) {
 		return {
 			islogged: true,
-			wishlisted: _.includes(state.user.mywishlist, props.course._id)
+			wishlisted: _.includes(state.user.mywishlist, Number(props.course._id))
 		}
 	}
 	return {

@@ -20,7 +20,7 @@ class Review extends React.Component {
     onSubmit(e) {
         e.preventDefault()
         addReview({
-            courseid: this.props.course._id,
+            courseid: Number(this.props.course._id),
             content: this.state.content,
             star: this.state.star
         }, (data, status) => {

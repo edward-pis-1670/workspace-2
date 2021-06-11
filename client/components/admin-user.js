@@ -64,7 +64,8 @@ class ModalAddUser extends Component {
         this.setState({ role: e.target.value })
     }
     Process() {
-        $.post('/api/admin/add-user',
+        // $.post('/api/admin/add-user',
+        $.post('http://localhost:5000/admin/add-new-user-by-admin',
             this.state, (data, status) => {
                 if (data.code == 200) {
                     this.setState({ modalOpen: false })

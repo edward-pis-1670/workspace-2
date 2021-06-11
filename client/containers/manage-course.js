@@ -25,7 +25,7 @@ class ManageCourse extends React.Component {
       // $.post('/api/user/get-course',
       $.post(
         "http://localhost:5000/users/get-course",
-        { courseid: nextProps.params.id },
+        { courseid: Number(nextProps.params.id) },
         (data, status) => {
           if (data.code == 200) {
             this.props.dispatch(setCourse(data.course));

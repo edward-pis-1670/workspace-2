@@ -272,6 +272,7 @@ const setViewCourses = (state = [], action) => {
         case ActionTypes.TAKE_COURSE:
             let index = _.findIndex(state, (o) => { return o == action.courseid })
             if (index >= 0) {
+                console.log(courseid)
                 let course = state[index]
                 course.numberofstudent += 1
                 return [...state.splice(0, index), course, ...state.splice(index + 1)]

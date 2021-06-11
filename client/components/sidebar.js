@@ -9,7 +9,7 @@ class SubGenre extends React.Component {
     render() {
         return (
             <li>
-                <Link to={'/courses/' + this.props.genreId + '/' + this.props.subgenre._id}>
+                <Link to={'/courses/' + this.props.genreId + '/' + Number(this.props.subgenre._id)}>
                     {this.props.subgenre.name}
                 </Link>
             </li>

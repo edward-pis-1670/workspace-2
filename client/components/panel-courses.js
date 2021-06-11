@@ -21,7 +21,7 @@ class PanelCourses extends React.Component {
         return <div className={'panel panel-' + ['primary', 'danger', 'info'][Math.floor((Math.random() * 3))]}>
             <div className="panel-heading">
                 <strong>{this.props.title}</strong>
-                <Button onClick={() => { browserHistory.push('/courses/' + this.props.id + (this.props.subid ? ('/' + this.props.subid) : '')) } } style={{ marginLeft: '20px' }}>
+                <Button onClick={() => { browserHistory.push('/courses/' + this.props.id + (this.props.subid ? ('/' + Number(this.props.subid)) : '')) } } style={{ marginLeft: '20px' }}>
                     <strong>View More{' '}<Glyphicon glyph="share-alt" /></strong>
                 </Button>
             </div>

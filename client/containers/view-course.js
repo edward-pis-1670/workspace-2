@@ -134,7 +134,7 @@ class ModalPurchase extends React.Component {
           <button
             disabled={this.state.isSubmitting}
             onClick={() => {
-              this.onClickPay(this.props.courseId);
+              this.onClickPay(Number(this.props.courseId));
             }}
             className="btn btn-success center-block"
           >
@@ -179,7 +179,7 @@ class ViewCourse extends React.Component {
         courseid: courseid,
       },
       (data, status) => {
-        this.props.dispatch(changeWishlist(data.action, courseid));
+        this.props.dispatch(changeWishlist(data.action, Number(courseid)));
       }
     );
   }
@@ -188,7 +188,7 @@ class ViewCourse extends React.Component {
       return this.props.dispatch(showModal(1));
     }
     if (this.props.islearning) {
-      return browserHistory.push("/course/" + courseid + "/learning");
+      return browserHistory.push("/course/" + Number(courseid) + "/learning");
     }
     this.refs.modalPurchase.setState({ show: true });
   }
@@ -218,7 +218,7 @@ class ViewCourse extends React.Component {
     }
     getCourseIntro(
       {
-        courseid: nextProps.params.id,
+        courseid: Number(nextProps.params.id),
       },
       (data, status) => {
         if (data.code == 1001) {
@@ -308,8 +308,8 @@ class ViewCourse extends React.Component {
   getCoursesRelateLecture(lecturerid, courseid) {
     getCoursesRelateLecture(
       {
-        lecturerid: lecturerid,
-        courseid: courseid,
+        lecturerid: Number(lecturerid),
+        courseid: Number(courseid),
       },
       (data, status) => {
         if (data.code == 200)
@@ -432,7 +432,7 @@ class ViewCourse extends React.Component {
                 "/courses/" +
                 this.props.course.genre._id +
                 "/" +
-                this.props.course.subgenre._id
+                Number(this.props.course.subgenre._id)
               }
             >
               <strong>{this.props.course.subgenre.name}</strong>
@@ -924,7 +924,7 @@ class ViewCourse extends React.Component {
                 takeCourse(Number(this.props.params.id), this.props.course.cost)
               );
               browserHistory.push(
-                "/course/" + this.props.params.id + "/learning"
+                "/course/" + Number(this.props.params.id) + "/learning"
               );
             }}
             onTakeCourseNotLoggedIn={() => {
@@ -942,7 +942,6 @@ class ViewCourse extends React.Component {
 ViewCourse = connect((state, props) => {
   let course = _.find(state.viewCourses, { _id: Number(props.params.id) });
   if (course) {
-    console.log(state)
     return {
       course: course,
       islearning: _.includes(state.user.mylearningcourses, Number(props.params.id)),
