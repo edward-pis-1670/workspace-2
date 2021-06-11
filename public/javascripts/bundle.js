@@ -112914,7 +112914,8 @@
 	        value: function componentDidMount() {
 	            var _this2 = this;
 
-	            $.post('/api/user/view-user', {
+	            // $.post('/api/user/view-user',
+	            $.post('http://localhost:5000/users/view-user', {
 	                id: Number(this.props.params.id)
 	            }, function (data, status) {
 	                if (data.code == 200) _this2.setState({ user: data.user });
@@ -115137,10 +115138,10 @@
 /* 1125 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -115174,549 +115175,601 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var ModalShowLectures = function (_Component) {
-	    _inherits(ModalShowLectures, _Component);
+	  _inherits(ModalShowLectures, _Component);
 
-	    function ModalShowLectures(props) {
-	        _classCallCheck(this, ModalShowLectures);
+	  function ModalShowLectures(props) {
+	    _classCallCheck(this, ModalShowLectures);
 
-	        var _this = _possibleConstructorReturn(this, (ModalShowLectures.__proto__ || Object.getPrototypeOf(ModalShowLectures)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (ModalShowLectures.__proto__ || Object.getPrototypeOf(ModalShowLectures)).call(this, props));
 
-	        _this.state = {
-	            modalOpen: false,
-	            course: {}
-	        };
-	        return _this;
+	    _this.state = {
+	      modalOpen: false,
+	      course: {}
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ModalShowLectures, [{
+	    key: "handleOpen",
+	    value: function handleOpen(e, course) {
+	      this.setState({
+	        modalOpen: true,
+	        course: course
+	      });
 	    }
-
-	    _createClass(ModalShowLectures, [{
-	        key: 'handleOpen',
-	        value: function handleOpen(e, course) {
-	            this.setState({
-	                modalOpen: true,
-	                course: course
-	            });
-	        }
-	    }, {
-	        key: 'handleClose',
-	        value: function handleClose(e) {
-	            this.setState({
-	                modalOpen: false
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
+	  }, {
+	    key: "handleClose",
+	    value: function handleClose(e) {
+	      this.setState({
+	        modalOpen: false
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _semanticUiReact.Modal,
+	        { open: this.state.modalOpen, onClose: this.handleClose.bind(this) },
+	        _react2.default.createElement(
+	          _semanticUiReact.Modal.Header,
+	          null,
+	          this.state.course.name
+	        ),
+	        _react2.default.createElement(
+	          _semanticUiReact.Modal.Content,
+	          null,
+	          this.state.course.lectures ? this.state.course.lectures.map(function (lecture, index) {
 	            return _react2.default.createElement(
-	                _semanticUiReact.Modal,
+	              "div",
+	              { key: index },
+	              _react2.default.createElement(
+	                "strong",
+	                null,
+	                "Lecture ",
+	                index + 1,
+	                ": ",
+	                lecture.name
+	              ),
+	              _react2.default.createElement(
+	                "video",
 	                {
-	                    open: this.state.modalOpen,
-	                    onClose: this.handleClose.bind(this) },
-	                _react2.default.createElement(
-	                    _semanticUiReact.Modal.Header,
-	                    null,
-	                    this.state.course.name
-	                ),
-	                _react2.default.createElement(
-	                    _semanticUiReact.Modal.Content,
-	                    null,
-	                    this.state.course.lectures ? this.state.course.lectures.map(function (lecture, index) {
-	                        return _react2.default.createElement(
-	                            'div',
-	                            { key: index },
-	                            _react2.default.createElement(
-	                                'strong',
-	                                null,
-	                                'Lecture ',
-	                                index + 1,
-	                                ': ',
-	                                lecture.name
-	                            ),
-	                            _react2.default.createElement(
-	                                'video',
-	                                { id: 'video-' + lecture._id, controls: true, preload: 'false',
-	                                    width: '100%', height: 'auto' },
-	                                _react2.default.createElement('source', { src: '/api/resource/play-video-admin/' + lecture._id, type: 'video/mp4' })
-	                            ),
-	                            _react2.default.createElement('hr', null)
-	                        );
-	                    }) : ''
-	                )
+	                  id: "video-" + lecture._id,
+	                  controls: true,
+	                  preload: "false",
+	                  width: "100%",
+	                  height: "auto"
+	                },
+	                _react2.default.createElement("source", {
+	                  src: "/api/resource/play-video-admin/" + lecture._id,
+	                  type: "video/mp4"
+	                })
+	              ),
+	              _react2.default.createElement("hr", null)
 	            );
-	        }
-	    }]);
+	          }) : ""
+	        )
+	      );
+	    }
+	  }]);
 
-	    return ModalShowLectures;
+	  return ModalShowLectures;
 	}(_react.Component);
 
 	var AdminReviewCourse = function (_Component2) {
-	    _inherits(AdminReviewCourse, _Component2);
+	  _inherits(AdminReviewCourse, _Component2);
 
-	    function AdminReviewCourse(props) {
-	        _classCallCheck(this, AdminReviewCourse);
+	  function AdminReviewCourse(props) {
+	    _classCallCheck(this, AdminReviewCourse);
 
-	        var _this2 = _possibleConstructorReturn(this, (AdminReviewCourse.__proto__ || Object.getPrototypeOf(AdminReviewCourse)).call(this, props));
+	    var _this2 = _possibleConstructorReturn(this, (AdminReviewCourse.__proto__ || Object.getPrototypeOf(AdminReviewCourse)).call(this, props));
 
-	        _this2.state = {
-	            searchQuery: '',
-	            courses: []
-	        };
-	        return _this2;
+	    _this2.state = {
+	      searchQuery: "",
+	      courses: []
+	    };
+	    return _this2;
+	  }
+
+	  _createClass(AdminReviewCourse, [{
+	    key: "viewCourse",
+	    value: function viewCourse(e, course) {
+	      this.modalViewCourse.handleOpen(e, course);
 	    }
+	  }, {
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      var _this3 = this;
 
-	    _createClass(AdminReviewCourse, [{
-	        key: 'viewCourse',
-	        value: function viewCourse(e, course) {
-	            this.modalViewCourse.handleOpen(e, course);
+	      this.setState({ searchQuery: this.props.location.query.searchQuery || "" });
+	      // $.post('/api/admin/get-review-courses',
+	      $.post("http://localhost:5000/admin/get-reviews-course", this.props.location.query, function (data, status) {
+	        if (data.code == 200) {
+	          _this3.setState({ courses: data.courses });
+	        } else if (data.code == 1001) {
+	          _this3.props.dispatch((0, _actions.setUser)({}));
+	          _this3.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          _reactRouter.browserHistory.push("/courses");
 	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this3 = this;
+	      });
+	    }
+	  }, {
+	    key: "componentWillReceiveProps",
+	    value: function componentWillReceiveProps(nextProps) {
+	      var _this4 = this;
 
-	            this.setState({ searchQuery: this.props.location.query.searchQuery || '' });
-	            // $.post('/api/admin/get-review-courses',
-	            $.post('http://localhost:5000/admin/get-reviews-course', this.props.location.query, function (data, status) {
-	                if (data.code == 200) {
-	                    _this3.setState({ courses: data.courses });
-	                } else if (data.code == 1001) {
-	                    _this3.props.dispatch((0, _actions.setUser)({}));
-	                    _this3.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    _reactRouter.browserHistory.push('/courses');
+	      if (this.props.location.query != nextProps.location.query) {
+	        this.setState({
+	          searchQuery: nextProps.location.query.searchQuery || ""
+	        });
+	        // $.post('/api/admin/get-review-courses',
+	        $.post("http://localhost:5000/admin/get-reviews-course", nextProps.location.query, function (data, status) {
+	          if (data.code == 200) {
+	            _this4.setState({ courses: data.courses });
+	          } else if (data.code == 1001) {
+	            _this4.props.dispatch((0, _actions.setUser)({}));
+	            _this4.props.dispatch((0, _actions.setGetMyCourses)(false));
+	            _reactRouter.browserHistory.push("/courses");
+	          }
+	        });
+	      }
+	    }
+	  }, {
+	    key: "onClickPrev",
+	    value: function onClickPrev(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page || query.page <= 1) {
+	        return;
+	      }
+	      var url = "/admin/review-courses" + "?page=" + (query.page - 1) + (query.searchQuery ? "&searchQuery=" + query.searchQuery : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onClickNext",
+	    value: function onClickNext(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/admin/review-courses" + "?page=" + (parseInt(query.page) + 1) + (query.searchQuery ? "&searchQuery=" + query.searchQuery : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onChangeFilterSort",
+	    value: function onChangeFilterSort(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/admin/review-courses" + "?page=" + query.page + (query.searchQuery ? "&searchQuery=" + query.searchQuery : "") + "&sort=" + e.target.value;
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onSubmitFormSearch",
+	    value: function onSubmitFormSearch(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/admin/review-courses" + "?page=" + query.page + (this.state.searchQuery != "" ? "&searchQuery=" + this.state.searchQuery : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "handleSearchQuery",
+	    value: function handleSearchQuery(e) {
+	      this.setState({ searchQuery: e.target.value });
+	      if (e.target.value == "") {
+	        var query = this.props.location.query;
+	        if (!query.page) {
+	          query.page = 1;
+	        }
+	        var url = "/admin/review-courses" + "?page=" + query.page + (query.sort ? "&sort=" + query.sort : "");
+	        _reactRouter.browserHistory.push(url);
+	      }
+	    }
+	  }, {
+	    key: "acceptCourse",
+	    value: function acceptCourse(e, _id) {
+	      var _this5 = this;
+
+	      // $.post('/api/admin/accept-course',
+	      $.post("http://localhost:5000/admin/accept-course", { _id: _id }, function (data, status) {
+	        if (data.code == 200) {
+	          var courses = _this5.state.courses;
+	          var index = _lodash2.default.findIndex(courses, function (o) {
+	            return o._id == _id;
+	          });
+	          _this5.setState({
+	            courses: [].concat(_toConsumableArray(courses.slice(0, index)), _toConsumableArray(courses.slice(index + 1)))
+	          });
+	        } else if (data.code == 1001) {
+	          _this5.props.dispatch((0, _actions.setUser)({}));
+	          _this5.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          _reactRouter.browserHistory.push("/courses");
+	        }
+	      });
+	    }
+	  }, {
+	    key: "refuseCourse",
+	    value: function refuseCourse(e, _id) {
+	      var _this6 = this;
+
+	      // $.post('/api/admin/refuse-course',
+	      $.post("http://localhost:5000/admin/refuse-course", { _id: _id }, function (data, status) {
+	        if (data.code == 200) {
+	          var courses = _this6.state.courses;
+	          var index = _lodash2.default.findIndex(courses, function (o) {
+	            return o._id == _id;
+	          });
+	          _this6.setState({
+	            courses: [].concat(_toConsumableArray(courses.slice(0, index)), _toConsumableArray(courses.slice(index + 1)))
+	          });
+	        } else if (data.code == 1001) {
+	          _this6.props.dispatch((0, _actions.setUser)({}));
+	          _this6.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          _reactRouter.browserHistory.push("/courses");
+	        }
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this7 = this;
+
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	          "form",
+	          {
+	            className: "form-inline",
+	            style: { marginBottom: "20px" },
+	            onSubmit: function onSubmit(e) {
+	              return _this7.onSubmitFormSearch(e);
+	            }
+	          },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "form-group form-group-lg" },
+	            _react2.default.createElement(
+	              "label",
+	              { className: "control-label" },
+	              "Sort by:"
+	            ),
+	            " ",
+	            _react2.default.createElement(
+	              "select",
+	              {
+	                style: { fontWeight: "bold" },
+	                className: "form-control",
+	                value: this.props.location.query.sort || "1",
+	                onChange: function onChange(e) {
+	                  return _this7.onChangeFilterSort(e);
 	                }
-	            });
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            var _this4 = this;
-
-	            if (this.props.location.query != nextProps.location.query) {
-	                this.setState({
-	                    searchQuery: nextProps.location.query.searchQuery || ''
-	                });
-	                // $.post('/api/admin/get-review-courses',
-	                $.post('http://localhost:5000/admin/get-reviews-course', nextProps.location.query, function (data, status) {
-	                    if (data.code == 200) {
-	                        _this4.setState({ courses: data.courses });
-	                    } else if (data.code == 1001) {
-	                        _this4.props.dispatch((0, _actions.setUser)({}));
-	                        _this4.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                        _reactRouter.browserHistory.push('/courses');
-	                    }
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'onClickPrev',
-	        value: function onClickPrev(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page || query.page <= 1) {
-	                return;
-	            }
-	            var url = '/admin/review-courses' + '?page=' + (query.page - 1) + (query.searchQuery ? '&searchQuery=' + query.searchQuery : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onClickNext',
-	        value: function onClickNext(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/admin/review-courses' + '?page=' + (parseInt(query.page) + 1) + (query.searchQuery ? '&searchQuery=' + query.searchQuery : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onChangeFilterSort',
-	        value: function onChangeFilterSort(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/admin/review-courses' + '?page=' + query.page + (query.searchQuery ? '&searchQuery=' + query.searchQuery : '') + '&sort=' + e.target.value;
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onSubmitFormSearch',
-	        value: function onSubmitFormSearch(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/admin/review-courses' + '?page=' + query.page + (this.state.searchQuery != '' ? '&searchQuery=' + this.state.searchQuery : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'handleSearchQuery',
-	        value: function handleSearchQuery(e) {
-	            this.setState({ searchQuery: e.target.value });
-	            if (e.target.value == '') {
-	                var query = this.props.location.query;
-	                if (!query.page) {
-	                    query.page = 1;
+	              },
+	              _react2.default.createElement(
+	                "option",
+	                { value: "1", style: { fontWeight: "bold" } },
+	                "Name: A-to-Z"
+	              ),
+	              _react2.default.createElement(
+	                "option",
+	                { value: "2", style: { fontWeight: "bold" } },
+	                "Name: Z-to-A"
+	              )
+	            )
+	          ),
+	          " ",
+	          _react2.default.createElement(
+	            "div",
+	            { className: "form-group form-group-lg" },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "input-group input-group-lg" },
+	              _react2.default.createElement("input", {
+	                type: "text",
+	                className: "form-control",
+	                value: this.state.searchQuery,
+	                placeholder: "Search course's name",
+	                onChange: function onChange(e) {
+	                  return _this7.handleSearchQuery(e);
 	                }
-	                var url = '/admin/review-courses' + '?page=' + query.page + (query.sort ? '&sort=' + query.sort : '');
-	                _reactRouter.browserHistory.push(url);
-	            }
-	        }
-	    }, {
-	        key: 'acceptCourse',
-	        value: function acceptCourse(e, _id) {
-	            var _this5 = this;
-
-	            // $.post('/api/admin/accept-course',
-	            $.post('http://localhost:5000/admin/accept-course', { _id: _id }, function (data, status) {
-	                if (data.code == 200) {
-	                    var courses = _this5.state.courses;
-	                    var index = _lodash2.default.findIndex(courses, function (o) {
-	                        return o._id == _id;
-	                    });
-	                    _this5.setState({ courses: [].concat(_toConsumableArray(courses.slice(0, index)), _toConsumableArray(courses.slice(index + 1))) });
-	                } else if (data.code == 1001) {
-	                    _this5.props.dispatch((0, _actions.setUser)({}));
-	                    _this5.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    _reactRouter.browserHistory.push('/courses');
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'refuseCourse',
-	        value: function refuseCourse(e, _id) {
-	            var _this6 = this;
-
-	            $.post('/api/admin/refuse-course', { _id: _id }, function (data, status) {
-	                if (data.code == 200) {
-	                    var courses = _this6.state.courses;
-	                    var index = _lodash2.default.findIndex(courses, function (o) {
-	                        return o._id == _id;
-	                    });
-	                    _this6.setState({ courses: [].concat(_toConsumableArray(courses.slice(0, index)), _toConsumableArray(courses.slice(index + 1))) });
-	                } else if (data.code == 1001) {
-	                    _this6.props.dispatch((0, _actions.setUser)({}));
-	                    _this6.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    _reactRouter.browserHistory.push('/courses');
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this7 = this;
-
-	            return _react2.default.createElement(
-	                'div',
+	              }),
+	              _react2.default.createElement(
+	                "span",
+	                { className: "input-group-btn" },
+	                _react2.default.createElement(
+	                  "button",
+	                  { className: "btn btn-default", type: "submit" },
+	                  _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "search" })
+	                )
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _semanticUiReact.Table,
+	          { basic: "very", celled: true, collapsing: true },
+	          _react2.default.createElement(
+	            _semanticUiReact.Table.Header,
+	            null,
+	            _react2.default.createElement(
+	              _semanticUiReact.Table.Row,
+	              null,
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
 	                null,
+	                "Course"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Information"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Requirement"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Price"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Instructor"
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _semanticUiReact.Table.Body,
+	            null,
+	            this.state.courses.map(function (course, index) {
+	              return _react2.default.createElement(
+	                _semanticUiReact.Table.Row,
+	                { key: index },
 	                _react2.default.createElement(
-	                    'form',
-	                    { className: 'form-inline', style: { marginBottom: '20px' }, onSubmit: function onSubmit(e) {
-	                            return _this7.onSubmitFormSearch(e);
-	                        } },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group form-group-lg' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { className: 'control-label' },
-	                            'Sort by:'
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'select',
-	                            { style: { fontWeight: 'bold' }, className: 'form-control',
-	                                value: this.props.location.query.sort || '1', onChange: function onChange(e) {
-	                                    return _this7.onChangeFilterSort(e);
-	                                } },
-	                            _react2.default.createElement(
-	                                'option',
-	                                { value: '1', style: { fontWeight: 'bold' } },
-	                                'Name: A-to-Z'
-	                            ),
-	                            _react2.default.createElement(
-	                                'option',
-	                                { value: '2', style: { fontWeight: 'bold' } },
-	                                'Name: Z-to-A'
-	                            )
-	                        )
-	                    ),
-	                    ' ',
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group form-group-lg' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'input-group input-group-lg' },
-	                            _react2.default.createElement('input', { type: 'text', className: 'form-control',
-	                                value: this.state.searchQuery, placeholder: 'Search course\'s name',
-	                                onChange: function onChange(e) {
-	                                    return _this7.handleSearchQuery(e);
-	                                } }),
-	                            _react2.default.createElement(
-	                                'span',
-	                                { className: 'input-group-btn' },
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { className: 'btn btn-default', type: 'submit' },
-	                                    _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'search' })
-	                                )
-	                            )
-	                        )
-	                    )
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  course.name
 	                ),
 	                _react2.default.createElement(
-	                    _semanticUiReact.Table,
-	                    { basic: 'very', celled: true, collapsing: true },
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Table.Header,
-	                        null,
-	                        _react2.default.createElement(
-	                            _semanticUiReact.Table.Row,
-	                            null,
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Course'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Information'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Requirement'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Price'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Instructor'
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Table.Body,
-	                        null,
-	                        this.state.courses.map(function (course, index) {
-	                            return _react2.default.createElement(
-	                                _semanticUiReact.Table.Row,
-	                                { key: index },
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    course.name
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    course.genre ? _react2.default.createElement(
-	                                        'div',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            'strong',
-	                                            null,
-	                                            'Category :',
-	                                            ' ',
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { target: '_blank', href: '/courses/' + course.genre._id },
-	                                                course.genre.name
-	                                            ),
-	                                            ' ',
-	                                            '/',
-	                                            ' ',
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { target: '_blank', href: '/courses/' + course.genre._id + '/' + course.subgenre._id },
-	                                                course.subgenre.name
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement('br', null)
-	                                    ) : '',
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        null,
-	                                        'Skill Level : ',
-	                                        function () {
-	                                            switch (course.level) {
-	                                                case 0:
-	                                                    return 'All Levels';
-	                                                case 1:
-	                                                    return 'Beginner Level';
-	                                                case 2:
-	                                                    return 'Intermediate Level';
-	                                                case 3:
-	                                                    return 'Expert Level';
-	                                                default:
-	                                                    return 'All Levels';
-	                                            }
-	                                        }()
-	                                    ),
-	                                    _react2.default.createElement('br', null),
-	                                    _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'calendar' }),
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        null,
-	                                        ' Created ' + new Date(course.createdAt).toLocaleString()
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            'span',
-	                                            { className: 'course-rate' },
-	                                            _react2.default.createElement('span', { style: { width: (course.star || 0) * 20 + '%' } })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'span',
-	                                            { style: { fontWeight: 'bold' } },
-	                                            ' ' + (course.star ? course.star.toFixed(1) : 0) + '(' + course.numberofreviews + ' ratings) • ' + course.numberofstudent + ' students enrolled'
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement('hr', null),
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        { style: { color: '#5bc0de' } },
-	                                        'Description'
-	                                    ),
-	                                    _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: course.description } })
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        { style: { color: '#5bc0de' } },
-	                                        'What are the requirements?'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'ul',
-	                                        null,
-	                                        course.needtoknow.map(function (item, index) {
-	                                            return _react2.default.createElement(
-	                                                'li',
-	                                                { key: index },
-	                                                item
-	                                            );
-	                                        })
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        { style: { color: '#5bc0de' } },
-	                                        'What am I going to get from this course?'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'ul',
-	                                        null,
-	                                        course.willableto.map(function (item, index) {
-	                                            return _react2.default.createElement(
-	                                                'li',
-	                                                { key: index },
-	                                                item
-	                                            );
-	                                        })
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        { style: { color: '#5bc0de' } },
-	                                        'What is the target students?'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'ul',
-	                                        null,
-	                                        course.targetstudent.map(function (item, index) {
-	                                            return _react2.default.createElement(
-	                                                'li',
-	                                                { key: index },
-	                                                item
-	                                            );
-	                                        })
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    course.cost + '$'
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'a',
-	                                        { target: '_blank', href: '/view-user/' + course.lecturer._id },
-	                                        course.lecturer.username + ''
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    { textAlign: 'center' },
-	                                    _react2.default.createElement(
-	                                        _semanticUiReact.Button,
-	                                        { positive: true, onClick: function onClick(e) {
-	                                                return _this7.viewCourse(e, course);
-	                                            } },
-	                                        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'eye-open' })
-	                                    ),
-	                                    _react2.default.createElement('hr', null),
-	                                    _react2.default.createElement(
-	                                        _semanticUiReact.Button.Group,
-	                                        { size: 'mini' },
-	                                        _react2.default.createElement(
-	                                            _semanticUiReact.Button,
-	                                            { positive: true, onClick: function onClick(e) {
-	                                                    return _this7.acceptCourse(e, course._id);
-	                                                } },
-	                                            'Accept'
-	                                        ),
-	                                        _react2.default.createElement(_semanticUiReact.Button.Or, null),
-	                                        _react2.default.createElement(
-	                                            _semanticUiReact.Button,
-	                                            { negative: true, onClick: function onClick(e) {
-	                                                    return _this7.refuseCourse(e, course._id);
-	                                                } },
-	                                            'Refuse'
-	                                        )
-	                                    )
-	                                )
-	                            );
-	                        })
-	                    )
-	                ),
-	                _react2.default.createElement(ModalShowLectures, { ref: function ref(_ref) {
-	                        return _this7.modalViewCourse = _ref;
-	                    } }),
-	                _react2.default.createElement(
-	                    _reactBootstrap.Pager,
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  course.genre ? _react2.default.createElement(
+	                    "div",
 	                    null,
 	                    _react2.default.createElement(
-	                        _reactBootstrap.Pager.Item,
-	                        { disabled: !this.props.location.query.page || this.props.location.query.page == 1,
-	                            previous: true, onClick: function onClick(e) {
-	                                _this7.onClickPrev(e);
-	                            } },
-	                        '\u2190 Previous Page'
+	                      "strong",
+	                      null,
+	                      "Category :",
+	                      " ",
+	                      _react2.default.createElement(
+	                        "a",
+	                        {
+	                          target: "_blank",
+	                          href: "/courses/" + course.genre._id
+	                        },
+	                        course.genre.name
+	                      ),
+	                      " ",
+	                      "/",
+	                      " ",
+	                      _react2.default.createElement(
+	                        "a",
+	                        {
+	                          target: "_blank",
+	                          href: "/courses/" + course.genre._id + "/" + course.subgenre._id
+	                        },
+	                        course.subgenre.name
+	                      )
+	                    ),
+	                    _react2.default.createElement("br", null)
+	                  ) : "",
+	                  _react2.default.createElement(
+	                    "strong",
+	                    null,
+	                    "Skill Level :",
+	                    " ",
+	                    function () {
+	                      switch (course.level) {
+	                        case 0:
+	                          return "All Levels";
+	                        case 1:
+	                          return "Beginner Level";
+	                        case 2:
+	                          return "Intermediate Level";
+	                        case 3:
+	                          return "Expert Level";
+	                        default:
+	                          return "All Levels";
+	                      }
+	                    }()
+	                  ),
+	                  _react2.default.createElement("br", null),
+	                  _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "calendar" }),
+	                  _react2.default.createElement(
+	                    "span",
+	                    null,
+	                    " Created " + new Date(course.createdAt).toLocaleString()
+	                  ),
+	                  _react2.default.createElement(
+	                    "div",
+	                    null,
+	                    _react2.default.createElement(
+	                      "span",
+	                      { className: "course-rate" },
+	                      _react2.default.createElement("span", {
+	                        style: { width: (course.star || 0) * 20 + "%" }
+	                      })
 	                    ),
 	                    _react2.default.createElement(
-	                        _reactBootstrap.Pager.Item,
-	                        { next: true, onClick: function onClick(e) {
-	                                _this7.onClickNext(e);
-	                            } },
-	                        'Next Page \u2192'
+	                      "span",
+	                      { style: { fontWeight: "bold" } },
+	                      " " + (course.star ? course.star.toFixed(1) : 0) + "(" + course.numberofreviews + " ratings) • " + course.numberofstudent + " students enrolled"
 	                    )
+	                  ),
+	                  _react2.default.createElement("hr", null),
+	                  _react2.default.createElement(
+	                    "strong",
+	                    { style: { color: "#5bc0de" } },
+	                    "Description"
+	                  ),
+	                  _react2.default.createElement("div", {
+	                    dangerouslySetInnerHTML: { __html: course.description }
+	                  })
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  _react2.default.createElement(
+	                    "strong",
+	                    { style: { color: "#5bc0de" } },
+	                    "What are the requirements?"
+	                  ),
+	                  _react2.default.createElement(
+	                    "ul",
+	                    null,
+	                    course.needtoknow.map(function (item, index) {
+	                      return _react2.default.createElement(
+	                        "li",
+	                        { key: index },
+	                        item
+	                      );
+	                    })
+	                  ),
+	                  _react2.default.createElement(
+	                    "strong",
+	                    { style: { color: "#5bc0de" } },
+	                    "What am I going to get from this course?"
+	                  ),
+	                  _react2.default.createElement(
+	                    "ul",
+	                    null,
+	                    course.willableto.map(function (item, index) {
+	                      return _react2.default.createElement(
+	                        "li",
+	                        { key: index },
+	                        item
+	                      );
+	                    })
+	                  ),
+	                  _react2.default.createElement(
+	                    "strong",
+	                    { style: { color: "#5bc0de" } },
+	                    "What is the target students?"
+	                  ),
+	                  _react2.default.createElement(
+	                    "ul",
+	                    null,
+	                    course.targetstudent.map(function (item, index) {
+	                      return _react2.default.createElement(
+	                        "li",
+	                        { key: index },
+	                        item
+	                      );
+	                    })
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  course.cost + "$"
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  _react2.default.createElement(
+	                    "a",
+	                    {
+	                      target: "_blank",
+	                      href: "/view-user/" + course.lecturer._id
+	                    },
+	                    course.lecturer.username + ""
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  { textAlign: "center" },
+	                  _react2.default.createElement(
+	                    _semanticUiReact.Button,
+	                    {
+	                      positive: true,
+	                      onClick: function onClick(e) {
+	                        return _this7.viewCourse(e, course);
+	                      }
+	                    },
+	                    _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "eye-open" })
+	                  ),
+	                  _react2.default.createElement("hr", null),
+	                  _react2.default.createElement(
+	                    _semanticUiReact.Button.Group,
+	                    { size: "mini" },
+	                    _react2.default.createElement(
+	                      _semanticUiReact.Button,
+	                      {
+	                        positive: true,
+	                        onClick: function onClick(e) {
+	                          return _this7.acceptCourse(e, course._id);
+	                        }
+	                      },
+	                      "Accept"
+	                    ),
+	                    _react2.default.createElement(_semanticUiReact.Button.Or, null),
+	                    _react2.default.createElement(
+	                      _semanticUiReact.Button,
+	                      {
+	                        negative: true,
+	                        onClick: function onClick(e) {
+	                          return _this7.refuseCourse(e, course._id);
+	                        }
+	                      },
+	                      "Refuse"
+	                    )
+	                  )
 	                )
-	            );
-	        }
-	    }]);
+	              );
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(ModalShowLectures, { ref: function ref(_ref) {
+	            return _this7.modalViewCourse = _ref;
+	          } }),
+	        _react2.default.createElement(
+	          _reactBootstrap.Pager,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Pager.Item,
+	            {
+	              disabled: !this.props.location.query.page || this.props.location.query.page == 1,
+	              previous: true,
+	              onClick: function onClick(e) {
+	                _this7.onClickPrev(e);
+	              }
+	            },
+	            "\u2190 Previous Page"
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Pager.Item,
+	            {
+	              next: true,
+	              onClick: function onClick(e) {
+	                _this7.onClickNext(e);
+	              }
+	            },
+	            "Next Page \u2192"
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	    return AdminReviewCourse;
+	  return AdminReviewCourse;
 	}(_react.Component);
 
 	AdminReviewCourse = (0, _reactRedux.connect)()(AdminReviewCourse);

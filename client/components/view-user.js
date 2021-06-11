@@ -15,7 +15,8 @@ class ViewUser extends React.Component {
         }
     }
     componentDidMount() {
-        $.post('/api/user/view-user',
+        // $.post('/api/user/view-user',
+        $.post('http://localhost:5000/users/view-user',
             {
                 id: Number(this.props.params.id)
             }, (data, status) => {
