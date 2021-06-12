@@ -63,3 +63,8 @@ export const getCourseIntro = (data, callback) => {
   // $.post("/api/course/get-course-info", data, callback);
   $.post("http://localhost:5000/courses/get-info-course", data, callback);
 };
+
+export const getCourseIntroLearning = (data, callback) => {
+  // $.post("/api/course/get-course-info", data, callback);
+  $.post("http://localhost:5000/users/get-info-course", data, callback);
+};

@@ -6,7 +6,7 @@ import { setUser, setGetMyCourses, addViewCourse } from "../actions";
 import { Col, Row, Glyphicon } from "react-bootstrap";
 import Review from "../components/review";
 var _ = require("lodash");
-import { getReview, getCourseIntro } from "../apis/courses";
+import { getReview, getCourseIntroLearning } from "../apis/courses";
 
 class LearnCourse extends React.Component {
   constructor(props) {
@@ -45,7 +45,7 @@ class LearnCourse extends React.Component {
     if (this.props.course) {
       return;
     }
-    getCourseIntro(
+    getCourseIntroLearning(
       {
         courseid: Number(this.props.params.id),
       },
@@ -111,10 +111,9 @@ class LearnCourse extends React.Component {
     );
   }
   render() {
-    if (!this.props.course || this.props.course.lectures.length == 0){
-
+    if (!this.props.course || this.props.course.lectures.length == 0) {
       // console.log(this.props.course.lectures)
-        return <div></div>;
+      return <div></div>;
     }
     return (
       <div>
@@ -218,10 +217,8 @@ class LearnCourse extends React.Component {
             >
               <source
                 src={
-                  "/api/resource/play-video-learning/" +
-                  this.props.params.id +
-                  "/" +
-                  this.props.course.lectures[this.state.currentLectureIndex]._id
+                  this.props.course.lectures[this.state.currentLectureIndex]
+                    .video
                 }
                 type="video/mp4"
               />

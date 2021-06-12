@@ -110090,6 +110090,11 @@
 	  $.post("http://localhost:5000/courses/get-info-course", data, callback);
 	};
 
+	var getCourseIntroLearning = exports.getCourseIntroLearning = function getCourseIntroLearning(data, callback) {
+	  // $.post("/api/course/get-course-info", data, callback);
+	  $.post("http://localhost:5000/users/get-info-course", data, callback);
+	};
+
 /***/ }),
 /* 1110 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -110184,7 +110189,7 @@
 	      if (this.props.course) {
 	        return;
 	      }
-	      (0, _courses.getCourseIntro)({
+	      (0, _courses.getCourseIntroLearning)({
 	        courseid: Number(this.props.params.id)
 	      }, function (data, status) {
 	        if (data.code == 1001) {
@@ -110257,7 +110262,6 @@
 	      var _this6 = this;
 
 	      if (!this.props.course || this.props.course.lectures.length == 0) {
-
 	        // console.log(this.props.course.lectures)
 	        return _react2.default.createElement("div", null);
 	      }
@@ -110377,7 +110381,7 @@
 	                height: "auto"
 	              },
 	              _react2.default.createElement("source", {
-	                src: "/api/resource/play-video-learning/" + this.props.params.id + "/" + this.props.course.lectures[this.state.currentLectureIndex]._id,
+	                src: this.props.course.lectures[this.state.currentLectureIndex].video,
 	                type: "video/mp4"
 	              })
 	            )
