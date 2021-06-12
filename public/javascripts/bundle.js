@@ -71007,10 +71007,10 @@
 /* 571 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -71040,661 +71040,713 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var ModalDepositFunds = function (_Component) {
-	    _inherits(ModalDepositFunds, _Component);
+	  _inherits(ModalDepositFunds, _Component);
 
-	    function ModalDepositFunds(props) {
-	        _classCallCheck(this, ModalDepositFunds);
+	  function ModalDepositFunds(props) {
+	    _classCallCheck(this, ModalDepositFunds);
 
-	        var _this = _possibleConstructorReturn(this, (ModalDepositFunds.__proto__ || Object.getPrototypeOf(ModalDepositFunds)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (ModalDepositFunds.__proto__ || Object.getPrototypeOf(ModalDepositFunds)).call(this, props));
 
-	        _this.state = {
-	            modalOpen: false,
-	            money: 100
-	        };
-	        return _this;
+	    _this.state = {
+	      modalOpen: false,
+	      money: 100
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ModalDepositFunds, [{
+	    key: "handleOpen",
+	    value: function handleOpen(e) {
+	      this.setState({
+	        modalOpen: true,
+	        money: 100
+	      });
 	    }
+	  }, {
+	    key: "handleClose",
+	    value: function handleClose(e) {
+	      this.setState({
+	        modalOpen: false,
+	        money: 100
+	      });
+	    }
+	  }, {
+	    key: "handleChange",
+	    value: function handleChange(e, _ref) {
+	      var value = _ref.value;
 
-	    _createClass(ModalDepositFunds, [{
-	        key: 'handleOpen',
-	        value: function handleOpen(e) {
-	            this.setState({
-	                modalOpen: true,
-	                money: 100
-	            });
-	        }
-	    }, {
-	        key: 'handleClose',
-	        value: function handleClose(e) {
-	            this.setState({
-	                modalOpen: false,
-	                money: 100
-	            });
-	        }
-	    }, {
-	        key: 'handleChange',
-	        value: function handleChange(e, _ref) {
-	            var value = _ref.value;
+	      this.setState({
+	        money: parseInt(value)
+	      });
+	    }
+	  }, {
+	    key: "depositFunds",
+	    value: function depositFunds(e) {
+	      var _this2 = this;
 
-	            this.setState({
-	                money: parseInt(value)
-	            });
+	      $.post(
+	      //   "/api/user/deposit-funds",
+	      "http://localhost:5000/users/deposit-funds", {
+	        money: this.state.money
+	      }, function (data, status) {
+	        if (data.code == 200) {
+	          _this2.props.depositFunds(_this2.state.money);
+	          _this2.handleClose(e);
+	        } else if (data.code == 1001) {
+	          _this2.props.dispatch((0, _actions.setUser)({}));
+	          _this2.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          browserHistory.push("/courses");
 	        }
-	    }, {
-	        key: 'depositFunds',
-	        value: function depositFunds(e) {
-	            var _this2 = this;
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this3 = this;
 
-	            $.post('/api/user/deposit-funds', {
-	                money: this.state.money
-	            }, function (data, status) {
-	                if (data.code == 200) {
-	                    _this2.props.depositFunds(_this2.state.money);
-	                    _this2.handleClose(e);
-	                } else if (data.code == 1001) {
-	                    _this2.props.dispatch((0, _actions.setUser)({}));
-	                    _this2.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    browserHistory.push('/courses');
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this3 = this;
+	      return _react2.default.createElement(
+	        _reactBootstrap.Modal,
+	        {
+	          bsSize: "small",
+	          show: this.state.modalOpen,
+	          onHide: this.handleClose.bind(this)
+	        },
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Header,
+	          { closeButton: true },
+	          _react2.default.createElement(
+	            _reactBootstrap.Modal.Title,
+	            { className: "text-center h3" },
+	            "Deposit Funds"
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Body,
+	          { style: { overflow: "auto" } },
+	          _react2.default.createElement(
+	            _semanticUiReact.Form,
+	            null,
+	            _react2.default.createElement(
+	              _semanticUiReact.Form.Field,
+	              null,
+	              _react2.default.createElement(_semanticUiReact.Radio, {
+	                label: "100$",
+	                name: "radioGroup",
+	                value: "100",
+	                checked: this.state.money === 100,
+	                onChange: this.handleChange.bind(this)
+	              })
+	            ),
+	            _react2.default.createElement(
+	              _semanticUiReact.Form.Field,
+	              null,
+	              _react2.default.createElement(_semanticUiReact.Radio, {
+	                label: "200$",
+	                name: "radioGroup",
+	                value: "200",
+	                checked: this.state.money === 200,
+	                onChange: this.handleChange.bind(this)
+	              })
+	            ),
+	            _react2.default.createElement(
+	              _semanticUiReact.Form.Field,
+	              null,
+	              _react2.default.createElement(_semanticUiReact.Radio, {
+	                label: "500$",
+	                name: "radioGroup",
+	                value: "500",
+	                checked: this.state.money === 500,
+	                onChange: this.handleChange.bind(this)
+	              })
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Footer,
+	          null,
+	          _react2.default.createElement(
+	            _semanticUiReact.Button,
+	            { positive: true, onClick: function onClick(e) {
+	                return _this3.depositFunds(e);
+	              } },
+	            "Confirm $",
+	            this.state.money,
+	            "USD"
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	            return _react2.default.createElement(
-	                _reactBootstrap.Modal,
-	                { bsSize: 'small', show: this.state.modalOpen,
-	                    onHide: this.handleClose.bind(this) },
-	                _react2.default.createElement(
-	                    _reactBootstrap.Modal.Header,
-	                    { closeButton: true },
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Modal.Title,
-	                        { className: 'text-center h3' },
-	                        'Deposit Funds'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    _reactBootstrap.Modal.Body,
-	                    { style: { overflow: 'auto' } },
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Form,
-	                        null,
-	                        _react2.default.createElement(
-	                            _semanticUiReact.Form.Field,
-	                            null,
-	                            _react2.default.createElement(_semanticUiReact.Radio, {
-	                                label: '100$',
-	                                name: 'radioGroup',
-	                                value: '100',
-	                                checked: this.state.money === 100,
-	                                onChange: this.handleChange.bind(this)
-	                            })
-	                        ),
-	                        _react2.default.createElement(
-	                            _semanticUiReact.Form.Field,
-	                            null,
-	                            _react2.default.createElement(_semanticUiReact.Radio, {
-	                                label: '200$',
-	                                name: 'radioGroup',
-	                                value: '200',
-	                                checked: this.state.money === 200,
-	                                onChange: this.handleChange.bind(this)
-	                            })
-	                        ),
-	                        _react2.default.createElement(
-	                            _semanticUiReact.Form.Field,
-	                            null,
-	                            _react2.default.createElement(_semanticUiReact.Radio, {
-	                                label: '500$',
-	                                name: 'radioGroup',
-	                                value: '500',
-	                                checked: this.state.money === 500,
-	                                onChange: this.handleChange.bind(this)
-	                            })
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    _reactBootstrap.Modal.Footer,
-	                    null,
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Button,
-	                        { positive: true, onClick: function onClick(e) {
-	                                return _this3.depositFunds(e);
-	                            } },
-	                        'Confirm $',
-	                        this.state.money,
-	                        'USD'
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return ModalDepositFunds;
+	  return ModalDepositFunds;
 	}(_react.Component);
 
 	var ModalWithDraw = function (_Component2) {
-	    _inherits(ModalWithDraw, _Component2);
+	  _inherits(ModalWithDraw, _Component2);
 
-	    function ModalWithDraw(props) {
-	        _classCallCheck(this, ModalWithDraw);
+	  function ModalWithDraw(props) {
+	    _classCallCheck(this, ModalWithDraw);
 
-	        var _this4 = _possibleConstructorReturn(this, (ModalWithDraw.__proto__ || Object.getPrototypeOf(ModalWithDraw)).call(this, props));
+	    var _this4 = _possibleConstructorReturn(this, (ModalWithDraw.__proto__ || Object.getPrototypeOf(ModalWithDraw)).call(this, props));
 
-	        _this4.state = {
-	            modalOpen: false,
-	            money: 100,
-	            message: ''
-	        };
-	        return _this4;
+	    _this4.state = {
+	      modalOpen: false,
+	      money: 100,
+	      message: ""
+	    };
+	    return _this4;
+	  }
+
+	  _createClass(ModalWithDraw, [{
+	    key: "handleOpen",
+	    value: function handleOpen(e) {
+	      this.setState({
+	        modalOpen: true,
+	        money: 100
+	      });
 	    }
+	  }, {
+	    key: "handleClose",
+	    value: function handleClose(e) {
+	      this.setState({
+	        modalOpen: false,
+	        money: 100
+	      });
+	    }
+	  }, {
+	    key: "handleChange",
+	    value: function handleChange(e, _ref2) {
+	      var value = _ref2.value;
 
-	    _createClass(ModalWithDraw, [{
-	        key: 'handleOpen',
-	        value: function handleOpen(e) {
-	            this.setState({
-	                modalOpen: true,
-	                money: 100
-	            });
-	        }
-	    }, {
-	        key: 'handleClose',
-	        value: function handleClose(e) {
-	            this.setState({
-	                modalOpen: false,
-	                money: 100
-	            });
-	        }
-	    }, {
-	        key: 'handleChange',
-	        value: function handleChange(e, _ref2) {
-	            var value = _ref2.value;
+	      this.setState({
+	        money: parseInt(value)
+	      });
+	    }
+	  }, {
+	    key: "withDraw",
+	    value: function withDraw(e) {
+	      var _this5 = this;
 
-	            this.setState({
-	                money: parseInt(value)
-	            });
+	      $.post(
+	      //   "/api/user/withdraw",
+	      "http://localhost:5000/users/withdraw-money", {
+	        money: this.state.money
+	      }, function (data, status) {
+	        if (data.code == 200) {
+	          _this5.props.withDraw(_this5.state.money);
+	          _this5.handleClose(e);
+	        } else if (data.code == 1001) {
+	          _this5.props.dispatch((0, _actions.setUser)({}));
+	          _this5.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          browserHistory.push("/courses");
+	        } else {
+	          _this5.setState({ message: data.message });
+	          var alertlogin = $(".alert:first");
+	          alertlogin.show(500, function () {
+	            setTimeout(function () {
+	              alertlogin.hide(500);
+	            }, 3000);
+	          });
 	        }
-	    }, {
-	        key: 'withDraw',
-	        value: function withDraw(e) {
-	            var _this5 = this;
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this6 = this;
 
-	            $.post('/api/user/withdraw', {
-	                money: this.state.money
-	            }, function (data, status) {
-	                if (data.code == 200) {
-	                    _this5.props.withDraw(_this5.state.money);
-	                    _this5.handleClose(e);
-	                } else if (data.code == 1001) {
-	                    _this5.props.dispatch((0, _actions.setUser)({}));
-	                    _this5.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    browserHistory.push('/courses');
-	                } else {
-	                    _this5.setState({ message: data.message });
-	                    var alertlogin = $(".alert:first");
-	                    alertlogin.show(500, function () {
-	                        setTimeout(function () {
-	                            alertlogin.hide(500);
-	                        }, 3000);
-	                    });
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this6 = this;
+	      return _react2.default.createElement(
+	        _reactBootstrap.Modal,
+	        {
+	          bsSize: "small",
+	          show: this.state.modalOpen,
+	          onHide: this.handleClose.bind(this)
+	        },
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Header,
+	          { closeButton: true },
+	          _react2.default.createElement(
+	            _reactBootstrap.Modal.Title,
+	            { className: "text-center h3" },
+	            "Withdraw Money"
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Body,
+	          { style: { overflow: "auto" } },
+	          _react2.default.createElement(
+	            "div",
+	            {
+	              className: "alert alert-danger text-center",
+	              role: "alert",
+	              style: { display: "none", marginBottom: 0 }
+	            },
+	            this.state.message,
+	            " "
+	          ),
+	          _react2.default.createElement(
+	            _semanticUiReact.Form,
+	            null,
+	            _react2.default.createElement(
+	              _semanticUiReact.Form.Field,
+	              null,
+	              _react2.default.createElement(_semanticUiReact.Radio, {
+	                label: "100$",
+	                name: "radioGroup",
+	                value: "100",
+	                checked: this.state.money === 100,
+	                onChange: this.handleChange.bind(this)
+	              })
+	            ),
+	            _react2.default.createElement(
+	              _semanticUiReact.Form.Field,
+	              null,
+	              _react2.default.createElement(_semanticUiReact.Radio, {
+	                label: "200$",
+	                name: "radioGroup",
+	                value: "200",
+	                checked: this.state.money === 200,
+	                onChange: this.handleChange.bind(this)
+	              })
+	            ),
+	            _react2.default.createElement(
+	              _semanticUiReact.Form.Field,
+	              null,
+	              _react2.default.createElement(_semanticUiReact.Radio, {
+	                label: "500$",
+	                name: "radioGroup",
+	                value: "500",
+	                checked: this.state.money === 500,
+	                onChange: this.handleChange.bind(this)
+	              })
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Footer,
+	          null,
+	          _react2.default.createElement(
+	            _semanticUiReact.Button,
+	            { negative: true, onClick: function onClick(e) {
+	                return _this6.withDraw(e);
+	              } },
+	            "Confirm $",
+	            this.state.money,
+	            "USD"
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	            return _react2.default.createElement(
-	                _reactBootstrap.Modal,
-	                { bsSize: 'small', show: this.state.modalOpen,
-	                    onHide: this.handleClose.bind(this) },
-	                _react2.default.createElement(
-	                    _reactBootstrap.Modal.Header,
-	                    { closeButton: true },
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Modal.Title,
-	                        { className: 'text-center h3' },
-	                        'Withdraw Money'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    _reactBootstrap.Modal.Body,
-	                    { style: { overflow: 'auto' } },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'alert alert-danger text-center', role: 'alert', style: { display: 'none', marginBottom: 0 } },
-	                        this.state.message,
-	                        ' '
-	                    ),
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Form,
-	                        null,
-	                        _react2.default.createElement(
-	                            _semanticUiReact.Form.Field,
-	                            null,
-	                            _react2.default.createElement(_semanticUiReact.Radio, {
-	                                label: '100$',
-	                                name: 'radioGroup',
-	                                value: '100',
-	                                checked: this.state.money === 100,
-	                                onChange: this.handleChange.bind(this)
-	                            })
-	                        ),
-	                        _react2.default.createElement(
-	                            _semanticUiReact.Form.Field,
-	                            null,
-	                            _react2.default.createElement(_semanticUiReact.Radio, {
-	                                label: '200$',
-	                                name: 'radioGroup',
-	                                value: '200',
-	                                checked: this.state.money === 200,
-	                                onChange: this.handleChange.bind(this)
-	                            })
-	                        ),
-	                        _react2.default.createElement(
-	                            _semanticUiReact.Form.Field,
-	                            null,
-	                            _react2.default.createElement(_semanticUiReact.Radio, {
-	                                label: '500$',
-	                                name: 'radioGroup',
-	                                value: '500',
-	                                checked: this.state.money === 500,
-	                                onChange: this.handleChange.bind(this)
-	                            })
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    _reactBootstrap.Modal.Footer,
-	                    null,
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Button,
-	                        { negative: true, onClick: function onClick(e) {
-	                                return _this6.withDraw(e);
-	                            } },
-	                        'Confirm $',
-	                        this.state.money,
-	                        'USD'
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return ModalWithDraw;
+	  return ModalWithDraw;
 	}(_react.Component);
 
 	var EditCredit = function (_Component3) {
-	    _inherits(EditCredit, _Component3);
+	  _inherits(EditCredit, _Component3);
 
-	    function EditCredit(props) {
-	        _classCallCheck(this, EditCredit);
+	  function EditCredit(props) {
+	    _classCallCheck(this, EditCredit);
 
-	        var _this7 = _possibleConstructorReturn(this, (EditCredit.__proto__ || Object.getPrototypeOf(EditCredit)).call(this, props));
+	    var _this7 = _possibleConstructorReturn(this, (EditCredit.__proto__ || Object.getPrototypeOf(EditCredit)).call(this, props));
 
-	        _this7.state = {
-	            filter: {
-	                page: 1,
-	                sort: 0
-	            },
-	            paypalid: _this7.props.paypalid,
-	            payments: []
-	        };
-	        return _this7;
+	    _this7.state = {
+	      filter: {
+	        page: 1,
+	        sort: 0
+	      },
+	      paypalid: _this7.props.paypalid,
+	      payments: []
+	    };
+	    return _this7;
+	  }
+
+	  _createClass(EditCredit, [{
+	    key: "handlePayPalId",
+	    value: function handlePayPalId(e) {
+	      this.setState({ paypalid: e.target.value });
 	    }
+	  }, {
+	    key: "depositFunds",
+	    value: function depositFunds(money) {
+	      var _this8 = this;
 
-	    _createClass(EditCredit, [{
-	        key: 'handlePayPalId',
-	        value: function handlePayPalId(e) {
-	            this.setState({ paypalid: e.target.value });
+	      this.props.dispatch((0, _actions.depositFunds)(money));
+	      // $.post("/api/user/get-payment", this.state.filter, (data, status) => {
+	      $.post("http://localhost:5000/users/get-payment-by-user", this.state.filter, function (data, status) {
+	        if (data.code == 200) {
+	          _this8.setState({ payments: data.payments });
+	        } else if (data.code == 1001) {
+	          _this8.props.dispatch((0, _actions.setUser)({}));
+	          _this8.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          browserHistory.push("/courses");
 	        }
-	    }, {
-	        key: 'depositFunds',
-	        value: function depositFunds(money) {
-	            var _this8 = this;
+	      });
+	    }
+	  }, {
+	    key: "withDraw",
+	    value: function withDraw(money) {
+	      var _this9 = this;
 
-	            this.props.dispatch((0, _actions.depositFunds)(money));
-	            $.post('/api/user/get-payment', this.state.filter, function (data, status) {
-	                if (data.code == 200) {
-	                    _this8.setState({ payments: data.payments });
-	                } else if (data.code == 1001) {
-	                    _this8.props.dispatch((0, _actions.setUser)({}));
-	                    _this8.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    browserHistory.push('/courses');
+	      this.props.dispatch((0, _actions.withDraw)(money));
+	      // $.post("/api/user/get-payment", this.state.filter, (data, status) => {
+	      $.post("http://localhost:5000/users/get-payment-by-user", this.state.filter, function (data, status) {
+	        if (data.code == 200) {
+	          _this9.setState({ payments: data.payments });
+	        } else if (data.code == 1001) {
+	          _this9.props.dispatch((0, _actions.setUser)({}));
+	          _this9.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          browserHistory.push("/courses");
+	        }
+	      });
+	    }
+	  }, {
+	    key: "showModalDepositFunds",
+	    value: function showModalDepositFunds(e) {
+	      this.modalDepositFunds.handleOpen(e);
+	    }
+	  }, {
+	    key: "showModalWithDraw",
+	    value: function showModalWithDraw(e) {
+	      this.modalWithDraw.handleOpen(e);
+	    }
+	  }, {
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      var _this10 = this;
+
+	      // $.post("/api/user/get-payment", this.state.filter, (data, status) => {
+	      $.post("http://localhost:5000/users/get-payment-by-user", this.state.filter, function (data, status) {
+	        if (data.code == 200) {
+	          _this10.setState({ payments: data.payments });
+	        } else if (data.code == 1001) {
+	          _this10.props.dispatch((0, _actions.setUser)({}));
+	          _this10.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          browserHistory.push("/courses");
+	        }
+	      });
+	    }
+	  }, {
+	    key: "onClickPrev",
+	    value: function onClickPrev(e) {
+	      var _this11 = this;
+
+	      e.preventDefault();
+	      var filter = this.state.filter;
+	      filter.page = Math.max(1, filter.page - 1);
+	      this.setState({ filter: filter });
+	      // $.post("/api/user/get-payment", filter, (data, status) => {
+	      $.post("http://localhost:5000/users/get-payment-by-user", filter, function (data, status) {
+	        if (data.code == 200) {
+	          _this11.setState({ payments: data.payments });
+	        } else if (data.code == 1001) {
+	          _this11.props.dispatch((0, _actions.setUser)({}));
+	          _this11.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          browserHistory.push("/courses");
+	        }
+	      });
+	    }
+	  }, {
+	    key: "onClickNext",
+	    value: function onClickNext(e) {
+	      var _this12 = this;
+
+	      e.preventDefault();
+	      var filter = this.state.filter;
+	      filter.page = filter.page + 1;
+	      this.setState({ filter: filter });
+	      // $.post("/api/user/get-payment", filter, (data, status) => {
+	      $.post("http://localhost:5000/users/get-payment-by-user", filter, function (data, status) {
+	        if (data.code == 200) {
+	          _this12.setState({ payments: data.payments });
+	        } else if (data.code == 1001) {
+	          _this12.props.dispatch((0, _actions.setUser)({}));
+	          _this12.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          browserHistory.push("/courses");
+	        }
+	      });
+	    }
+	  }, {
+	    key: "deletePayment",
+	    value: function deletePayment(e, payment, index) {
+	      var payments = this.state.payments;
+	      payments = [].concat(_toConsumableArray(payments.slice(0, index)), _toConsumableArray(payments.slice(index + 1)));
+	      this.setState({ payments: payments });
+	      // $.post("/api/user/delete-payment", { _id: payment._id });
+	      $.post("http://localhost:5000/users/delete-payment", { _id: payment._id });
+	    }
+	  }, {
+	    key: "setPaypalId",
+	    value: function setPaypalId(e) {
+	      var _this13 = this;
+
+	      $.post(
+	      //   "/api/user/set-paypalid",
+	      "http://localhost:5000/users/set-paypalid", {
+	        paypalid: this.state.paypalid
+	      }, function (data, status) {
+	        if (data.code == 200) {
+	          _this13.props.dispatch((0, _actions.setPaypalId)(_this13.state.paypalid));
+	        } else if (data.code == 1001) {
+	          _this13.props.dispatch((0, _actions.setUser)({}));
+	          _this13.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          browserHistory.push("/courses");
+	        }
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this14 = this;
+
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement("link", { rel: "stylesheet", href: "/stylesheets/semantic.min.css" }),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "edit-user-header-box" },
+	          _react2.default.createElement(
+	            "p",
+	            { className: "text-center" },
+	            _react2.default.createElement(
+	              "strong",
+	              null,
+	              "Credit"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "text-center" },
+	            "Your credit information"
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "edit-user-content" },
+	          _react2.default.createElement(
+	            "h4",
+	            { style: { fontWeight: "bold", display: "inline" } },
+	            "Your total Academy credits: USD$",
+	            this.props.balance.toFixed(2),
+	            " "
+	          ),
+	          _react2.default.createElement(
+	            _semanticUiReact.Button.Group,
+	            { size: "mini" },
+	            _react2.default.createElement(
+	              _semanticUiReact.Button,
+	              { positive: true, onClick: function onClick(e) {
+	                  return _this14.showModalDepositFunds(e);
+	                } },
+	              "Deposit Funds"
+	            ),
+	            _react2.default.createElement(_semanticUiReact.Button.Or, null),
+	            _react2.default.createElement(
+	              _semanticUiReact.Button,
+	              { negative: true, onClick: function onClick(e) {
+	                  return _this14.showModalWithDraw(e);
+	                } },
+	              "Withdraw Money"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "h4",
+	            { style: { fontWeight: "bold" } },
+	            "Enter PayPal-Id(It is your e-mail address you used to register with PayPal)"
+	          ),
+	          _react2.default.createElement(
+	            _semanticUiReact.Input,
+	            {
+	              fluid: true,
+	              action: true,
+	              value: this.state.paypalid,
+	              onChange: function onChange(e) {
+	                return _this14.handlePayPalId(e);
+	              },
+	              placeholder: "Your e-mail address you used to register with PayPal",
+	              type: "email"
+	            },
+	            _react2.default.createElement("input", null),
+	            _react2.default.createElement(
+	              _semanticUiReact.Button,
+	              {
+	                disabled: this.props.paypalid == this.state.paypalid,
+	                positive: true,
+	                onClick: function onClick(e) {
+	                  return _this14.setPaypalId(e);
 	                }
-	            });
-	        }
-	    }, {
-	        key: 'withDraw',
-	        value: function withDraw(money) {
-	            var _this9 = this;
-
-	            this.props.dispatch((0, _actions.withDraw)(money));
-	            $.post('/api/user/get-payment', this.state.filter, function (data, status) {
-	                if (data.code == 200) {
-	                    _this9.setState({ payments: data.payments });
-	                } else if (data.code == 1001) {
-	                    _this9.props.dispatch((0, _actions.setUser)({}));
-	                    _this9.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    browserHistory.push('/courses');
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'showModalDepositFunds',
-	        value: function showModalDepositFunds(e) {
-	            this.modalDepositFunds.handleOpen(e);
-	        }
-	    }, {
-	        key: 'showModalWithDraw',
-	        value: function showModalWithDraw(e) {
-	            this.modalWithDraw.handleOpen(e);
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this10 = this;
-
-	            $.post('/api/user/get-payment', this.state.filter, function (data, status) {
-	                if (data.code == 200) {
-	                    _this10.setState({ payments: data.payments });
-	                } else if (data.code == 1001) {
-	                    _this10.props.dispatch((0, _actions.setUser)({}));
-	                    _this10.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    browserHistory.push('/courses');
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'onClickPrev',
-	        value: function onClickPrev(e) {
-	            var _this11 = this;
-
-	            e.preventDefault();
-	            var filter = this.state.filter;
-	            filter.page = Math.max(1, filter.page - 1);
-	            this.setState({ filter: filter });
-	            $.post('/api/user/get-payment', filter, function (data, status) {
-	                if (data.code == 200) {
-	                    _this11.setState({ payments: data.payments });
-	                } else if (data.code == 1001) {
-	                    _this11.props.dispatch((0, _actions.setUser)({}));
-	                    _this11.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    browserHistory.push('/courses');
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'onClickNext',
-	        value: function onClickNext(e) {
-	            var _this12 = this;
-
-	            e.preventDefault();
-	            var filter = this.state.filter;
-	            filter.page = filter.page + 1;
-	            this.setState({ filter: filter });
-	            $.post('/api/user/get-payment', filter, function (data, status) {
-	                if (data.code == 200) {
-	                    _this12.setState({ payments: data.payments });
-	                } else if (data.code == 1001) {
-	                    _this12.props.dispatch((0, _actions.setUser)({}));
-	                    _this12.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    browserHistory.push('/courses');
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'deletePayment',
-	        value: function deletePayment(e, payment, index) {
-	            var payments = this.state.payments;
-	            payments = [].concat(_toConsumableArray(payments.slice(0, index)), _toConsumableArray(payments.slice(index + 1)));
-	            this.setState({ payments: payments });
-	            $.post('/api/user/delete-payment', { _id: payment._id });
-	        }
-	    }, {
-	        key: 'setPaypalId',
-	        value: function setPaypalId(e) {
-	            var _this13 = this;
-
-	            $.post('/api/user/set-paypalid', {
-	                paypalid: this.state.paypalid
-	            }, function (data, status) {
-	                if (data.code == 200) {
-	                    _this13.props.dispatch((0, _actions.setPaypalId)(_this13.state.paypalid));
-	                } else if (data.code == 1001) {
-	                    _this13.props.dispatch((0, _actions.setUser)({}));
-	                    _this13.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    browserHistory.push('/courses');
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this14 = this;
-
-	            return _react2.default.createElement(
-	                'div',
+	              },
+	              "Save"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "h4",
+	            { style: { fontWeight: "bold" } },
+	            "Credit History"
+	          ),
+	          _react2.default.createElement(
+	            _semanticUiReact.Table,
+	            { basic: "very", celled: true, collapsing: true },
+	            _react2.default.createElement(
+	              _semanticUiReact.Table.Header,
+	              null,
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.Row,
 	                null,
-	                _react2.default.createElement('link', { rel: 'stylesheet', href: '/stylesheets/semantic.min.css' }),
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'edit-user-header-box' },
-	                    _react2.default.createElement(
-	                        'p',
-	                        { className: 'text-center' },
-	                        _react2.default.createElement(
-	                            'strong',
-	                            null,
-	                            'Credit'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'p',
-	                        { className: 'text-center' },
-	                        'Your credit information'
-	                    )
+	                  _semanticUiReact.Table.HeaderCell,
+	                  null,
+	                  "Credit History"
 	                ),
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'edit-user-content' },
-	                    _react2.default.createElement(
-	                        'h4',
-	                        { style: { fontWeight: 'bold', display: 'inline' } },
-	                        'Your total Academy credits: USD$',
-	                        this.props.balance.toFixed(2),
-	                        ' '
-	                    ),
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Button.Group,
-	                        { size: 'mini' },
-	                        _react2.default.createElement(
-	                            _semanticUiReact.Button,
-	                            { positive: true, onClick: function onClick(e) {
-	                                    return _this14.showModalDepositFunds(e);
-	                                } },
-	                            'Deposit Funds'
-	                        ),
-	                        _react2.default.createElement(_semanticUiReact.Button.Or, null),
-	                        _react2.default.createElement(
-	                            _semanticUiReact.Button,
-	                            { negative: true, onClick: function onClick(e) {
-	                                    return _this14.showModalWithDraw(e);
-	                                } },
-	                            'Withdraw Money'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'h4',
-	                        { style: { fontWeight: 'bold' } },
-	                        'Enter PayPal-Id(It is your e-mail address you used to register with PayPal)'
-	                    ),
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Input,
-	                        { fluid: true, action: true, value: this.state.paypalid, onChange: function onChange(e) {
-	                                return _this14.handlePayPalId(e);
-	                            },
-	                            placeholder: 'Your e-mail address you used to register with PayPal', type: 'email' },
-	                        _react2.default.createElement('input', null),
-	                        _react2.default.createElement(
-	                            _semanticUiReact.Button,
-	                            { disabled: this.props.paypalid == this.state.paypalid, positive: true, onClick: function onClick(e) {
-	                                    return _this14.setPaypalId(e);
-	                                } },
-	                            'Save'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'h4',
-	                        { style: { fontWeight: 'bold' } },
-	                        'Credit History'
-	                    ),
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Table,
-	                        { basic: 'very', celled: true, collapsing: true },
-	                        _react2.default.createElement(
-	                            _semanticUiReact.Table.Header,
-	                            null,
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.Row,
-	                                null,
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.HeaderCell,
-	                                    null,
-	                                    'Credit History'
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.HeaderCell,
-	                                    null,
-	                                    'Date'
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.HeaderCell,
-	                                    null,
-	                                    'Amount'
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.HeaderCell,
-	                                    null,
-	                                    'Information'
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            _semanticUiReact.Table.Body,
-	                            null,
-	                            this.state.payments.map(function (payment, index) {
-	                                return _react2.default.createElement(
-	                                    _semanticUiReact.Table.Row,
-	                                    { key: index },
-	                                    _react2.default.createElement(
-	                                        _semanticUiReact.Table.Cell,
-	                                        null,
-	                                        ['Withdraw Money', 'Deposit Funds', 'Enroll in a course', 'Student enroll in your course'][payment.type]
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        _semanticUiReact.Table.Cell,
-	                                        null,
-	                                        new Date(payment.createdAt).toLocaleString()
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        _semanticUiReact.Table.Cell,
-	                                        null,
-	                                        payment.money.toFixed(2) + '$'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        _semanticUiReact.Table.Cell,
-	                                        null,
-	                                        payment.type == 2 || payment.type == 3 ? _react2.default.createElement(
-	                                            'div',
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    'strong',
-	                                                    { style: { color: '#5bc0de' } },
-	                                                    'Course: '
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    _reactRouter.Link,
-	                                                    { to: payment.type == 2 ? '/course/' + payment.information.course._id : '/managecourse/' + payment.information.course._id + '/goals' },
-	                                                    payment.information.course.name
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    'strong',
-	                                                    { style: { color: '#5bc0de' } },
-	                                                    payment.type == 2 ? 'Instructor: ' : 'Student: '
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    _reactRouter.Link,
-	                                                    { to: '/view-user/' + payment.information.user._id },
-	                                                    payment.information.user.username
-	                                                )
-	                                            )
-	                                        ) : ''
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        _semanticUiReact.Table.Cell,
-	                                        { textAlign: 'center' },
-	                                        _react2.default.createElement(
-	                                            _semanticUiReact.Button,
-	                                            { positive: true, onClick: function onClick(e) {
-	                                                    return _this14.deletePayment(e, payment, index);
-	                                                } },
-	                                            _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'trash' })
-	                                        )
-	                                    )
-	                                );
-	                            })
-	                        )
-	                    ),
-	                    _react2.default.createElement(ModalDepositFunds, { depositFunds: this.depositFunds.bind(this), ref: function ref(_ref3) {
-	                            return _this14.modalDepositFunds = _ref3;
-	                        } }),
-	                    _react2.default.createElement(ModalWithDraw, { withDraw: this.withDraw.bind(this), ref: function ref(_ref4) {
-	                            return _this14.modalWithDraw = _ref4;
-	                        } }),
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Pager,
+	                  _semanticUiReact.Table.HeaderCell,
+	                  null,
+	                  "Date"
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.HeaderCell,
+	                  null,
+	                  "Amount"
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.HeaderCell,
+	                  null,
+	                  "Information"
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _semanticUiReact.Table.Body,
+	              null,
+	              this.state.payments.map(function (payment, index) {
+	                return _react2.default.createElement(
+	                  _semanticUiReact.Table.Row,
+	                  { key: index },
+	                  _react2.default.createElement(
+	                    _semanticUiReact.Table.Cell,
+	                    null,
+	                    ["Withdraw Money", "Deposit Funds", "Enroll in a course", "Student enroll in your course"][payment.type]
+	                  ),
+	                  _react2.default.createElement(
+	                    _semanticUiReact.Table.Cell,
+	                    null,
+	                    new Date(payment.createdAt).toLocaleString()
+	                  ),
+	                  _react2.default.createElement(
+	                    _semanticUiReact.Table.Cell,
+	                    null,
+	                    payment.money.toFixed(2) + "$"
+	                  ),
+	                  _react2.default.createElement(
+	                    _semanticUiReact.Table.Cell,
+	                    null,
+	                    payment.type == 2 || payment.type == 3 ? _react2.default.createElement(
+	                      "div",
+	                      null,
+	                      _react2.default.createElement(
+	                        "div",
 	                        null,
 	                        _react2.default.createElement(
-	                            _reactBootstrap.Pager.Item,
-	                            { disabled: this.state.filter.page == 1,
-	                                previous: true, onClick: function onClick(e) {
-	                                    _this14.onClickPrev(e);
-	                                } },
-	                            '\u2190 Previous Page'
+	                          "strong",
+	                          { style: { color: "#5bc0de" } },
+	                          "Course:",
+	                          " "
 	                        ),
 	                        _react2.default.createElement(
-	                            _reactBootstrap.Pager.Item,
-	                            { next: true, onClick: function onClick(e) {
-	                                    _this14.onClickNext(e);
-	                                } },
-	                            'Next Page \u2192'
+	                          _reactRouter.Link,
+	                          {
+	                            to: payment.type == 2 ? "/course/" + payment.information.course._id : "/managecourse/" + payment.information.course._id + "/goals"
+	                          },
+	                          payment.information.course.name
 	                        )
+	                      ),
+	                      _react2.default.createElement(
+	                        "div",
+	                        null,
+	                        _react2.default.createElement(
+	                          "strong",
+	                          { style: { color: "#5bc0de" } },
+	                          payment.type == 2 ? "Instructor: " : "Student: "
+	                        ),
+	                        _react2.default.createElement(
+	                          _reactRouter.Link,
+	                          {
+	                            to: "/view-user/" + payment.information.user._id
+	                          },
+	                          payment.information.user.username
+	                        )
+	                      )
+	                    ) : ""
+	                  ),
+	                  _react2.default.createElement(
+	                    _semanticUiReact.Table.Cell,
+	                    { textAlign: "center" },
+	                    _react2.default.createElement(
+	                      _semanticUiReact.Button,
+	                      {
+	                        positive: true,
+	                        onClick: function onClick(e) {
+	                          return _this14.deletePayment(e, payment, index);
+	                        }
+	                      },
+	                      _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "trash" })
 	                    )
-	                )
-	            );
-	        }
-	    }]);
+	                  )
+	                );
+	              })
+	            )
+	          ),
+	          _react2.default.createElement(ModalDepositFunds, {
+	            depositFunds: this.depositFunds.bind(this),
+	            ref: function ref(_ref3) {
+	              return _this14.modalDepositFunds = _ref3;
+	            }
+	          }),
+	          _react2.default.createElement(ModalWithDraw, {
+	            withDraw: this.withDraw.bind(this),
+	            ref: function ref(_ref4) {
+	              return _this14.modalWithDraw = _ref4;
+	            }
+	          }),
+	          _react2.default.createElement(
+	            _reactBootstrap.Pager,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Pager.Item,
+	              {
+	                disabled: this.state.filter.page == 1,
+	                previous: true,
+	                onClick: function onClick(e) {
+	                  _this14.onClickPrev(e);
+	                }
+	              },
+	              "\u2190 Previous Page"
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Pager.Item,
+	              {
+	                next: true,
+	                onClick: function onClick(e) {
+	                  _this14.onClickNext(e);
+	                }
+	              },
+	              "Next Page \u2192"
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	    return EditCredit;
+	  return EditCredit;
 	}(_react.Component);
 
 	EditCredit = (0, _reactRedux.connect)(function (state) {
-	    return {
-	        balance: state.user.creditbalance,
-	        paypalid: state.user.paypalid || ''
-	    };
+	  return {
+	    balance: state.user.creditbalance,
+	    paypalid: state.user.paypalid || ""
+	  };
 	})(EditCredit);
 
 	exports.default = EditCredit;
@@ -114600,10 +114652,10 @@
 /* 1124 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -114637,529 +114689,576 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var ModalShowLectures = function (_Component) {
-	    _inherits(ModalShowLectures, _Component);
+	  _inherits(ModalShowLectures, _Component);
 
-	    function ModalShowLectures(props) {
-	        _classCallCheck(this, ModalShowLectures);
+	  function ModalShowLectures(props) {
+	    _classCallCheck(this, ModalShowLectures);
 
-	        var _this = _possibleConstructorReturn(this, (ModalShowLectures.__proto__ || Object.getPrototypeOf(ModalShowLectures)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (ModalShowLectures.__proto__ || Object.getPrototypeOf(ModalShowLectures)).call(this, props));
 
-	        _this.state = {
-	            modalOpen: false,
-	            course: {}
-	        };
-	        return _this;
+	    _this.state = {
+	      modalOpen: false,
+	      course: {}
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ModalShowLectures, [{
+	    key: "handleOpen",
+	    value: function handleOpen(e, course) {
+	      this.setState({
+	        modalOpen: true,
+	        course: course
+	      });
 	    }
-
-	    _createClass(ModalShowLectures, [{
-	        key: 'handleOpen',
-	        value: function handleOpen(e, course) {
-	            this.setState({
-	                modalOpen: true,
-	                course: course
-	            });
-	        }
-	    }, {
-	        key: 'handleClose',
-	        value: function handleClose(e) {
-	            this.setState({
-	                modalOpen: false
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
+	  }, {
+	    key: "handleClose",
+	    value: function handleClose(e) {
+	      this.setState({
+	        modalOpen: false
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _semanticUiReact.Modal,
+	        { open: this.state.modalOpen, onClose: this.handleClose.bind(this) },
+	        _react2.default.createElement(
+	          _semanticUiReact.Modal.Header,
+	          null,
+	          this.state.course.name
+	        ),
+	        _react2.default.createElement(
+	          _semanticUiReact.Modal.Content,
+	          null,
+	          this.state.course.lectures ? this.state.course.lectures.map(function (lecture, index) {
 	            return _react2.default.createElement(
-	                _semanticUiReact.Modal,
+	              "div",
+	              { key: index },
+	              _react2.default.createElement(
+	                "strong",
+	                null,
+	                "Lecture ",
+	                index + 1,
+	                ": ",
+	                lecture.name
+	              ),
+	              _react2.default.createElement(
+	                "video",
 	                {
-	                    open: this.state.modalOpen,
-	                    onClose: this.handleClose.bind(this) },
-	                _react2.default.createElement(
-	                    _semanticUiReact.Modal.Header,
-	                    null,
-	                    this.state.course.name
-	                ),
-	                _react2.default.createElement(
-	                    _semanticUiReact.Modal.Content,
-	                    null,
-	                    this.state.course.lectures ? this.state.course.lectures.map(function (lecture, index) {
-	                        return _react2.default.createElement(
-	                            'div',
-	                            { key: index },
-	                            _react2.default.createElement(
-	                                'strong',
-	                                null,
-	                                'Lecture ',
-	                                index + 1,
-	                                ': ',
-	                                lecture.name
-	                            ),
-	                            _react2.default.createElement(
-	                                'video',
-	                                { id: 'video-' + lecture._id, controls: true, preload: 'false',
-	                                    width: '100%', height: 'auto' },
-	                                _react2.default.createElement('source', { src: '/api/resource/play-video-admin/' + lecture._id, type: 'video/mp4' })
-	                            ),
-	                            _react2.default.createElement('hr', null)
-	                        );
-	                    }) : ''
-	                )
+	                  id: "video-" + lecture._id,
+	                  controls: true,
+	                  preload: "false",
+	                  width: "100%",
+	                  height: "auto"
+	                },
+	                _react2.default.createElement("source", {
+	                  src: "/api/resource/play-video-admin/" + lecture._id,
+	                  type: "video/mp4"
+	                })
+	              ),
+	              _react2.default.createElement("hr", null)
 	            );
-	        }
-	    }]);
+	          }) : ""
+	        )
+	      );
+	    }
+	  }]);
 
-	    return ModalShowLectures;
+	  return ModalShowLectures;
 	}(_react.Component);
 
 	var AdminCourse = function (_Component2) {
-	    _inherits(AdminCourse, _Component2);
+	  _inherits(AdminCourse, _Component2);
 
-	    function AdminCourse(props) {
-	        _classCallCheck(this, AdminCourse);
+	  function AdminCourse(props) {
+	    _classCallCheck(this, AdminCourse);
 
-	        var _this2 = _possibleConstructorReturn(this, (AdminCourse.__proto__ || Object.getPrototypeOf(AdminCourse)).call(this, props));
+	    var _this2 = _possibleConstructorReturn(this, (AdminCourse.__proto__ || Object.getPrototypeOf(AdminCourse)).call(this, props));
 
-	        _this2.state = {
-	            searchQuery: '',
-	            courses: []
-	        };
-	        return _this2;
+	    _this2.state = {
+	      searchQuery: "",
+	      courses: []
+	    };
+	    return _this2;
+	  }
+
+	  _createClass(AdminCourse, [{
+	    key: "viewCourse",
+	    value: function viewCourse(e, course) {
+	      this.modalViewCourse.handleOpen(e, course);
 	    }
+	  }, {
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      var _this3 = this;
 
-	    _createClass(AdminCourse, [{
-	        key: 'viewCourse',
-	        value: function viewCourse(e, course) {
-	            this.modalViewCourse.handleOpen(e, course);
+	      this.setState({ searchQuery: this.props.location.query.searchQuery || "" });
+	      // $.post('/api/admin/get-courses',
+	      $.post("http://localhost:5000/admin/get-courses", this.props.location.query, function (data, status) {
+	        if (data.code == 200) {
+	          _this3.setState({ courses: data.courses });
+	        } else if (data.code == 1001) {
+	          _this3.props.dispatch((0, _actions.setUser)({}));
+	          _this3.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          _reactRouter.browserHistory.push("/courses");
 	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this3 = this;
+	      });
+	    }
+	  }, {
+	    key: "componentWillReceiveProps",
+	    value: function componentWillReceiveProps(nextProps) {
+	      var _this4 = this;
 
-	            this.setState({ searchQuery: this.props.location.query.searchQuery || '' });
-	            // $.post('/api/admin/get-courses',
-	            $.post('http://localhost:5000/admin/get-courses', this.props.location.query, function (data, status) {
-	                if (data.code == 200) {
-	                    _this3.setState({ courses: data.courses });
-	                } else if (data.code == 1001) {
-	                    _this3.props.dispatch((0, _actions.setUser)({}));
-	                    _this3.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    _reactRouter.browserHistory.push('/courses');
+	      if (this.props.location.query != nextProps.location.query) {
+	        this.setState({
+	          searchQuery: nextProps.location.query.searchQuery || ""
+	        });
+	        // $.post('/api/admin/get-courses',
+	        $.post("http://localhost:5000/admin/get-courses", nextProps.location.query, function (data, status) {
+	          if (data.code == 200) {
+	            _this4.setState({ courses: data.courses });
+	          } else if (data.code == 1001) {
+	            _this4.props.dispatch((0, _actions.setUser)({}));
+	            _this4.props.dispatch((0, _actions.setGetMyCourses)(false));
+	            _reactRouter.browserHistory.push("/courses");
+	          }
+	        });
+	      }
+	    }
+	  }, {
+	    key: "onClickPrev",
+	    value: function onClickPrev(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page || query.page <= 1) {
+	        return;
+	      }
+	      var url = "/admin/courses" + "?page=" + (query.page - 1) + (query.searchQuery ? "&searchQuery=" + query.searchQuery : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onClickNext",
+	    value: function onClickNext(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/admin/courses" + "?page=" + (parseInt(query.page) + 1) + (query.searchQuery ? "&searchQuery=" + query.searchQuery : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onChangeFilterSort",
+	    value: function onChangeFilterSort(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/admin/courses" + "?page=" + query.page + (query.searchQuery ? "&searchQuery=" + query.searchQuery : "") + "&sort=" + e.target.value;
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onSubmitFormSearch",
+	    value: function onSubmitFormSearch(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/admin/courses" + "?page=" + query.page + (this.state.searchQuery != "" ? "&searchQuery=" + this.state.searchQuery : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "handleSearchQuery",
+	    value: function handleSearchQuery(e) {
+	      this.setState({ searchQuery: e.target.value });
+	      if (e.target.value == "") {
+	        var query = this.props.location.query;
+	        if (!query.page) {
+	          query.page = 1;
+	        }
+	        var url = "/admin/courses" + "?page=" + query.page + (query.sort ? "&sort=" + query.sort : "");
+	        _reactRouter.browserHistory.push(url);
+	      }
+	    }
+	  }, {
+	    key: "deleteCourse",
+	    value: function deleteCourse(_id) {
+	      var _this5 = this;
+
+	      // $.post('/api/admin/delete-course',
+	      $.post("http://localhost:5000/admin/delete-course-by-admin", { _id: _id }, function (data, status) {
+	        if (data.code == 200) {
+	          var courses = _this5.state.courses;
+	          var index = _lodash2.default.findIndex(courses, function (o) {
+	            return o._id == _id;
+	          });
+	          _this5.setState({
+	            courses: [].concat(_toConsumableArray(courses.slice(0, index)), _toConsumableArray(courses.slice(index + 1)))
+	          });
+	        } else if (data.code == 1001) {
+	          _reactRouter.browserHistory.push("/courses");
+	        }
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this6 = this;
+
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	          "form",
+	          {
+	            className: "form-inline",
+	            style: { marginBottom: "20px" },
+	            onSubmit: function onSubmit(e) {
+	              return _this6.onSubmitFormSearch(e);
+	            }
+	          },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "form-group form-group-lg" },
+	            _react2.default.createElement(
+	              "label",
+	              { className: "control-label" },
+	              "Sort by:"
+	            ),
+	            " ",
+	            _react2.default.createElement(
+	              "select",
+	              {
+	                style: { fontWeight: "bold" },
+	                className: "form-control",
+	                value: this.props.location.query.sort || "1",
+	                onChange: function onChange(e) {
+	                  return _this6.onChangeFilterSort(e);
 	                }
-	            });
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            var _this4 = this;
-
-	            if (this.props.location.query != nextProps.location.query) {
-	                this.setState({
-	                    searchQuery: nextProps.location.query.searchQuery || ''
-	                });
-	                // $.post('/api/admin/get-courses',
-	                $.post('http://localhost:5000/admin/get-courses', nextProps.location.query, function (data, status) {
-	                    if (data.code == 200) {
-	                        _this4.setState({ courses: data.courses });
-	                    } else if (data.code == 1001) {
-	                        _this4.props.dispatch((0, _actions.setUser)({}));
-	                        _this4.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                        _reactRouter.browserHistory.push('/courses');
-	                    }
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'onClickPrev',
-	        value: function onClickPrev(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page || query.page <= 1) {
-	                return;
-	            }
-	            var url = '/admin/courses' + '?page=' + (query.page - 1) + (query.searchQuery ? '&searchQuery=' + query.searchQuery : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onClickNext',
-	        value: function onClickNext(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/admin/courses' + '?page=' + (parseInt(query.page) + 1) + (query.searchQuery ? '&searchQuery=' + query.searchQuery : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onChangeFilterSort',
-	        value: function onChangeFilterSort(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/admin/courses' + '?page=' + query.page + (query.searchQuery ? '&searchQuery=' + query.searchQuery : '') + '&sort=' + e.target.value;
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onSubmitFormSearch',
-	        value: function onSubmitFormSearch(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/admin/courses' + '?page=' + query.page + (this.state.searchQuery != '' ? '&searchQuery=' + this.state.searchQuery : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'handleSearchQuery',
-	        value: function handleSearchQuery(e) {
-	            this.setState({ searchQuery: e.target.value });
-	            if (e.target.value == '') {
-	                var query = this.props.location.query;
-	                if (!query.page) {
-	                    query.page = 1;
+	              },
+	              _react2.default.createElement(
+	                "option",
+	                { value: "1", style: { fontWeight: "bold" } },
+	                "Name: A-to-Z"
+	              ),
+	              _react2.default.createElement(
+	                "option",
+	                { value: "2", style: { fontWeight: "bold" } },
+	                "Name: Z-to-A"
+	              )
+	            )
+	          ),
+	          " ",
+	          _react2.default.createElement(
+	            "div",
+	            { className: "form-group form-group-lg" },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "input-group input-group-lg" },
+	              _react2.default.createElement("input", {
+	                type: "text",
+	                className: "form-control",
+	                value: this.state.searchQuery,
+	                placeholder: "Search course's name",
+	                onChange: function onChange(e) {
+	                  return _this6.handleSearchQuery(e);
 	                }
-	                var url = '/admin/courses' + '?page=' + query.page + (query.sort ? '&sort=' + query.sort : '');
-	                _reactRouter.browserHistory.push(url);
-	            }
-	        }
-	    }, {
-	        key: 'deleteCourse',
-	        value: function deleteCourse(_id) {
-	            var _this5 = this;
-
-	            $.post('/api/admin/delete-course', { _id: _id }, function (data, status) {
-	                if (data.code == 200) {
-	                    var courses = _this5.state.courses;
-	                    var index = _lodash2.default.findIndex(courses, function (o) {
-	                        return o._id == _id;
-	                    });
-	                    _this5.setState({ courses: [].concat(_toConsumableArray(courses.slice(0, index)), _toConsumableArray(courses.slice(index + 1))) });
-	                } else if (data.code == 1001) {
-	                    _reactRouter.browserHistory.push('/courses');
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this6 = this;
-
-	            return _react2.default.createElement(
-	                'div',
+	              }),
+	              _react2.default.createElement(
+	                "span",
+	                { className: "input-group-btn" },
+	                _react2.default.createElement(
+	                  "button",
+	                  { className: "btn btn-default", type: "submit" },
+	                  _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "search" })
+	                )
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _semanticUiReact.Table,
+	          { basic: "very", celled: true, collapsing: true },
+	          _react2.default.createElement(
+	            _semanticUiReact.Table.Header,
+	            null,
+	            _react2.default.createElement(
+	              _semanticUiReact.Table.Row,
+	              null,
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
 	                null,
+	                "Course"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Information"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Requirement"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Price"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Public"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Instructor"
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _semanticUiReact.Table.Body,
+	            null,
+	            this.state.courses.map(function (course, index) {
+	              return _react2.default.createElement(
+	                _semanticUiReact.Table.Row,
+	                { key: index },
 	                _react2.default.createElement(
-	                    'form',
-	                    { className: 'form-inline', style: { marginBottom: '20px' }, onSubmit: function onSubmit(e) {
-	                            return _this6.onSubmitFormSearch(e);
-	                        } },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group form-group-lg' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { className: 'control-label' },
-	                            'Sort by:'
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'select',
-	                            { style: { fontWeight: 'bold' }, className: 'form-control',
-	                                value: this.props.location.query.sort || '1', onChange: function onChange(e) {
-	                                    return _this6.onChangeFilterSort(e);
-	                                } },
-	                            _react2.default.createElement(
-	                                'option',
-	                                { value: '1', style: { fontWeight: 'bold' } },
-	                                'Name: A-to-Z'
-	                            ),
-	                            _react2.default.createElement(
-	                                'option',
-	                                { value: '2', style: { fontWeight: 'bold' } },
-	                                'Name: Z-to-A'
-	                            )
-	                        )
-	                    ),
-	                    ' ',
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group form-group-lg' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'input-group input-group-lg' },
-	                            _react2.default.createElement('input', { type: 'text', className: 'form-control',
-	                                value: this.state.searchQuery, placeholder: 'Search course\'s name',
-	                                onChange: function onChange(e) {
-	                                    return _this6.handleSearchQuery(e);
-	                                } }),
-	                            _react2.default.createElement(
-	                                'span',
-	                                { className: 'input-group-btn' },
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { className: 'btn btn-default', type: 'submit' },
-	                                    _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'search' })
-	                                )
-	                            )
-	                        )
-	                    )
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  course.name
 	                ),
 	                _react2.default.createElement(
-	                    _semanticUiReact.Table,
-	                    { basic: 'very', celled: true, collapsing: true },
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Table.Header,
-	                        null,
-	                        _react2.default.createElement(
-	                            _semanticUiReact.Table.Row,
-	                            null,
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Course'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Information'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Requirement'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Price'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Public'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Instructor'
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Table.Body,
-	                        null,
-	                        this.state.courses.map(function (course, index) {
-	                            return _react2.default.createElement(
-	                                _semanticUiReact.Table.Row,
-	                                { key: index },
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    course.name
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    course.genre ? _react2.default.createElement(
-	                                        'div',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            'strong',
-	                                            null,
-	                                            'Category :',
-	                                            ' ',
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { target: '_blank', href: '/courses/' + course.genre._id },
-	                                                course.genre.name
-	                                            ),
-	                                            ' ',
-	                                            '/',
-	                                            ' ',
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { target: '_blank', href: '/courses/' + course.genre._id + '/' + course.subgenre._id },
-	                                                course.subgenre.name
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement('br', null)
-	                                    ) : '',
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        null,
-	                                        'Skill Level : ',
-	                                        function () {
-	                                            switch (course.level) {
-	                                                case 0:
-	                                                    return 'All Levels';
-	                                                case 1:
-	                                                    return 'Beginner Level';
-	                                                case 2:
-	                                                    return 'Intermediate Level';
-	                                                case 3:
-	                                                    return 'Expert Level';
-	                                                default:
-	                                                    return 'All Levels';
-	                                            }
-	                                        }()
-	                                    ),
-	                                    _react2.default.createElement('br', null),
-	                                    _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'calendar' }),
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        null,
-	                                        ' Created ' + new Date(course.createdAt).toLocaleString()
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            'span',
-	                                            { className: 'course-rate' },
-	                                            _react2.default.createElement('span', { style: { width: (course.star || 0) * 20 + '%' } })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'span',
-	                                            { style: { fontWeight: 'bold' } },
-	                                            ' ' + (course.star ? course.star.toFixed(1) : 0) + '(' + course.numberofreviews + ' ratings) • ' + course.numberofstudent + ' students enrolled'
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement('hr', null),
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        { style: { color: '#5bc0de' } },
-	                                        'Description'
-	                                    ),
-	                                    _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: course.description } })
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        { style: { color: '#5bc0de' } },
-	                                        'What are the requirements?'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'ul',
-	                                        null,
-	                                        course.needtoknow.map(function (item, index) {
-	                                            return _react2.default.createElement(
-	                                                'li',
-	                                                { key: index },
-	                                                item
-	                                            );
-	                                        })
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        { style: { color: '#5bc0de' } },
-	                                        'What am I going to get from this course?'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'ul',
-	                                        null,
-	                                        course.willableto.map(function (item, index) {
-	                                            return _react2.default.createElement(
-	                                                'li',
-	                                                { key: index },
-	                                                item
-	                                            );
-	                                        })
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'strong',
-	                                        { style: { color: '#5bc0de' } },
-	                                        'What is the target students?'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'ul',
-	                                        null,
-	                                        course.targetstudent.map(function (item, index) {
-	                                            return _react2.default.createElement(
-	                                                'li',
-	                                                { key: index },
-	                                                item
-	                                            );
-	                                        })
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    course.cost + '$'
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    { textAlign: 'center' },
-	                                    course.public ? _react2.default.createElement(_semanticUiReact.Icon, { color: 'green', name: 'checkmark', size: 'large' }) : ''
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'a',
-	                                        { target: '_blank', href: '/view-user/' + course.lecturer._id },
-	                                        course.lecturer.username + ''
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    { textAlign: 'center' },
-	                                    _react2.default.createElement(
-	                                        _semanticUiReact.Button.Group,
-	                                        { size: 'mini' },
-	                                        _react2.default.createElement(
-	                                            _semanticUiReact.Button,
-	                                            { positive: true, onClick: function onClick(e) {
-	                                                    return _this6.viewCourse(e, course);
-	                                                } },
-	                                            _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'eye-open' })
-	                                        ),
-	                                        _react2.default.createElement(_semanticUiReact.Button.Or, null),
-	                                        _react2.default.createElement(
-	                                            _semanticUiReact.Button,
-	                                            { negative: true, onClick: function onClick(e) {
-	                                                    return _this6.deleteCourse(course._id);
-	                                                } },
-	                                            _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'trash' })
-	                                        )
-	                                    )
-	                                )
-	                            );
-	                        })
-	                    )
-	                ),
-	                _react2.default.createElement(ModalShowLectures, { ref: function ref(_ref) {
-	                        return _this6.modalViewCourse = _ref;
-	                    } }),
-	                _react2.default.createElement(
-	                    _reactBootstrap.Pager,
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  course.genre ? _react2.default.createElement(
+	                    "div",
 	                    null,
 	                    _react2.default.createElement(
-	                        _reactBootstrap.Pager.Item,
-	                        { disabled: !this.props.location.query.page || this.props.location.query.page == 1,
-	                            previous: true, onClick: function onClick(e) {
-	                                _this6.onClickPrev(e);
-	                            } },
-	                        '\u2190 Previous Page'
+	                      "strong",
+	                      null,
+	                      "Category :",
+	                      " ",
+	                      _react2.default.createElement(
+	                        "a",
+	                        {
+	                          target: "_blank",
+	                          href: "/courses/" + course.genre._id
+	                        },
+	                        course.genre.name
+	                      ),
+	                      " ",
+	                      "/",
+	                      " ",
+	                      _react2.default.createElement(
+	                        "a",
+	                        {
+	                          target: "_blank",
+	                          href: "/courses/" + course.genre._id + "/" + course.subgenre._id
+	                        },
+	                        course.subgenre.name
+	                      )
+	                    ),
+	                    _react2.default.createElement("br", null)
+	                  ) : "",
+	                  _react2.default.createElement(
+	                    "strong",
+	                    null,
+	                    "Skill Level :",
+	                    " ",
+	                    function () {
+	                      switch (course.level) {
+	                        case 0:
+	                          return "All Levels";
+	                        case 1:
+	                          return "Beginner Level";
+	                        case 2:
+	                          return "Intermediate Level";
+	                        case 3:
+	                          return "Expert Level";
+	                        default:
+	                          return "All Levels";
+	                      }
+	                    }()
+	                  ),
+	                  _react2.default.createElement("br", null),
+	                  _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "calendar" }),
+	                  _react2.default.createElement(
+	                    "span",
+	                    null,
+	                    " Created " + new Date(course.createdAt).toLocaleString()
+	                  ),
+	                  _react2.default.createElement(
+	                    "div",
+	                    null,
+	                    _react2.default.createElement(
+	                      "span",
+	                      { className: "course-rate" },
+	                      _react2.default.createElement("span", {
+	                        style: { width: (course.star || 0) * 20 + "%" }
+	                      })
 	                    ),
 	                    _react2.default.createElement(
-	                        _reactBootstrap.Pager.Item,
-	                        { next: true, onClick: function onClick(e) {
-	                                _this6.onClickNext(e);
-	                            } },
-	                        'Next Page \u2192'
+	                      "span",
+	                      { style: { fontWeight: "bold" } },
+	                      " " + (course.star ? course.star.toFixed(1) : 0) + "(" + course.numberofreviews + " ratings) • " + course.numberofstudent + " students enrolled"
 	                    )
+	                  ),
+	                  _react2.default.createElement("hr", null),
+	                  _react2.default.createElement(
+	                    "strong",
+	                    { style: { color: "#5bc0de" } },
+	                    "Description"
+	                  ),
+	                  _react2.default.createElement("div", {
+	                    dangerouslySetInnerHTML: { __html: course.description }
+	                  })
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  _react2.default.createElement(
+	                    "strong",
+	                    { style: { color: "#5bc0de" } },
+	                    "What are the requirements?"
+	                  ),
+	                  _react2.default.createElement(
+	                    "ul",
+	                    null,
+	                    course.needtoknow.map(function (item, index) {
+	                      return _react2.default.createElement(
+	                        "li",
+	                        { key: index },
+	                        item
+	                      );
+	                    })
+	                  ),
+	                  _react2.default.createElement(
+	                    "strong",
+	                    { style: { color: "#5bc0de" } },
+	                    "What am I going to get from this course?"
+	                  ),
+	                  _react2.default.createElement(
+	                    "ul",
+	                    null,
+	                    course.willableto.map(function (item, index) {
+	                      return _react2.default.createElement(
+	                        "li",
+	                        { key: index },
+	                        item
+	                      );
+	                    })
+	                  ),
+	                  _react2.default.createElement(
+	                    "strong",
+	                    { style: { color: "#5bc0de" } },
+	                    "What is the target students?"
+	                  ),
+	                  _react2.default.createElement(
+	                    "ul",
+	                    null,
+	                    course.targetstudent.map(function (item, index) {
+	                      return _react2.default.createElement(
+	                        "li",
+	                        { key: index },
+	                        item
+	                      );
+	                    })
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  course.cost + "$"
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  { textAlign: "center" },
+	                  course.public ? _react2.default.createElement(_semanticUiReact.Icon, { color: "green", name: "checkmark", size: "large" }) : ""
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  _react2.default.createElement(
+	                    "a",
+	                    {
+	                      target: "_blank",
+	                      href: "/view-user/" + course.lecturer._id
+	                    },
+	                    course.lecturer.username + ""
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  { textAlign: "center" },
+	                  _react2.default.createElement(
+	                    _semanticUiReact.Button.Group,
+	                    { size: "mini" },
+	                    _react2.default.createElement(
+	                      _semanticUiReact.Button,
+	                      {
+	                        positive: true,
+	                        onClick: function onClick(e) {
+	                          return _this6.viewCourse(e, course);
+	                        }
+	                      },
+	                      _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "eye-open" })
+	                    ),
+	                    _react2.default.createElement(_semanticUiReact.Button.Or, null),
+	                    _react2.default.createElement(
+	                      _semanticUiReact.Button,
+	                      {
+	                        negative: true,
+	                        onClick: function onClick(e) {
+	                          return _this6.deleteCourse(course._id);
+	                        }
+	                      },
+	                      _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "trash" })
+	                    )
+	                  )
 	                )
-	            );
-	        }
-	    }]);
+	              );
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(ModalShowLectures, { ref: function ref(_ref) {
+	            return _this6.modalViewCourse = _ref;
+	          } }),
+	        _react2.default.createElement(
+	          _reactBootstrap.Pager,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Pager.Item,
+	            {
+	              disabled: !this.props.location.query.page || this.props.location.query.page == 1,
+	              previous: true,
+	              onClick: function onClick(e) {
+	                _this6.onClickPrev(e);
+	              }
+	            },
+	            "\u2190 Previous Page"
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Pager.Item,
+	            {
+	              next: true,
+	              onClick: function onClick(e) {
+	                _this6.onClickNext(e);
+	              }
+	            },
+	            "Next Page \u2192"
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	    return AdminCourse;
+	  return AdminCourse;
 	}(_react.Component);
 
 	AdminCourse = (0, _reactRedux.connect)()(AdminCourse);
@@ -115812,10 +115911,10 @@
 /* 1126 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -115845,367 +115944,413 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var AdminCredit = function (_Component) {
-	    _inherits(AdminCredit, _Component);
+	  _inherits(AdminCredit, _Component);
 
-	    function AdminCredit(props) {
-	        _classCallCheck(this, AdminCredit);
+	  function AdminCredit(props) {
+	    _classCallCheck(this, AdminCredit);
 
-	        var _this = _possibleConstructorReturn(this, (AdminCredit.__proto__ || Object.getPrototypeOf(AdminCredit)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (AdminCredit.__proto__ || Object.getPrototypeOf(AdminCredit)).call(this, props));
 
-	        _this.state = {
-	            filter: {
-	                page: 1,
-	                sort: 0
-	            },
-	            cardnumber: '',
-	            cardnumberTemp: '',
-	            profitratio: 0,
-	            profitratioTemp: 0,
-	            totalprofit: 0,
-	            payments: []
-	        };
-	        return _this;
+	    _this.state = {
+	      filter: {
+	        page: 1,
+	        sort: 0
+	      },
+	      cardnumber: "",
+	      cardnumberTemp: "",
+	      profitratio: 0,
+	      profitratioTemp: 0,
+	      totalprofit: 0,
+	      payments: []
+	    };
+	    return _this;
+	  }
+
+	  _createClass(AdminCredit, [{
+	    key: "handleCardNumber",
+	    value: function handleCardNumber(e) {
+	      this.setState({ cardnumberTemp: e.target.value });
 	    }
+	  }, {
+	    key: "handleProfitRatio",
+	    value: function handleProfitRatio(e) {
+	      this.setState({ profitratioTemp: e.target.value });
+	    }
+	  }, {
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      var _this2 = this;
 
-	    _createClass(AdminCredit, [{
-	        key: 'handleCardNumber',
-	        value: function handleCardNumber(e) {
-	            this.setState({ cardnumberTemp: e.target.value });
+	      // $.post("/api/admin/get-payment", this.state.filter, (data, status) => {
+	      $.post("http://localhost:5000/admin/get-payment-by-admin", this.state.filter, function (data, status) {
+	        if (data.code == 200) {
+	          _this2.setState({ payments: data.payments });
+	        } else if (data.code == 1001) {
+	          _this2.props.dispatch((0, _actions.setUser)({}));
+	          _this2.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          browserHistory.push("/courses");
 	        }
-	    }, {
-	        key: 'handleProfitRatio',
-	        value: function handleProfitRatio(e) {
-	            this.setState({ profitratioTemp: e.target.value });
+	      });
+	      // $.get('/api/admin/get-config', (data, status) => {
+	      $.get("http://localhost:5000/admin/get-config", function (data, status) {
+	        if (data.code == 200) {
+	          _this2.setState({
+	            cardnumber: data.cardnumber,
+	            cardnumberTemp: data.cardnumber,
+	            profitratio: data.profitratio,
+	            profitratioTemp: data.profitratio,
+	            totalprofit: data.totalprofit
+	          });
+	        } else if (data.code == 1001) {
+	          _this2.props.dispatch((0, _actions.setUser)({}));
+	          _this2.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          browserHistory.push("/courses");
 	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this2 = this;
+	      });
+	    }
+	  }, {
+	    key: "onClickPrev",
+	    value: function onClickPrev(e) {
+	      var _this3 = this;
 
-	            $.post('/api/admin/get-payment', this.state.filter, function (data, status) {
-	                if (data.code == 200) {
-	                    _this2.setState({ payments: data.payments });
-	                } else if (data.code == 1001) {
-	                    _this2.props.dispatch((0, _actions.setUser)({}));
-	                    _this2.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    browserHistory.push('/courses');
-	                }
-	            });
-	            $.get('/api/admin/get-config', function (data, status) {
-	                if (data.code == 200) {
-	                    _this2.setState({
-	                        cardnumber: data.cardnumber,
-	                        cardnumberTemp: data.cardnumber,
-	                        profitratio: data.profitratio,
-	                        profitratioTemp: data.profitratio,
-	                        totalprofit: data.totalprofit
-	                    });
-	                } else if (data.code == 1001) {
-	                    _this2.props.dispatch((0, _actions.setUser)({}));
-	                    _this2.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    browserHistory.push('/courses');
-	                }
-	            });
+	      e.preventDefault();
+	      var filter = this.state.filter;
+	      filter.page = Math.max(1, filter.page - 1);
+	      this.setState({ filter: filter });
+	      // $.post("/api/admin/get-payment", filter, (data, status) => {
+	      $.post("http://localhost:5000/admin/get-payment-by-admin", filter, function (data, status) {
+	        if (data.code == 200) {
+	          _this3.setState({ payments: data.payments });
+	        } else if (data.code == 1001) {
+	          _this3.props.dispatch((0, _actions.setUser)({}));
+	          _this3.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          browserHistory.push("/courses");
 	        }
-	    }, {
-	        key: 'onClickPrev',
-	        value: function onClickPrev(e) {
-	            var _this3 = this;
+	      });
+	    }
+	  }, {
+	    key: "onClickNext",
+	    value: function onClickNext(e) {
+	      var _this4 = this;
 
-	            e.preventDefault();
-	            var filter = this.state.filter;
-	            filter.page = Math.max(1, filter.page - 1);
-	            this.setState({ filter: filter });
-	            $.post('/api/admin/get-payment', filter, function (data, status) {
-	                if (data.code == 200) {
-	                    _this3.setState({ payments: data.payments });
-	                } else if (data.code == 1001) {
-	                    _this3.props.dispatch((0, _actions.setUser)({}));
-	                    _this3.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    browserHistory.push('/courses');
-	                }
-	            });
+	      e.preventDefault();
+	      var filter = this.state.filter;
+	      filter.page = filter.page + 1;
+	      this.setState({ filter: filter });
+	      $.post("http://localhost:5000/admin/get-payment-by-admin", filter, function (data, status) {
+	        if (data.code == 200) {
+	          _this4.setState({ payments: data.payments });
+	        } else if (data.code == 1001) {
+	          _this4.props.dispatch((0, _actions.setUser)({}));
+	          _this4.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          browserHistory.push("/courses");
 	        }
-	    }, {
-	        key: 'onClickNext',
-	        value: function onClickNext(e) {
-	            var _this4 = this;
+	      });
+	    }
+	  }, {
+	    key: "deletePayment",
+	    value: function deletePayment(e, payment, index) {
+	      var payments = this.state.payments;
+	      payments = [].concat(_toConsumableArray(payments.slice(0, index)), _toConsumableArray(payments.slice(index + 1)));
+	      this.setState({ payments: payments });
+	      // $.post("/api/admin/delete-payment", { _id: payment._id });
+	      $.post("http://localhost:5000/admin/delete-payment-by-admin", {
+	        _id: payment._id
+	      });
+	    }
+	  }, {
+	    key: "setCardNumber",
+	    value: function setCardNumber(e) {
+	      var _this5 = this;
 
-	            e.preventDefault();
-	            var filter = this.state.filter;
-	            filter.page = filter.page + 1;
-	            this.setState({ filter: filter });
-	            $.post('/api/admin/get-payment', filter, function (data, status) {
-	                if (data.code == 200) {
-	                    _this4.setState({ payments: data.payments });
-	                } else if (data.code == 1001) {
-	                    _this4.props.dispatch((0, _actions.setUser)({}));
-	                    _this4.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    browserHistory.push('/courses');
-	                }
-	            });
+	      $.post(
+	      //   "/api/admin/set-cardnumber",
+	      "http://localhost:5000/admin/set-cardnumber", {
+	        cardnumber: this.state.cardnumberTemp
+	      }, function (data, status) {
+	        if (data.code == 200) {
+	          _this5.setState({ cardnumber: data.cardnumber });
+	        } else if (data.code == 1001) {
+	          _this5.props.dispatch((0, _actions.setUser)({}));
+	          _this5.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          browserHistory.push("/courses");
 	        }
-	    }, {
-	        key: 'deletePayment',
-	        value: function deletePayment(e, payment, index) {
-	            var payments = this.state.payments;
-	            payments = [].concat(_toConsumableArray(payments.slice(0, index)), _toConsumableArray(payments.slice(index + 1)));
-	            this.setState({ payments: payments });
-	            $.post('/api/admin/delete-payment', { _id: payment._id });
-	        }
-	    }, {
-	        key: 'setCardNumber',
-	        value: function setCardNumber(e) {
-	            var _this5 = this;
+	      });
+	    }
+	  }, {
+	    key: "setProfitRatio",
+	    value: function setProfitRatio(e) {
+	      var _this6 = this;
 
-	            $.post('/api/admin/set-cardnumber', {
-	                cardnumber: this.state.cardnumberTemp
-	            }, function (data, status) {
-	                if (data.code == 200) {
-	                    _this5.setState({ cardnumber: data.cardnumber });
-	                } else if (data.code == 1001) {
-	                    _this5.props.dispatch((0, _actions.setUser)({}));
-	                    _this5.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    browserHistory.push('/courses');
-	                }
-	            });
+	      $.post(
+	      //   "/api/admin/set-profitratio",
+	      "http://localhost:5000/admin/set-profit-ratio", {
+	        profitratio: this.state.profitratioTemp
+	      }, function (data, status) {
+	        if (data.code == 200) {
+	          _this6.setState({ profitratio: data.profitratio });
+	        } else if (data.code == 1001) {
+	          _this6.props.dispatch((0, _actions.setUser)({}));
+	          _this6.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          browserHistory.push("/courses");
 	        }
-	    }, {
-	        key: 'setProfitRatio',
-	        value: function setProfitRatio(e) {
-	            var _this6 = this;
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this7 = this;
 
-	            $.post('/api/admin/set-profitratio', {
-	                profitratio: this.state.profitratioTemp
-	            }, function (data, status) {
-	                if (data.code == 200) {
-	                    _this6.setState({ profitratio: data.profitratio });
-	                } else if (data.code == 1001) {
-	                    _this6.props.dispatch((0, _actions.setUser)({}));
-	                    _this6.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    browserHistory.push('/courses');
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this7 = this;
-
-	            return _react2.default.createElement(
-	                'div',
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	          "h4",
+	          { style: { fontWeight: "bold", display: "inline" } },
+	          "Total Profit: USD$",
+	          this.state.totalprofit.toFixed(2),
+	          " "
+	        ),
+	        _react2.default.createElement(
+	          "h4",
+	          { style: { fontWeight: "bold" } },
+	          "Enter Credit Card Number(It is your visa card number you used to linked with PayPal)"
+	        ),
+	        _react2.default.createElement(
+	          _semanticUiReact.Input,
+	          {
+	            fluid: true,
+	            action: true,
+	            value: this.state.cardnumberTemp,
+	            onChange: function onChange(e) {
+	              return _this7.handleCardNumber(e);
+	            },
+	            placeholder: "Card Number",
+	            type: "text"
+	          },
+	          _react2.default.createElement("input", null),
+	          _react2.default.createElement(
+	            _semanticUiReact.Button,
+	            {
+	              disabled: this.state.cardnumber == this.state.cardnumberTemp,
+	              positive: true,
+	              onClick: function onClick(e) {
+	                return _this7.setCardNumber(e);
+	              }
+	            },
+	            "Save"
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "h4",
+	          { style: { fontWeight: "bold" } },
+	          "Profit Ratio"
+	        ),
+	        _react2.default.createElement(
+	          _semanticUiReact.Input,
+	          {
+	            fluid: true,
+	            action: true,
+	            value: this.state.profitratioTemp,
+	            onChange: function onChange(e) {
+	              return _this7.handleProfitRatio(e);
+	            },
+	            placeholder: "Profit Ratio",
+	            type: "Number",
+	            step: "0.01"
+	          },
+	          _react2.default.createElement("input", null),
+	          _react2.default.createElement(
+	            _semanticUiReact.Button,
+	            {
+	              disabled: this.state.profitratio == this.state.profitratioTemp,
+	              positive: true,
+	              onClick: function onClick(e) {
+	                return _this7.setProfitRatio(e);
+	              }
+	            },
+	            "Save"
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "h4",
+	          { style: { fontWeight: "bold" } },
+	          "Credit History"
+	        ),
+	        _react2.default.createElement(
+	          _semanticUiReact.Table,
+	          { basic: "very", celled: true, collapsing: true },
+	          _react2.default.createElement(
+	            _semanticUiReact.Table.Header,
+	            null,
+	            _react2.default.createElement(
+	              _semanticUiReact.Table.Row,
+	              null,
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
 	                null,
+	                "Credit History"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Date"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Amount"
+	              ),
+	              _react2.default.createElement(
+	                _semanticUiReact.Table.HeaderCell,
+	                null,
+	                "Information"
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _semanticUiReact.Table.Body,
+	            null,
+	            this.state.payments.map(function (payment, index) {
+	              return _react2.default.createElement(
+	                _semanticUiReact.Table.Row,
+	                { key: index },
 	                _react2.default.createElement(
-	                    'h4',
-	                    { style: { fontWeight: 'bold', display: 'inline' } },
-	                    'Total Profit: USD$',
-	                    this.state.totalprofit.toFixed(2),
-	                    ' '
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  ["Withdraw Money", "Deposit Funds", "Student enroll in a course"][payment.type]
 	                ),
 	                _react2.default.createElement(
-	                    'h4',
-	                    { style: { fontWeight: 'bold' } },
-	                    'Enter Credit Card Number(It is your visa card number you used to linked with PayPal)'
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  new Date(payment.createdAt).toLocaleString()
 	                ),
 	                _react2.default.createElement(
-	                    _semanticUiReact.Input,
-	                    { fluid: true, action: true, value: this.state.cardnumberTemp, onChange: function onChange(e) {
-	                            return _this7.handleCardNumber(e);
-	                        },
-	                        placeholder: 'Card Number', type: 'text' },
-	                    _react2.default.createElement('input', null),
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Button,
-	                        { disabled: this.state.cardnumber == this.state.cardnumberTemp, positive: true, onClick: function onClick(e) {
-	                                return _this7.setCardNumber(e);
-	                            } },
-	                        'Save'
-	                    )
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  payment.money + "$"
 	                ),
 	                _react2.default.createElement(
-	                    'h4',
-	                    { style: { fontWeight: 'bold' } },
-	                    'Profit Ratio'
-	                ),
-	                _react2.default.createElement(
-	                    _semanticUiReact.Input,
-	                    { fluid: true, action: true, value: this.state.profitratioTemp, onChange: function onChange(e) {
-	                            return _this7.handleProfitRatio(e);
-	                        },
-	                        placeholder: 'Profit Ratio', type: 'Number', step: '0.01' },
-	                    _react2.default.createElement('input', null),
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Button,
-	                        { disabled: this.state.profitratio == this.state.profitratioTemp, positive: true, onClick: function onClick(e) {
-	                                return _this7.setProfitRatio(e);
-	                            } },
-	                        'Save'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'h4',
-	                    { style: { fontWeight: 'bold' } },
-	                    'Credit History'
-	                ),
-	                _react2.default.createElement(
-	                    _semanticUiReact.Table,
-	                    { basic: 'very', celled: true, collapsing: true },
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Table.Header,
-	                        null,
-	                        _react2.default.createElement(
-	                            _semanticUiReact.Table.Row,
-	                            null,
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Credit History'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Date'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Amount'
-	                            ),
-	                            _react2.default.createElement(
-	                                _semanticUiReact.Table.HeaderCell,
-	                                null,
-	                                'Information'
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        _semanticUiReact.Table.Body,
-	                        null,
-	                        this.state.payments.map(function (payment, index) {
-	                            return _react2.default.createElement(
-	                                _semanticUiReact.Table.Row,
-	                                { key: index },
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    ['Withdraw Money', 'Deposit Funds', 'Student enroll in a course'][payment.type]
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    new Date(payment.createdAt).toLocaleString()
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    payment.money + '$'
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    null,
-	                                    payment.type == 2 ? _react2.default.createElement(
-	                                        'div',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                'strong',
-	                                                { style: { color: '#5bc0de' } },
-	                                                'Student: '
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                _reactRouter.Link,
-	                                                { to: '/view-user/' + payment.user._id },
-	                                                payment.user.username
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                'strong',
-	                                                { style: { color: '#5bc0de' } },
-	                                                'Course: '
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                _reactRouter.Link,
-	                                                { to: '/course/' + payment.information.course._id },
-	                                                payment.information.course.name
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                'strong',
-	                                                { style: { color: '#5bc0de' } },
-	                                                'Instructor: '
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                _reactRouter.Link,
-	                                                { to: '/view-user/' + payment.information.user._id },
-	                                                payment.information.user.username
-	                                            )
-	                                        )
-	                                    ) : _react2.default.createElement(
-	                                        'div',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                'strong',
-	                                                { style: { color: '#5bc0de' } },
-	                                                'User: '
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                _reactRouter.Link,
-	                                                { to: '/view-user/' + payment.user._id },
-	                                                payment.user.username
-	                                            )
-	                                        )
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    _semanticUiReact.Table.Cell,
-	                                    { textAlign: 'center' },
-	                                    _react2.default.createElement(
-	                                        _semanticUiReact.Button,
-	                                        { positive: true, onClick: function onClick(e) {
-	                                                return _this7.deletePayment(e, payment, index);
-	                                            } },
-	                                        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'trash' })
-	                                    )
-	                                )
-	                            );
-	                        })
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    _reactBootstrap.Pager,
+	                  _semanticUiReact.Table.Cell,
+	                  null,
+	                  payment.type == 2 ? _react2.default.createElement(
+	                    "div",
 	                    null,
 	                    _react2.default.createElement(
-	                        _reactBootstrap.Pager.Item,
-	                        { disabled: this.state.filter.page == 1,
-	                            previous: true, onClick: function onClick(e) {
-	                                _this7.onClickPrev(e);
-	                            } },
-	                        '\u2190 Previous Page'
+	                      "div",
+	                      null,
+	                      _react2.default.createElement(
+	                        "strong",
+	                        { style: { color: "#5bc0de" } },
+	                        "Student:",
+	                        " "
+	                      ),
+	                      _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: "/view-user/" + payment.user._id },
+	                        payment.user.username
+	                      )
 	                    ),
 	                    _react2.default.createElement(
-	                        _reactBootstrap.Pager.Item,
-	                        { next: true, onClick: function onClick(e) {
-	                                _this7.onClickNext(e);
-	                            } },
-	                        'Next Page \u2192'
+	                      "div",
+	                      null,
+	                      _react2.default.createElement(
+	                        "strong",
+	                        { style: { color: "#5bc0de" } },
+	                        "Course: "
+	                      ),
+	                      _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        {
+	                          to: "/course/" + payment.information.course._id
+	                        },
+	                        payment.information.course.name
+	                      )
+	                    ),
+	                    _react2.default.createElement(
+	                      "div",
+	                      null,
+	                      _react2.default.createElement(
+	                        "strong",
+	                        { style: { color: "#5bc0de" } },
+	                        "Instructor:",
+	                        " "
+	                      ),
+	                      _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        {
+	                          to: "/view-user/" + payment.information.user._id
+	                        },
+	                        payment.information.user.username
+	                      )
 	                    )
+	                  ) : _react2.default.createElement(
+	                    "div",
+	                    null,
+	                    _react2.default.createElement(
+	                      "div",
+	                      null,
+	                      _react2.default.createElement(
+	                        "strong",
+	                        { style: { color: "#5bc0de" } },
+	                        "User: "
+	                      ),
+	                      _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: "/view-user/" + payment.user._id },
+	                        payment.user.username
+	                      )
+	                    )
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  _semanticUiReact.Table.Cell,
+	                  { textAlign: "center" },
+	                  _react2.default.createElement(
+	                    _semanticUiReact.Button,
+	                    {
+	                      positive: true,
+	                      onClick: function onClick(e) {
+	                        return _this7.deletePayment(e, payment, index);
+	                      }
+	                    },
+	                    _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "trash" })
+	                  )
 	                )
-	            );
-	        }
-	    }]);
+	              );
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Pager,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Pager.Item,
+	            {
+	              disabled: this.state.filter.page == 1,
+	              previous: true,
+	              onClick: function onClick(e) {
+	                _this7.onClickPrev(e);
+	              }
+	            },
+	            "\u2190 Previous Page"
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Pager.Item,
+	            {
+	              next: true,
+	              onClick: function onClick(e) {
+	                _this7.onClickNext(e);
+	              }
+	            },
+	            "Next Page \u2192"
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	    return AdminCredit;
+	  return AdminCredit;
 	}(_react.Component);
 
 	exports.default = AdminCredit;
