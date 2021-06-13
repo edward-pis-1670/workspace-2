@@ -107301,9 +107301,7 @@
 	            _this2.setState({
 	              course_name: data.course.name,
 	              course_description: data.course.description,
-	              course_image:
-	              // "/api/resource/images?src=" +
-	              data.course.coverphoto,
+	              course_image: data.course.coverphoto,
 	              course_category: data.course.genre,
 	              course_subcategory: data.course.subgenre,
 	              course_level: data.course.level
@@ -108290,16 +108288,7 @@
 	                  width: "640",
 	                  height: "auto"
 	                },
-	                _react2.default.createElement("source", {
-	                  src:
-	                  // // "/api/resource/play-video-lecturer/" +
-	                  // "http://localhost:5000/resources/play-video-lecturer/" +
-	                  // lecture._id +
-	                  // "?path=" +
-	                  // lecture.video
-	                  "" + lecture.video,
-	                  type: "video/mp4"
-	                })
+	                _react2.default.createElement("source", { src: "" + lecture.video, type: "video/mp4" })
 	              ),
 	              _react2.default.createElement("br", null)
 	            );
@@ -109457,10 +109446,7 @@
 	                            height: "auto",
 	                            style: { paddingLeft: "0px", marginTop: "10px" }
 	                          },
-	                          _react2.default.createElement("source", {
-	                            src: "/api/resource/play-video-preview/" + lecture._id,
-	                            type: "video/mp4"
-	                          })
+	                          _react2.default.createElement("source", { src: lecture.video, type: "video/mp4" })
 	                        ) : "",
 	                        _this11.props.course.lectures.length != index + 1 ? _react2.default.createElement("hr", { style: { borderColor: "silver" } }) : ""
 	                      );

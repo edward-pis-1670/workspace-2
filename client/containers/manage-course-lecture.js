@@ -124,7 +124,9 @@ class ManageCourseLecture extends React.Component {
           return browserHistory.push("/");
         }
         if (data.code == 200) {
-          this.props.dispatch(addLecture(data.lecture, Number(this.props.params.id)));
+          this.props.dispatch(
+            addLecture(data.lecture, Number(this.props.params.id))
+          );
           return this.refs.modalAddLecture.setState({
             isSubmitting: false,
             lecturename: "",
@@ -160,7 +162,9 @@ class ManageCourseLecture extends React.Component {
           return browserHistory.push("/");
         }
         if (data.code == 200) {
-          this.props.dispatch(deleteLecture(lectureid, Number(this.props.params.id)));
+          this.props.dispatch(
+            deleteLecture(lectureid, Number(this.props.params.id))
+          );
         }
       }
     );
@@ -281,18 +285,7 @@ class ManageCourseLecture extends React.Component {
                 width="640"
                 height="auto"
               >
-                <source
-                  src={
-                    // // "/api/resource/play-video-lecturer/" +
-                    // "http://localhost:5000/resources/play-video-lecturer/" +
-                    // lecture._id +
-                    // "?path=" +
-                    // lecture.video
-                    `${lecture.video}`
-                  }
-                  type="video/mp4"
-                />
-                
+                <source src={`${lecture.video}`} type="video/mp4" />
               </video>
               <br />
             </div>

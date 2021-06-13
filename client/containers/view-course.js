@@ -599,13 +599,7 @@ class ViewCourse extends React.Component {
                               height="auto"
                               style={{ paddingLeft: "0px", marginTop: "10px" }}
                             >
-                              <source
-                                src={
-                                  "/api/resource/play-video-preview/" +
-                                  lecture._id
-                                }
-                                type="video/mp4"
-                              />
+                              <source src={lecture.video} type="video/mp4" />
                             </video>
                           ) : (
                             ""
@@ -663,9 +657,7 @@ class ViewCourse extends React.Component {
                       className="photo-profile"
                       style={{
                         backgroundImage:
-                          "url(" +
-                          (this.props.course.lecturer.photo) +
-                          ")",
+                          "url(" + this.props.course.lecturer.photo + ")",
                       }}
                     ></div>
                   </div>
@@ -830,9 +822,7 @@ class ViewCourse extends React.Component {
                             <div className="info-rate" key={index}>
                               <img
                                 className="avatar-rate"
-                                src={
-                                  review.user.photo
-                                }
+                                src={review.user.photo}
                               />
                               <div
                                 style={{
@@ -944,7 +934,10 @@ ViewCourse = connect((state, props) => {
   if (course) {
     return {
       course: course,
-      islearning: _.includes(state.user.mylearningcourses, Number(props.params.id)),
+      islearning: _.includes(
+        state.user.mylearningcourses,
+        Number(props.params.id)
+      ),
       wishlisted: _.includes(state.user.mywishlist, Number(props.params.id)),
       islogged:
         state.hasOwnProperty("user") && state.user.hasOwnProperty("username"),

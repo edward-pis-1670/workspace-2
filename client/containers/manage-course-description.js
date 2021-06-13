@@ -47,9 +47,7 @@ class ManageCourseDescription extends React.Component {
             this.setState({
               course_name: data.course.name,
               course_description: data.course.description,
-              course_image:
-                // "/api/resource/images?src=" +
-                data.course.coverphoto,
+              course_image: data.course.coverphoto,
               course_category: data.course.genre,
               course_subcategory: data.course.subgenre,
               course_level: data.course.level,
