@@ -42697,7 +42697,7 @@
 	              _react2.default.createElement(
 	                "a",
 	                {
-	                  href: "/authentication/auth/facebook",
+	                  href: "http://localhost:5000/auth/facebook",
 	                  className: "btn btn-block btn-social btn-lg btn-facebook"
 	                },
 	                _react2.default.createElement("i", { className: "fa fa-facebook" }),
@@ -42710,7 +42710,7 @@
 	              _react2.default.createElement(
 	                "a",
 	                {
-	                  href: "/authentication/auth/google",
+	                  href: "http://localhost:5000/auth/google",
 	                  className: "btn btn-block btn-social btn-lg btn-google"
 	                },
 	                _react2.default.createElement("i", { className: "fa fa-google" }),
@@ -69269,7 +69269,8 @@
 	};
 
 	var forgotPassword = exports.forgotPassword = function forgotPassword(data, callback) {
-	  $.post("/authentication/forgotpassword", data, callback);
+	  // $.post("/authentication/forgotpassword", data, callback);
+	  $.post("http://localhost:5000/auth/forgot-password", data, callback);
 	};
 
 	var logout = exports.logout = function logout(callback) {
@@ -105734,10 +105735,10 @@
 /* 1099 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -105773,591 +105774,657 @@
 	var _ = __webpack_require__(221);
 
 	var ModalCreateCourse = function (_React$Component) {
-	    _inherits(ModalCreateCourse, _React$Component);
+	  _inherits(ModalCreateCourse, _React$Component);
 
-	    function ModalCreateCourse(props) {
-	        _classCallCheck(this, ModalCreateCourse);
+	  function ModalCreateCourse(props) {
+	    _classCallCheck(this, ModalCreateCourse);
 
-	        var _this = _possibleConstructorReturn(this, (ModalCreateCourse.__proto__ || Object.getPrototypeOf(ModalCreateCourse)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (ModalCreateCourse.__proto__ || Object.getPrototypeOf(ModalCreateCourse)).call(this, props));
 
-	        _this.state = {
-	            showModal: false,
-	            coursename: '',
-	            message: '',
-	            isSubmitting: false
-	        };
-	        return _this;
+	    _this.state = {
+	      showModal: false,
+	      coursename: "",
+	      message: "",
+	      isSubmitting: false
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ModalCreateCourse, [{
+	    key: "hideModal",
+	    value: function hideModal() {
+	      this.setState({ showModal: false, coursename: "" });
 	    }
-
-	    _createClass(ModalCreateCourse, [{
-	        key: 'hideModal',
-	        value: function hideModal() {
-	            this.setState({ showModal: false, coursename: '' });
-	        }
-	    }, {
-	        key: 'handleCourseName',
-	        value: function handleCourseName(e) {
-	            this.setState({ coursename: e.target.value });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                _reactBootstrap.Modal,
-	                { show: this.state.showModal,
-	                    onHide: this.hideModal.bind(this) },
+	  }, {
+	    key: "handleCourseName",
+	    value: function handleCourseName(e) {
+	      this.setState({ coursename: e.target.value });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _reactBootstrap.Modal,
+	        { show: this.state.showModal, onHide: this.hideModal.bind(this) },
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Header,
+	          { closeButton: true },
+	          _react2.default.createElement(
+	            _reactBootstrap.Modal.Title,
+	            { className: "text-center h3" },
+	            "CREATE COURSE"
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Body,
+	          { style: { overflow: "auto" } },
+	          _react2.default.createElement(
+	            "div",
+	            {
+	              className: "alert alert-danger text-center",
+	              role: "alert",
+	              style: { display: "none", marginBottom: 0 }
+	            },
+	            this.state.message,
+	            " "
+	          ),
+	          _react2.default.createElement(
+	            "form",
+	            {
+	              className: "form-horizontal",
+	              onSubmit: this.props.onSubmitCreateCourse.bind(this)
+	            },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group form-group-lg" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group col-sm-offset-1 col-sm-10" },
+	                _react2.default.createElement("span", { className: "input-group-addon glyphicon glyphicon-book" }),
+	                _react2.default.createElement("input", {
+	                  type: "text",
+	                  required: true,
+	                  className: "form-control",
+	                  placeholder: "Course's name",
+	                  onChange: this.handleCourseName.bind(this)
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "col-sm-offset-1 col-sm-10" },
 	                _react2.default.createElement(
-	                    _reactBootstrap.Modal.Header,
-	                    { closeButton: true },
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Modal.Title,
-	                        { className: 'text-center h3' },
-	                        'CREATE COURSE'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    _reactBootstrap.Modal.Body,
-	                    { style: { overflow: 'auto' } },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'alert alert-danger text-center', role: 'alert', style: { display: 'none', marginBottom: 0 } },
-	                        this.state.message,
-	                        ' '
-	                    ),
-	                    _react2.default.createElement(
-	                        'form',
-	                        { className: 'form-horizontal', onSubmit: this.props.onSubmitCreateCourse.bind(this) },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group form-group-lg' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group col-sm-offset-1 col-sm-10' },
-	                                _react2.default.createElement('span', { className: 'input-group-addon glyphicon glyphicon-book' }),
-	                                _react2.default.createElement('input', { type: 'text', required: true, className: 'form-control',
-	                                    placeholder: 'Course\'s name', onChange: this.handleCourseName.bind(this) })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-sm-offset-1 col-sm-10' },
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { disabled: this.state.isSubmitting, type: 'submit', className: 'btn btn-warning btn-lg center-block' },
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { className: 'glyphicon glyphicon-ok' },
-	                                        ' ',
-	                                        'Create'
-	                                    )
-	                                )
-	                            )
-	                        )
-	                    )
+	                  "button",
+	                  {
+	                    disabled: this.state.isSubmitting,
+	                    type: "submit",
+	                    className: "btn btn-warning btn-lg center-block"
+	                  },
+	                  _react2.default.createElement(
+	                    "span",
+	                    { className: "glyphicon glyphicon-ok" },
+	                    " Create"
+	                  )
 	                )
-	            );
-	        }
-	    }]);
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	    return ModalCreateCourse;
+	  return ModalCreateCourse;
 	}(_react2.default.Component);
 
 	var Instructor = function (_React$Component2) {
-	    _inherits(Instructor, _React$Component2);
+	  _inherits(Instructor, _React$Component2);
 
-	    function Instructor(props) {
-	        _classCallCheck(this, Instructor);
+	  function Instructor(props) {
+	    _classCallCheck(this, Instructor);
 
-	        var _this2 = _possibleConstructorReturn(this, (Instructor.__proto__ || Object.getPrototypeOf(Instructor)).call(this, props));
+	    var _this2 = _possibleConstructorReturn(this, (Instructor.__proto__ || Object.getPrototypeOf(Instructor)).call(this, props));
 
-	        _this2.state = {
-	            coursename: _this2.props.location.query.name || '',
-	            headerColor: ['lightseagreen', 'teal', 'forestgreen', 'green', 'sienna', 'peru', 'indigo'][Math.floor(Math.random() * 7)]
-	        };
-	        return _this2;
+	    _this2.state = {
+	      coursename: _this2.props.location.query.name || "",
+	      headerColor: ["lightseagreen", "teal", "forestgreen", "green", "sienna", "peru", "indigo"][Math.floor(Math.random() * 7)]
+	    };
+	    return _this2;
+	  }
+
+	  _createClass(Instructor, [{
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      var _this3 = this;
+
+	      if (!this.props.getMyCourses)
+	        // $.get('/api/user/get-all-mycourses', (courses) => {
+	        $.get("http://localhost:5000/users/get-all-my-courses", function (courses) {
+	          _this3.props.dispatch((0, _actions.getAllMyCourses)(JSON.parse(courses)));
+	          _this3.props.dispatch((0, _actions.setGetMyCourses)(true));
+	        });
 	    }
+	  }, {
+	    key: "showModal",
+	    value: function showModal() {
+	      this.refs.modalCreateCourse.setState({ showModal: true });
+	    }
+	  }, {
+	    key: "onSubmitCreateCourse",
+	    value: function onSubmitCreateCourse(e) {
+	      var _this4 = this;
 
-	    _createClass(Instructor, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this3 = this;
+	      e.preventDefault();
+	      this.refs.modalCreateCourse.setState({ isSubmitting: true });
+	      $.post(
+	      // 'api/user/createcourse',
+	      "http://localhost:5000/users/create-course", { coursename: this.refs.modalCreateCourse.state.coursename }, function (data, status) {
+	        if (data.code == 1001) {
+	          _this4.props.dispatch((0, _actions.setUser)({}));
+	          _this4.props.dispatch((0, _actions.setGetMyCourses)(false));
+	          return _reactRouter.browserHistory.push("/");
+	        }
+	        if (data.code == 200) {
+	          _this4.props.dispatch((0, _actions.createCourse)(data.course));
+	          return _this4.refs.modalCreateCourse.setState({
+	            isSubmitting: false,
+	            coursename: "",
+	            showModal: false
+	          });
+	        }
+	        var alertlogin = $(".alert:first");
+	        alertlogin.show(500, function () {
+	          setTimeout(function () {
+	            alertlogin.hide(500);
+	          }, 3000);
+	        });
+	        _this4.refs.modalCreateCourse.setState({
+	          message: data.message,
+	          isSubmitting: false
+	        });
+	      });
+	    }
+	  }, {
+	    key: "onSelectPage",
+	    value: function onSelectPage(page) {
+	      var query = this.props.location.query;
+	      var url = "/instructor" + "?page=" + page + (query.name ? "&name=" + query.name : "") + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "") + (query.level ? "&level=" + query.level : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	    // onClickPrev(e) {
+	    //     e.preventDefault()
+	    //     let query = this.props.location.query
+	    //     if (!query.page || query.page <= 1) {
+	    //         return
+	    //     }
+	    //     let url = '/instructor' + '?page=' + (query.page - 1)
+	    //         + (query.name ? ('&name=' + query.name) : '') + (query.free ? ('&free=' + query.free) : '')
+	    //         + (query.sort ? ('&sort=' + query.sort) : '')
+	    //         + (query.level ? ('&level=' + query.level) : '')
+	    //     browserHistory.push(url)
+	    // }
+	    // onClickNext(e) {
+	    //     e.preventDefault()
+	    //     let query = this.props.location.query
+	    //     if (!query.page) {
+	    //         query.page = 1
+	    //     }
+	    //     let url = '/instructor' + '?page=' + (parseInt(query.page) + 1)
+	    //         + (query.name ? ('&name=' + query.name) : '') + (query.free ? ('&free=' + query.free) : '')
+	    //         + (query.sort ? ('&sort=' + query.sort) : '')
+	    //         + (query.level ? ('&level=' + query.level) : '')
+	    //     browserHistory.push(url)
+	    // }
 
-	            if (!this.props.getMyCourses)
-	                // $.get('/api/user/get-all-mycourses', (courses) => {
-	                $.get('http://localhost:5000/users/get-all-my-courses', function (courses) {
-	                    _this3.props.dispatch((0, _actions.getAllMyCourses)(JSON.parse(courses)));
-	                    _this3.props.dispatch((0, _actions.setGetMyCourses)(true));
-	                });
-	        }
-	    }, {
-	        key: 'showModal',
-	        value: function showModal() {
-	            this.refs.modalCreateCourse.setState({ showModal: true });
-	        }
-	    }, {
-	        key: 'onSubmitCreateCourse',
-	        value: function onSubmitCreateCourse(e) {
-	            var _this4 = this;
+	  }, {
+	    key: "onChangeFilterSort",
+	    value: function onChangeFilterSort(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/instructor" + "?page=" + query.page + (query.name ? "&name=" + query.name : "") + (query.free ? "&free=" + query.free : "") + "&sort=" + e.target.value + (query.level ? "&level=" + query.level : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onChangeFilterPrice",
+	    value: function onChangeFilterPrice(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/instructor" + "?page=" + query.page + (e.target.value == "none" ? "" : "&free=" + e.target.value) + (query.name ? "&name=" + query.name : "") + (query.sort ? "&sort=" + query.sort : "") + (query.level ? "&level=" + query.level : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onChangeFilterLevel",
+	    value: function onChangeFilterLevel(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/instructor" + "?page=" + query.page + (query.free ? "&free=" + query.free : "") + (query.name ? "&name=" + query.name : "") + (query.sort ? "&sort=" + query.sort : "") + (e.target.value == "none" ? "" : "&level=" + e.target.value);
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onChangeCourseName",
+	    value: function onChangeCourseName(e) {
+	      e.preventDefault();
+	      this.setState({ coursename: e.target.value });
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/instructor" + "?page=" + query.page + (e.target.value == "" ? "" : "&name=" + e.target.value) + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "") + (query.level ? "&level=" + query.level : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this5 = this;
 
-	            e.preventDefault();
-	            this.refs.modalCreateCourse.setState({ isSubmitting: true });
-	            $.post(
-	            // 'api/user/createcourse',
-	            'http://localhost:5000/users/create-course', { coursename: this.refs.modalCreateCourse.state.coursename }, function (data, status) {
-	                if (data.code == 1001) {
-	                    _this4.props.dispatch((0, _actions.setUser)({}));
-	                    _this4.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                    return _reactRouter.browserHistory.push('/');
-	                }
-	                if (data.code == 200) {
-	                    _this4.props.dispatch((0, _actions.createCourse)(data.course));
-	                    return _this4.refs.modalCreateCourse.setState({ isSubmitting: false, coursename: '', showModal: false });
-	                }
-	                var alertlogin = $(".alert:first");
-	                alertlogin.show(500, function () {
-	                    setTimeout(function () {
-	                        alertlogin.hide(500);
-	                    }, 3000);
-	                });
-	                _this4.refs.modalCreateCourse.setState({ message: data.message, isSubmitting: false });
-	            });
+	      if (!this.props.mycourses) return _react2.default.createElement("div", null);
+	      var page = this.props.location.query.page || 1;
+	      var sort = this.props.location.query.sort || 1;
+	      var name = this.props.location.query.name;
+	      var free = this.props.location.query.free;
+	      var level = this.props.location.query.level;
+	      var mycourses = this.props.mycourses;
+	      if (name) {
+	        mycourses = _.filter(mycourses, function (o) {
+	          return o.name.match(new RegExp(".*" + name + ".*", "i"));
+	        });
+	      }
+	      if (free) {
+	        mycourses = _.filter(mycourses, function (o) {
+	          return free == "true" ? !o.cost || o.cost == 0 : o.cost && o.cost > 0;
+	        });
+	      }
+	      if (level) {
+	        mycourses = _.filter(mycourses, function (o) {
+	          return o.level && o.level == level;
+	        });
+	      }
+	      switch (parseInt(sort)) {
+	        case 1:
+	          mycourses = _.sortBy(mycourses, "numberofstudent").reverse();
+	          break;
+	        case 2:
+	          mycourses = _.sortBy(mycourses, "revenue").reverse();
+	          break;
+	        case 3:
+	          mycourses = _.sortBy(mycourses, "star").reverse();
+	          break;
+	      }
+	      var maxPage = parseInt((mycourses.length - 1) / 8) + 1;
+	      mycourses = mycourses.slice(8 * page - 8, 8 * page);
+	      var listCourses = mycourses.map(function (course, index) {
+	        return _react2.default.createElement(_courseInstructor2.default, {
+	          key: index,
+	          username: _this5.props.username,
+	          course: course
+	        });
+	      });
+	      var averageRating = 0;
+	      var numberCourse = this.props.mycourses.length;
+	      for (var i = 0; i < this.props.mycourses.length; i++) {
+	        if (!this.props.mycourses[i].star || this.props.mycourses[i].star == 0) {
+	          numberCourse--;
+	        } else {
+	          averageRating += this.props.mycourses[i].star;
 	        }
-	    }, {
-	        key: 'onSelectPage',
-	        value: function onSelectPage(page) {
-	            var query = this.props.location.query;
-	            var url = '/instructor' + '?page=' + page + (query.name ? '&name=' + query.name : '') + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '') + (query.level ? '&level=' + query.level : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	        // onClickPrev(e) {
-	        //     e.preventDefault()
-	        //     let query = this.props.location.query
-	        //     if (!query.page || query.page <= 1) {
-	        //         return
-	        //     }
-	        //     let url = '/instructor' + '?page=' + (query.page - 1)
-	        //         + (query.name ? ('&name=' + query.name) : '') + (query.free ? ('&free=' + query.free) : '')
-	        //         + (query.sort ? ('&sort=' + query.sort) : '')
-	        //         + (query.level ? ('&level=' + query.level) : '')
-	        //     browserHistory.push(url)
-	        // }
-	        // onClickNext(e) {
-	        //     e.preventDefault()
-	        //     let query = this.props.location.query
-	        //     if (!query.page) {
-	        //         query.page = 1
-	        //     }
-	        //     let url = '/instructor' + '?page=' + (parseInt(query.page) + 1)
-	        //         + (query.name ? ('&name=' + query.name) : '') + (query.free ? ('&free=' + query.free) : '')
-	        //         + (query.sort ? ('&sort=' + query.sort) : '')
-	        //         + (query.level ? ('&level=' + query.level) : '')
-	        //     browserHistory.push(url)
-	        // }
-
-	    }, {
-	        key: 'onChangeFilterSort',
-	        value: function onChangeFilterSort(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/instructor' + '?page=' + query.page + (query.name ? '&name=' + query.name : '') + (query.free ? '&free=' + query.free : '') + '&sort=' + e.target.value + (query.level ? '&level=' + query.level : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onChangeFilterPrice',
-	        value: function onChangeFilterPrice(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/instructor' + '?page=' + query.page + (e.target.value == 'none' ? '' : '&free=' + e.target.value) + (query.name ? '&name=' + query.name : '') + (query.sort ? '&sort=' + query.sort : '') + (query.level ? '&level=' + query.level : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onChangeFilterLevel',
-	        value: function onChangeFilterLevel(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/instructor' + '?page=' + query.page + (query.free ? '&free=' + query.free : '') + (query.name ? '&name=' + query.name : '') + (query.sort ? '&sort=' + query.sort : '') + (e.target.value == 'none' ? '' : '&level=' + e.target.value);
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onChangeCourseName',
-	        value: function onChangeCourseName(e) {
-	            e.preventDefault();
-	            this.setState({ coursename: e.target.value });
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/instructor' + '?page=' + query.page + (e.target.value == '' ? '' : '&name=' + e.target.value) + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '') + (query.level ? '&level=' + query.level : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this5 = this;
-
-	            if (!this.props.mycourses) return _react2.default.createElement('div', null);
-	            var page = this.props.location.query.page || 1;
-	            var sort = this.props.location.query.sort || 1;
-	            var name = this.props.location.query.name;
-	            var free = this.props.location.query.free;
-	            var level = this.props.location.query.level;
-	            var mycourses = this.props.mycourses;
-	            if (name) {
-	                mycourses = _.filter(mycourses, function (o) {
-	                    return o.name.match(new RegExp('.*' + name + '.*', 'i'));
-	                });
-	            }
-	            if (free) {
-	                mycourses = _.filter(mycourses, function (o) {
-	                    return free == 'true' ? !o.cost || o.cost == 0 : o.cost && o.cost > 0;
-	                });
-	            }
-	            if (level) {
-	                mycourses = _.filter(mycourses, function (o) {
-	                    return o.level && o.level == level;
-	                });
-	            }
-	            switch (parseInt(sort)) {
-	                case 1:
-	                    mycourses = _.sortBy(mycourses, 'numberofstudent').reverse();
-	                    break;
-	                case 2:
-	                    mycourses = _.sortBy(mycourses, 'revenue').reverse();
-	                    break;
-	                case 3:
-	                    mycourses = _.sortBy(mycourses, 'star').reverse();
-	                    break;
-	            }
-	            var maxPage = parseInt((mycourses.length - 1) / 8) + 1;
-	            mycourses = mycourses.slice(8 * page - 8, 8 * page);
-	            var listCourses = mycourses.map(function (course, index) {
-	                return _react2.default.createElement(_courseInstructor2.default, { key: index, username: _this5.props.username, course: course });
-	            });
-	            var averageRating = 0;
-	            var numberCourse = this.props.mycourses.length;
-	            for (var i = 0; i < this.props.mycourses.length; i++) {
-	                if (!this.props.mycourses[i].star || this.props.mycourses[i].star == 0) {
-	                    numberCourse--;
-	                } else {
-	                    averageRating += this.props.mycourses[i].star;
-	                }
-	            }
-	            averageRating = numberCourse == 0 ? 0 : averageRating / numberCourse;
-	            return _react2.default.createElement(
-	                'div',
+	      }
+	      averageRating = numberCourse == 0 ? 0 : averageRating / numberCourse;
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	          "div",
+	          {
+	            className: "genre-info-box",
+	            style: { backgroundColor: this.state.headerColor }
+	          },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "container" },
+	            _react2.default.createElement(
+	              _reactBootstrap.Breadcrumb,
+	              null,
+	              _react2.default.createElement(
+	                _reactBootstrap.Breadcrumb.Item,
+	                {
+	                  onClick: function onClick(e) {
+	                    e.preventDefault();
+	                    _reactRouter.browserHistory.push("/courses");
+	                  }
+	                },
+	                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "home" })
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Breadcrumb.Item,
+	                { active: true },
+	                "Instructor"
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Row,
+	              null,
+	              _react2.default.createElement(
+	                "p",
+	                { className: "genre-title col-xs-8" },
+	                "Instructor Dashboard"
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "col-xs-4" },
+	                _react2.default.createElement(
+	                  "button",
+	                  {
+	                    onClick: this.showModal.bind(this),
+	                    className: "btn btn-warning btn-lg"
+	                  },
+	                  _react2.default.createElement("span", { className: "glyphicon glyphicon-pencil" }),
+	                  " Create Course"
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "ul",
+	              { className: "mycourses-navbar" },
+	              _react2.default.createElement(
+	                "li",
 	                null,
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'genre-info-box', style: { backgroundColor: this.state.headerColor } },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'container' },
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Breadcrumb,
-	                            null,
-	                            _react2.default.createElement(
-	                                _reactBootstrap.Breadcrumb.Item,
-	                                { onClick: function onClick(e) {
-	                                        e.preventDefault();_reactRouter.browserHistory.push('/courses');
-	                                    } },
-	                                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'home' })
-	                            ),
-	                            _react2.default.createElement(
-	                                _reactBootstrap.Breadcrumb.Item,
-	                                { active: true },
-	                                'Instructor'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Row,
-	                            null,
-	                            _react2.default.createElement(
-	                                'p',
-	                                { className: 'genre-title col-xs-8' },
-	                                'Instructor Dashboard'
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-xs-4' },
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { onClick: this.showModal.bind(this), className: 'btn btn-warning btn-lg' },
-	                                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-pencil' }),
-	                                    ' ',
-	                                    'Create Course'
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'ul',
-	                            { className: 'mycourses-navbar' },
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: '/mycourses/learning' },
-	                                    'Learning'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: '/mycourses/wishlist' },
-	                                    'Wishlist'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { activeClassName: 'active',
-	                                        onlyActiveOnIndex: true, to: '/instructor' },
-	                                    'My Courses'
-	                                )
-	                            )
-	                        )
-	                    )
+	                  _reactRouter.Link,
+	                  { to: "/mycourses/learning" },
+	                  "Learning"
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: "/mycourses/wishlist" },
+	                  "Wishlist"
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  {
+	                    activeClassName: "active",
+	                    onlyActiveOnIndex: true,
+	                    to: "/instructor"
+	                  },
+	                  "My Courses"
+	                )
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "instructor-infor-box" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "container" },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "col-sm-4" },
+	              _react2.default.createElement(
+	                "h5",
+	                null,
+	                "Total Revenue"
+	              ),
+	              _react2.default.createElement(
+	                "h4",
+	                { className: "text-success" },
+	                this.props.mycourses.map(function (o) {
+	                  return o.revenue ? o.revenue : 0;
+	                }).reduce(function (a, b) {
+	                  return a + b;
+	                }, 0),
+	                _react2.default.createElement("span", { className: "glyphicon glyphicon-usd" })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "col-sm-4" },
+	              _react2.default.createElement(
+	                "h5",
+	                null,
+	                "Average Rating"
+	              ),
+	              _react2.default.createElement(
+	                "h4",
+	                { className: "text-success" },
+	                averageRating.toFixed(2),
+	                " ",
+	                _react2.default.createElement("span", { className: "glyphicon glyphicon-star" })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "col-sm-4" },
+	              _react2.default.createElement(
+	                "h5",
+	                null,
+	                "Total Students"
+	              ),
+	              _react2.default.createElement(
+	                "h4",
+	                { className: "text-success" },
+	                this.props.mycourses.map(function (o) {
+	                  return o.numberofstudent ? o.numberofstudent : 0;
+	                }).reduce(function (a, b) {
+	                  return a + b;
+	                }, 0),
+	                " ",
+	                _react2.default.createElement("span", { className: "glyphicon glyphicon-education" })
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "container" },
+	          _react2.default.createElement(
+	            "form",
+	            {
+	              className: "form-inline",
+	              style: { marginBottom: "20px" },
+	              onSubmit: function onSubmit(e) {
+	                _this5.onSubmitFormSearch(e);
+	              }
+	            },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group form-group-lg" },
+	              _react2.default.createElement(
+	                "select",
+	                {
+	                  style: { fontWeight: "bold" },
+	                  className: "form-control",
+	                  value: this.props.location.query.level || "none",
+	                  onChange: function onChange(e) {
+	                    _this5.onChangeFilterLevel(e);
+	                  }
+	                },
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "none", style: { fontWeight: "bold" } },
+	                  "--Select Level--"
 	                ),
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'instructor-infor-box' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'container' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-sm-4' },
-	                            _react2.default.createElement(
-	                                'h5',
-	                                null,
-	                                'Total Revenue'
-	                            ),
-	                            _react2.default.createElement(
-	                                'h4',
-	                                { className: 'text-success' },
-	                                this.props.mycourses.map(function (o) {
-	                                    return o.revenue ? o.revenue : 0;
-	                                }).reduce(function (a, b) {
-	                                    return a + b;
-	                                }, 0),
-	                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-usd' })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-sm-4' },
-	                            _react2.default.createElement(
-	                                'h5',
-	                                null,
-	                                'Average Rating'
-	                            ),
-	                            _react2.default.createElement(
-	                                'h4',
-	                                { className: 'text-success' },
-	                                averageRating.toFixed(2),
-	                                ' ',
-	                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-star' })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-sm-4' },
-	                            _react2.default.createElement(
-	                                'h5',
-	                                null,
-	                                'Total Students'
-	                            ),
-	                            _react2.default.createElement(
-	                                'h4',
-	                                { className: 'text-success' },
-	                                this.props.mycourses.map(function (o) {
-	                                    return o.numberofstudent ? o.numberofstudent : 0;
-	                                }).reduce(function (a, b) {
-	                                    return a + b;
-	                                }, 0),
-	                                ' ',
-	                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-education' })
-	                            )
-	                        )
-	                    )
+	                  "option",
+	                  { value: "1", style: { fontWeight: "bold" } },
+	                  "Beginner Level"
 	                ),
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'container' },
-	                    _react2.default.createElement(
-	                        'form',
-	                        { className: 'form-inline', style: { marginBottom: '20px' }, onSubmit: function onSubmit(e) {
-	                                _this5.onSubmitFormSearch(e);
-	                            } },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group form-group-lg' },
-	                            _react2.default.createElement(
-	                                'select',
-	                                { style: { fontWeight: 'bold' }, className: 'form-control',
-	                                    value: this.props.location.query.level || 'none', onChange: function onChange(e) {
-	                                        _this5.onChangeFilterLevel(e);
-	                                    } },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'none', style: { fontWeight: 'bold' } },
-	                                    '--Select Level--'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '1', style: { fontWeight: 'bold' } },
-	                                    'Beginner Level'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '2', style: { fontWeight: 'bold' } },
-	                                    'Intermediate Level'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '3', style: { fontWeight: 'bold' } },
-	                                    'Expert Level'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '0', style: { fontWeight: 'bold' } },
-	                                    'All Levels'
-	                                )
-	                            )
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group form-group-lg' },
-	                            _react2.default.createElement(
-	                                'select',
-	                                { style: { fontWeight: 'bold' }, className: 'form-control',
-	                                    value: this.props.location.query.free || 'none', onChange: function onChange(e) {
-	                                        _this5.onChangeFilterPrice(e);
-	                                    } },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'none', style: { fontWeight: 'bold' } },
-	                                    '--Price--'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'false', style: { fontWeight: 'bold' } },
-	                                    'Paid'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'true', style: { fontWeight: 'bold' } },
-	                                    'Free'
-	                                )
-	                            )
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group form-group-lg' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Sort by:'
-	                            ),
-	                            ' ',
-	                            _react2.default.createElement(
-	                                'select',
-	                                { style: { fontWeight: 'bold' }, className: 'form-control',
-	                                    value: this.props.location.query.sort || '1', onChange: function onChange(e) {
-	                                        _this5.onChangeFilterSort(e);
-	                                    } },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '1', style: { fontWeight: 'bold' } },
-	                                    'Popularity'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '2', style: { fontWeight: 'bold' } },
-	                                    'Best Seller'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '3', style: { fontWeight: 'bold' } },
-	                                    'Highest Rated'
-	                                )
-	                            )
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group form-group-lg', style: { fontWeight: 'bold' } },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group input-group-lg' },
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control',
-	                                    value: this.state.coursename, placeholder: 'Search', onChange: function onChange(e) {
-	                                        _this5.onChangeCourseName(e);
-	                                    } }),
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'input-group-btn' },
-	                                    _react2.default.createElement(
-	                                        'button',
-	                                        { className: 'btn btn-info', disabled: true },
-	                                        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'search' })
-	                                    )
-	                                )
-	                            )
-	                        )
-	                    )
+	                  "option",
+	                  { value: "2", style: { fontWeight: "bold" } },
+	                  "Intermediate Level"
 	                ),
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'container' },
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Row,
-	                        null,
-	                        listCourses
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'text-center' },
-	                        _react2.default.createElement(_reactBootstrap.Pagination, { prev: true, next: true, first: true, last: true, ellipsis: true, boundaryLinks: true,
-	                            items: maxPage,
-	                            maxButtons: 5, activePage: parseInt(this.props.location.query.page || 1),
-	                            onSelect: function onSelect(page) {
-	                                _this5.onSelectPage(page);
-	                            } })
-	                    )
+	                  "option",
+	                  { value: "3", style: { fontWeight: "bold" } },
+	                  "Expert Level"
+	                )
+	              )
+	            ),
+	            " ",
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group form-group-lg" },
+	              _react2.default.createElement(
+	                "select",
+	                {
+	                  style: { fontWeight: "bold" },
+	                  className: "form-control",
+	                  value: this.props.location.query.free || "none",
+	                  onChange: function onChange(e) {
+	                    _this5.onChangeFilterPrice(e);
+	                  }
+	                },
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "none", style: { fontWeight: "bold" } },
+	                  "--Price--"
 	                ),
-	                _react2.default.createElement(ModalCreateCourse, { ref: 'modalCreateCourse', onSubmitCreateCourse: this.onSubmitCreateCourse.bind(this) })
-	            );
-	        }
-	    }]);
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "false", style: { fontWeight: "bold" } },
+	                  "Paid"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "true", style: { fontWeight: "bold" } },
+	                  "Free"
+	                )
+	              )
+	            ),
+	            " ",
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group form-group-lg" },
+	              _react2.default.createElement(
+	                "label",
+	                null,
+	                "Sort by:"
+	              ),
+	              " ",
+	              _react2.default.createElement(
+	                "select",
+	                {
+	                  style: { fontWeight: "bold" },
+	                  className: "form-control",
+	                  value: this.props.location.query.sort || "1",
+	                  onChange: function onChange(e) {
+	                    _this5.onChangeFilterSort(e);
+	                  }
+	                },
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "1", style: { fontWeight: "bold" } },
+	                  "Popularity"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "2", style: { fontWeight: "bold" } },
+	                  "Best Seller"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "3", style: { fontWeight: "bold" } },
+	                  "Highest Rated"
+	                )
+	              )
+	            ),
+	            " ",
+	            _react2.default.createElement(
+	              "div",
+	              {
+	                className: "form-group form-group-lg",
+	                style: { fontWeight: "bold" }
+	              },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group input-group-lg" },
+	                _react2.default.createElement("input", {
+	                  type: "text",
+	                  className: "form-control",
+	                  value: this.state.coursename,
+	                  placeholder: "Search",
+	                  onChange: function onChange(e) {
+	                    _this5.onChangeCourseName(e);
+	                  }
+	                }),
+	                _react2.default.createElement(
+	                  "span",
+	                  { className: "input-group-btn" },
+	                  _react2.default.createElement(
+	                    "button",
+	                    { className: "btn btn-info", disabled: true },
+	                    _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "search" })
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "container" },
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            listCourses
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "text-center" },
+	            _react2.default.createElement(_reactBootstrap.Pagination, {
+	              prev: true,
+	              next: true,
+	              first: true,
+	              last: true,
+	              ellipsis: true,
+	              boundaryLinks: true,
+	              items: maxPage,
+	              maxButtons: 5,
+	              activePage: parseInt(this.props.location.query.page || 1),
+	              onSelect: function onSelect(page) {
+	                _this5.onSelectPage(page);
+	              }
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(ModalCreateCourse, {
+	          ref: "modalCreateCourse",
+	          onSubmitCreateCourse: this.onSubmitCreateCourse.bind(this)
+	        })
+	      );
+	    }
+	  }]);
 
-	    return Instructor;
+	  return Instructor;
 	}(_react2.default.Component);
 
 	Instructor = (0, _reactRedux.connect)(function (state) {
-	    return {
-	        mycourses: state.user.mycourses,
-	        getMyCourses: state.getMyCourses,
-	        username: state.user.username
-	    };
+	  return {
+	    mycourses: state.user.mycourses,
+	    getMyCourses: state.getMyCourses,
+	    username: state.user.username
+	  };
 	})(Instructor);
 
 	exports.default = Instructor;
@@ -107655,11 +107722,6 @@
 	                  "option",
 	                  { value: 3 },
 	                  "Expert Level"
-	                ),
-	                _react2.default.createElement(
-	                  "option",
-	                  { value: 0 },
-	                  "All Levels"
 	                )
 	              )
 	            ),
@@ -111253,10 +111315,10 @@
 /* 1116 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -111288,338 +111350,367 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var CoursesSubgenre = function (_React$Component) {
-	    _inherits(CoursesSubgenre, _React$Component);
+	  _inherits(CoursesSubgenre, _React$Component);
 
-	    function CoursesSubgenre(props) {
-	        _classCallCheck(this, CoursesSubgenre);
+	  function CoursesSubgenre(props) {
+	    _classCallCheck(this, CoursesSubgenre);
 
-	        var _this = _possibleConstructorReturn(this, (CoursesSubgenre.__proto__ || Object.getPrototypeOf(CoursesSubgenre)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (CoursesSubgenre.__proto__ || Object.getPrototypeOf(CoursesSubgenre)).call(this, props));
 
-	        _this.state = {
-	            genre: { name: '', _id: '' },
-	            subgenre: { name: '', _id: '' },
-	            courses: [],
-	            progress: 0,
-	            bsStyle: ['success', 'info', 'warning', 'danger'][Math.floor(Math.random() * 4)],
-	            headerColor: ['lightseagreen', 'teal', 'forestgreen', 'green', 'sienna', 'peru', 'indigo'][Math.floor(Math.random() * 7)]
-	        };
-	        return _this;
+	    _this.state = {
+	      genre: { name: "", _id: "" },
+	      subgenre: { name: "", _id: "" },
+	      courses: [],
+	      progress: 0,
+	      bsStyle: ["success", "info", "warning", "danger"][Math.floor(Math.random() * 4)],
+	      headerColor: ["lightseagreen", "teal", "forestgreen", "green", "sienna", "peru", "indigo"][Math.floor(Math.random() * 7)]
+	    };
+	    return _this;
+	  }
+
+	  _createClass(CoursesSubgenre, [{
+	    key: "componentWillReceiveProps",
+	    value: function componentWillReceiveProps(nextProps) {
+	      var _this2 = this;
+
+	      if (this.props.params != nextProps.params || this.props.location.query != nextProps.location.query) {
+	        this.setState({
+	          progress: 0,
+	          courses: [],
+	          headerColor: ["lightseagreen", "teal", "forestgreen", "green", "sienna", "peru", "indigo"][Math.floor(Math.random() * 7)],
+	          bsStyle: ["success", "info", "warning", "danger"][Math.floor(Math.random() * 4)]
+	        });
+	        (0, _courses.getCoursesBySubGenre)({
+	          subgenreid: Number(nextProps.params.subgenreid),
+	          data: nextProps.location.query,
+	          success: function success(data, status) {
+	            if (data.code == 200) {
+	              setTimeout(function () {
+	                _this2.setState({
+	                  genre: data.genre,
+	                  subgenre: data.subgenre,
+	                  courses: data.courses
+	                });
+	              }, 500);
+	            }
+	          },
+	          xhr: function xhr() {
+	            var xhr = new window.XMLHttpRequest();
+	            xhr.onprogress = function (evt) {
+	              if (evt.lengthComputable) {
+	                var percentComplete = Math.ceil(evt.loaded * 100.0 / evt.total);
+	                _this2.setState({ progress: percentComplete });
+	              }
+	            };
+	            return xhr;
+	          }
+	        });
+	      }
 	    }
+	  }, {
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      var _this3 = this;
 
-	    _createClass(CoursesSubgenre, [{
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            var _this2 = this;
-
-	            if (this.props.params != nextProps.params || this.props.location.query != nextProps.location.query) {
-	                this.setState({
-	                    progress: 0,
-	                    courses: [],
-	                    headerColor: ['lightseagreen', 'teal', 'forestgreen', 'green', 'sienna', 'peru', 'indigo'][Math.floor(Math.random() * 7)],
-	                    bsStyle: ['success', 'info', 'warning', 'danger'][Math.floor(Math.random() * 4)]
-	                });
-	                (0, _courses.getCoursesBySubGenre)({
-	                    subgenreid: Number(nextProps.params.subgenreid),
-	                    data: nextProps.location.query,
-	                    success: function success(data, status) {
-	                        if (data.code == 200) {
-	                            setTimeout(function () {
-	                                _this2.setState({
-	                                    genre: data.genre,
-	                                    subgenre: data.subgenre,
-	                                    courses: data.courses
-	                                });
-	                            }, 500);
-	                        }
-	                    },
-	                    xhr: function xhr() {
-	                        var xhr = new window.XMLHttpRequest();
-	                        xhr.onprogress = function (evt) {
-	                            if (evt.lengthComputable) {
-	                                var percentComplete = Math.ceil(evt.loaded * 100.0 / evt.total);
-	                                _this2.setState({ progress: percentComplete });
-	                            }
-	                        };
-	                        return xhr;
-	                    }
-	                });
+	      (0, _courses.getCoursesBySubGenre)({
+	        subgenreid: Number(this.props.params.subgenreid),
+	        data: this.props.location.query,
+	        success: function success(data, status) {
+	          if (data.code == 200) {
+	            setTimeout(function () {
+	              _this3.setState({
+	                genre: data.genre,
+	                subgenre: data.subgenre,
+	                courses: data.courses
+	              });
+	            }, 500);
+	          }
+	        },
+	        xhr: function xhr() {
+	          var xhr = new window.XMLHttpRequest();
+	          xhr.onprogress = function (evt) {
+	            if (evt.lengthComputable) {
+	              var percentComplete = Math.ceil(evt.loaded * 100.0 / evt.total);
+	              _this3.setState({ progress: percentComplete });
 	            }
+	          };
+	          return xhr;
 	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this3 = this;
+	      });
+	    }
+	  }, {
+	    key: "onClickPrev",
+	    value: function onClickPrev(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page || query.page <= 1) {
+	        return;
+	      }
+	      var url = "/courses/" + this.props.params.genreid + "/" + Number(this.props.params.subgenreid) + "?page=" + (query.page - 1) + (query.level ? "&level=" + query.level : "") + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onClickNext",
+	    value: function onClickNext(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/courses/" + this.props.params.genreid + "/" + Number(this.props.params.subgenreid) + "?page=" + (parseInt(query.page) + 1) + (query.level ? "&level=" + query.level : "") + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onChangeFilterPrice",
+	    value: function onChangeFilterPrice(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/courses/" + this.props.params.genreid + "/" + Number(this.props.params.subgenreid) + "?page=" + query.page + (query.level ? "&level=" + query.level : "") + (e.target.value == "none" ? "" : "&free=" + e.target.value) + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onChangeFilterLevel",
+	    value: function onChangeFilterLevel(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/courses/" + this.props.params.genreid + "/" + Number(this.props.params.subgenreid) + "?page=" + query.page + (e.target.value == "none" ? "" : "&level=" + e.target.value) + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onChangeFilterSort",
+	    value: function onChangeFilterSort(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/courses/" + this.props.params.genreid + "/" + Number(this.props.params.subgenreid) + "?page=" + query.page + (query.level ? "&level=" + query.level : "") + (query.free ? "&free=" + query.free : "") + "&sort=" + e.target.value;
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this4 = this;
 
-	            (0, _courses.getCoursesBySubGenre)({
-	                subgenreid: Number(this.props.params.subgenreid),
-	                data: this.props.location.query,
-	                success: function success(data, status) {
-	                    if (data.code == 200) {
-	                        setTimeout(function () {
-	                            _this3.setState({
-	                                genre: data.genre,
-	                                subgenre: data.subgenre,
-	                                courses: data.courses
-	                            });
-	                        }, 500);
-	                    }
-	                },
-	                xhr: function xhr() {
-	                    var xhr = new window.XMLHttpRequest();
-	                    xhr.onprogress = function (evt) {
-	                        if (evt.lengthComputable) {
-	                            var percentComplete = Math.ceil(evt.loaded * 100.0 / evt.total);
-	                            _this3.setState({ progress: percentComplete });
-	                        }
-	                    };
-	                    return xhr;
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	          "div",
+	          {
+	            className: "genre-info-box",
+	            style: { backgroundColor: this.state.headerColor }
+	          },
+	          _react2.default.createElement(
+	            _reactBootstrap.Breadcrumb,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Breadcrumb.Item,
+	              {
+	                onClick: function onClick(e) {
+	                  e.preventDefault();
+	                  _reactRouter.browserHistory.push("/courses");
 	                }
-	            });
-	        }
-	    }, {
-	        key: 'onClickPrev',
-	        value: function onClickPrev(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page || query.page <= 1) {
-	                return;
-	            }
-	            var url = '/courses/' + this.props.params.genreid + '/' + Number(this.props.params.subgenreid) + '?page=' + (query.page - 1) + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onClickNext',
-	        value: function onClickNext(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/courses/' + this.props.params.genreid + '/' + Number(this.props.params.subgenreid) + '?page=' + (parseInt(query.page) + 1) + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onChangeFilterPrice',
-	        value: function onChangeFilterPrice(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/courses/' + this.props.params.genreid + '/' + Number(this.props.params.subgenreid) + '?page=' + query.page + (query.level ? '&level=' + query.level : '') + (e.target.value == 'none' ? '' : '&free=' + e.target.value) + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onChangeFilterLevel',
-	        value: function onChangeFilterLevel(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/courses/' + this.props.params.genreid + '/' + Number(this.props.params.subgenreid) + '?page=' + query.page + (e.target.value == 'none' ? '' : '&level=' + e.target.value) + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onChangeFilterSort',
-	        value: function onChangeFilterSort(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/courses/' + this.props.params.genreid + '/' + Number(this.props.params.subgenreid) + '?page=' + query.page + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + '&sort=' + e.target.value;
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this4 = this;
-
-	            return _react2.default.createElement(
-	                'div',
-	                null,
+	              },
+	              _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "home" })
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Breadcrumb.Item,
+	              {
+	                onClick: function onClick(e) {
+	                  e.preventDefault();
+	                  _reactRouter.browserHistory.push("/courses/" + (_this4.state.genre._id || ""));
+	                }
+	              },
+	              this.state.genre.name || ""
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Breadcrumb.Item,
+	              { active: true },
+	              this.state.subgenre.name || ""
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "span",
+	            { className: "genre-title" },
+	            this.state.subgenre.name || ""
+	          )
+	        ),
+	        this.state.courses.length == 0 ? _react2.default.createElement(_reactBootstrap.ProgressBar, {
+	          bsStyle: this.state.bsStyle,
+	          active: true,
+	          now: this.state.progress
+	        }) : _react2.default.createElement(
+	          "div",
+	          null,
+	          _react2.default.createElement(
+	            "div",
+	            { className: "form-inline", style: { marginBottom: "20px" } },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "select",
+	                {
+	                  style: { fontWeight: "bold" },
+	                  className: "form-control",
+	                  value: this.props.location.query.level || "none",
+	                  onChange: function onChange(e) {
+	                    _this4.onChangeFilterLevel(e);
+	                  }
+	                },
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'genre-info-box', style: { backgroundColor: this.state.headerColor } },
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Breadcrumb,
-	                        null,
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Breadcrumb.Item,
-	                            { onClick: function onClick(e) {
-	                                    e.preventDefault();_reactRouter.browserHistory.push('/courses');
-	                                } },
-	                            _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'home' })
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Breadcrumb.Item,
-	                            { onClick: function onClick(e) {
-	                                    e.preventDefault();_reactRouter.browserHistory.push('/courses/' + (_this4.state.genre._id || ''));
-	                                } },
-	                            this.state.genre.name || ''
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Breadcrumb.Item,
-	                            { active: true },
-	                            this.state.subgenre.name || ''
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'span',
-	                        { className: 'genre-title' },
-	                        this.state.subgenre.name || ''
-	                    )
+	                  "option",
+	                  { value: "none", style: { fontWeight: "bold" } },
+	                  "--Select Level--"
 	                ),
-	                this.state.courses.length == 0 ? _react2.default.createElement(_reactBootstrap.ProgressBar, { bsStyle: this.state.bsStyle, active: true, now: this.state.progress }) : _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-inline', style: { marginBottom: '20px' } },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'select',
-	                                { style: { fontWeight: 'bold' }, className: 'form-control',
-	                                    value: this.props.location.query.level || 'none', onChange: function onChange(e) {
-	                                        _this4.onChangeFilterLevel(e);
-	                                    } },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'none', style: { fontWeight: 'bold' } },
-	                                    '--Select Level--'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '1', style: { fontWeight: 'bold' } },
-	                                    'Beginner Level'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '2', style: { fontWeight: 'bold' } },
-	                                    'Intermediate Level'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '3', style: { fontWeight: 'bold' } },
-	                                    'Expert Level'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '0', style: { fontWeight: 'bold' } },
-	                                    'All Levels'
-	                                )
-	                            )
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'select',
-	                                { style: { fontWeight: 'bold' }, className: 'form-control',
-	                                    value: this.props.location.query.free || 'none', onChange: function onChange(e) {
-	                                        _this4.onChangeFilterPrice(e);
-	                                    } },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'none', style: { fontWeight: 'bold' } },
-	                                    '--Price--'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'false', style: { fontWeight: 'bold' } },
-	                                    'Paid'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'true', style: { fontWeight: 'bold' } },
-	                                    'Free'
-	                                )
-	                            )
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Sort by:'
-	                            ),
-	                            ' ',
-	                            _react2.default.createElement(
-	                                'select',
-	                                { style: { fontWeight: 'bold' }, className: 'form-control',
-	                                    value: this.props.location.query.sort || '1', onChange: function onChange(e) {
-	                                        _this4.onChangeFilterSort(e);
-	                                    } },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '1', style: { fontWeight: 'bold' } },
-	                                    'Popularity'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '2', style: { fontWeight: 'bold' } },
-	                                    'Highest Rated'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '3', style: { fontWeight: 'bold' } },
-	                                    'Newest'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '4', style: { fontWeight: 'bold' } },
-	                                    'Price: Low to high'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '5', style: { fontWeight: 'bold' } },
-	                                    'Price: High to low'
-	                                )
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Row,
-	                        null,
-	                        this.state.courses.map(function (course, index) {
-	                            return _react2.default.createElement(
-	                                _reactBootstrap.Col,
-	                                { md: 3, sm: 6, xs: 12, key: index },
-	                                _react2.default.createElement(_course2.default, { popoverPlacement: index % 2 == 0 ? 'right' : 'left', course: course })
-	                            );
-	                        })
-	                    ),
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Pager,
-	                        null,
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Pager.Item,
-	                            { disabled: !this.props.location.query.page || this.props.location.query.page == 1,
-	                                previous: true, onClick: function onClick(e) {
-	                                    _this4.onClickPrev(e);
-	                                } },
-	                            '\u2190 Previous Page'
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Pager.Item,
-	                            { next: true, onClick: function onClick(e) {
-	                                    _this4.onClickNext(e);
-	                                } },
-	                            'Next Page \u2192'
-	                        )
-	                    )
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "1", style: { fontWeight: "bold" } },
+	                  "Beginner Level"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "2", style: { fontWeight: "bold" } },
+	                  "Intermediate Level"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "3", style: { fontWeight: "bold" } },
+	                  "Expert Level"
 	                )
-	            );
-	        }
-	    }]);
+	              )
+	            ),
+	            " ",
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "select",
+	                {
+	                  style: { fontWeight: "bold" },
+	                  className: "form-control",
+	                  value: this.props.location.query.free || "none",
+	                  onChange: function onChange(e) {
+	                    _this4.onChangeFilterPrice(e);
+	                  }
+	                },
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "none", style: { fontWeight: "bold" } },
+	                  "--Price--"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "false", style: { fontWeight: "bold" } },
+	                  "Paid"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "true", style: { fontWeight: "bold" } },
+	                  "Free"
+	                )
+	              )
+	            ),
+	            " ",
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group" },
+	              _react2.default.createElement(
+	                "label",
+	                null,
+	                "Sort by:"
+	              ),
+	              " ",
+	              _react2.default.createElement(
+	                "select",
+	                {
+	                  style: { fontWeight: "bold" },
+	                  className: "form-control",
+	                  value: this.props.location.query.sort || "1",
+	                  onChange: function onChange(e) {
+	                    _this4.onChangeFilterSort(e);
+	                  }
+	                },
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "1", style: { fontWeight: "bold" } },
+	                  "Popularity"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "2", style: { fontWeight: "bold" } },
+	                  "Highest Rated"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "3", style: { fontWeight: "bold" } },
+	                  "Newest"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "4", style: { fontWeight: "bold" } },
+	                  "Price: Low to high"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "5", style: { fontWeight: "bold" } },
+	                  "Price: High to low"
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            this.state.courses.map(function (course, index) {
+	              return _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { md: 3, sm: 6, xs: 12, key: index },
+	                _react2.default.createElement(_course2.default, {
+	                  popoverPlacement: index % 2 == 0 ? "right" : "left",
+	                  course: course
+	                })
+	              );
+	            })
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Pager,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Pager.Item,
+	              {
+	                disabled: !this.props.location.query.page || this.props.location.query.page == 1,
+	                previous: true,
+	                onClick: function onClick(e) {
+	                  _this4.onClickPrev(e);
+	                }
+	              },
+	              "\u2190 Previous Page"
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Pager.Item,
+	              {
+	                next: true,
+	                onClick: function onClick(e) {
+	                  _this4.onClickNext(e);
+	                }
+	              },
+	              "Next Page \u2192"
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	    return CoursesSubgenre;
+	  return CoursesSubgenre;
 	}(_react2.default.Component);
 
 	exports.default = CoursesSubgenre;
@@ -111628,10 +111719,10 @@
 /* 1117 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -111663,379 +111754,414 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var CoursesSearch = function (_React$Component) {
-	    _inherits(CoursesSearch, _React$Component);
+	  _inherits(CoursesSearch, _React$Component);
 
-	    function CoursesSearch(props) {
-	        _classCallCheck(this, CoursesSearch);
+	  function CoursesSearch(props) {
+	    _classCallCheck(this, CoursesSearch);
 
-	        var _this = _possibleConstructorReturn(this, (CoursesSearch.__proto__ || Object.getPrototypeOf(CoursesSearch)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (CoursesSearch.__proto__ || Object.getPrototypeOf(CoursesSearch)).call(this, props));
 
-	        _this.state = {
-	            courses: [],
-	            coursename: _this.props.location.query.name || '',
-	            bsStyle: ['success', 'info', 'warning', 'danger'][Math.floor(Math.random() * 4)],
-	            headerColor: ['lightseagreen', 'teal', 'forestgreen', 'green', 'sienna', 'peru', 'indigo'][Math.floor(Math.random() * 7)],
-	            isloading: true,
-	            progress: 0
-	        };
-	        return _this;
+	    _this.state = {
+	      courses: [],
+	      coursename: _this.props.location.query.name || "",
+	      bsStyle: ["success", "info", "warning", "danger"][Math.floor(Math.random() * 4)],
+	      headerColor: ["lightseagreen", "teal", "forestgreen", "green", "sienna", "peru", "indigo"][Math.floor(Math.random() * 7)],
+	      isloading: true,
+	      progress: 0
+	    };
+	    return _this;
+	  }
+
+	  _createClass(CoursesSearch, [{
+	    key: "componentWillReceiveProps",
+	    value: function componentWillReceiveProps(nextProps) {
+	      var _this2 = this;
+
+	      if (this.props.location.query != nextProps.location.query) {
+	        this.setState({
+	          courses: [],
+	          coursename: nextProps.location.query.name || "",
+	          headerColor: ["lightseagreen", "teal", "forestgreen", "green", "sienna", "peru", "indigo"][Math.floor(Math.random() * 7)],
+	          bsStyle: ["success", "info", "warning", "danger"][Math.floor(Math.random() * 4)],
+	          progress: 0,
+	          isloading: true
+	        });
+	        (0, _courses.getCoursesSearch)({
+	          data: nextProps.location.query,
+	          success: function success(data, status) {
+	            if (data.code == 1001) {
+	              _this2.props.dispatch(setUser({}));
+	              _this2.props.dispatch(setGetMyCourses(false));
+	              return _reactRouter.browserHistory.push("/");
+	            } else if (data.code == 200) {
+	              setTimeout(function () {
+	                _this2.setState({ courses: data.courses, isloading: false });
+	              }, 500);
+	            }
+	          },
+	          xhr: function xhr() {
+	            var xhr = new window.XMLHttpRequest();
+	            xhr.onprogress = function (evt) {
+	              if (evt.lengthComputable) {
+	                var percentComplete = Math.ceil(evt.loaded * 100.0 / evt.total);
+	                _this2.setState({ progress: percentComplete });
+	              }
+	            };
+	            return xhr;
+	          }
+	        });
+	      }
 	    }
+	  }, {
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      var _this3 = this;
 
-	    _createClass(CoursesSearch, [{
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            var _this2 = this;
-
-	            if (this.props.location.query != nextProps.location.query) {
-	                this.setState({
-	                    courses: [],
-	                    coursename: nextProps.location.query.name || '',
-	                    headerColor: ['lightseagreen', 'teal', 'forestgreen', 'green', 'sienna', 'peru', 'indigo'][Math.floor(Math.random() * 7)],
-	                    bsStyle: ['success', 'info', 'warning', 'danger'][Math.floor(Math.random() * 4)],
-	                    progress: 0,
-	                    isloading: true
-	                });
-	                (0, _courses.getCoursesSearch)({
-	                    data: nextProps.location.query,
-	                    success: function success(data, status) {
-	                        if (data.code == 1001) {
-	                            _this2.props.dispatch(setUser({}));
-	                            _this2.props.dispatch(setGetMyCourses(false));
-	                            return _reactRouter.browserHistory.push('/');
-	                        } else if (data.code == 200) {
-	                            setTimeout(function () {
-	                                _this2.setState({ courses: data.courses, isloading: false });
-	                            }, 500);
-	                        }
-	                    },
-	                    xhr: function xhr() {
-	                        var xhr = new window.XMLHttpRequest();
-	                        xhr.onprogress = function (evt) {
-	                            if (evt.lengthComputable) {
-	                                var percentComplete = Math.ceil(evt.loaded * 100.0 / evt.total);
-	                                _this2.setState({ progress: percentComplete });
-	                            }
-	                        };
-	                        return xhr;
-	                    }
-	                });
+	      (0, _courses.getCoursesSearch)({
+	        data: this.props.location.query,
+	        success: function success(data, status) {
+	          if (data.code == 1001) {
+	            _this3.props.dispatch(setUser({}));
+	            _this3.props.dispatch(setGetMyCourses(false));
+	            return _reactRouter.browserHistory.push("/");
+	          } else if (data.code == 200) {
+	            setTimeout(function () {
+	              _this3.setState({ courses: data.courses, isloading: false });
+	            }, 500);
+	          }
+	        },
+	        xhr: function xhr() {
+	          var xhr = new window.XMLHttpRequest();
+	          xhr.onprogress = function (evt) {
+	            if (evt.lengthComputable) {
+	              var percentComplete = Math.ceil(evt.loaded * 100.0 / evt.total);
+	              _this3.setState({ progress: percentComplete });
 	            }
+	          };
+	          return xhr;
 	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this3 = this;
+	      });
+	    }
+	  }, {
+	    key: "onClickPrev",
+	    value: function onClickPrev(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page || query.page <= 1) {
+	        return;
+	      }
+	      var url = "/courses/search" + "?page=" + (query.page - 1) + (query.name ? "&name=" + query.name : "") + (query.level ? "&level=" + query.level : "") + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onClickNext",
+	    value: function onClickNext(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/courses/search" + "?page=" + (parseInt(query.page) + 1) + (query.name ? "&name=" + query.name : "") + (query.level ? "&level=" + query.level : "") + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onChangeFilterLevel",
+	    value: function onChangeFilterLevel(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/courses/search" + "?page=" + query.page + (query.name ? "&name=" + query.name : "") + (e.target.value == "none" ? "" : "&level=" + e.target.value) + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onChangeFilterSort",
+	    value: function onChangeFilterSort(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/courses/search" + "?page=" + query.page + (query.name ? "&name=" + query.name : "") + (query.level ? "&level=" + query.level : "") + (query.free ? "&free=" + query.free : "") + "&sort=" + e.target.value;
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onChangeFilterPrice",
+	    value: function onChangeFilterPrice(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/courses/search" + "?page=" + query.page + (query.name ? "&name=" + query.name : "") + (query.level ? "&level=" + query.level : "") + (e.target.value == "none" ? "" : "&free=" + e.target.value) + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onSubmitFormSearch",
+	    value: function onSubmitFormSearch(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/courses/search" + "?page=" + query.page + (this.state.coursename != "" ? "&name=" + this.state.coursename : "") + (query.level ? "&level=" + query.level : "") + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "handleCourseName",
+	    value: function handleCourseName(e) {
+	      this.setState({ coursename: e.target.value });
+	      if (e.target.value == "") {
+	        var query = this.props.location.query;
+	        if (!query.page) {
+	          query.page = 1;
+	        }
+	        var url = "/courses/search" + "?page=" + query.page + (query.level ? "&level=" + query.level : "") + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "");
+	        _reactRouter.browserHistory.push(url);
+	      }
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this4 = this;
 
-	            (0, _courses.getCoursesSearch)({
-	                data: this.props.location.query,
-	                success: function success(data, status) {
-	                    if (data.code == 1001) {
-	                        _this3.props.dispatch(setUser({}));
-	                        _this3.props.dispatch(setGetMyCourses(false));
-	                        return _reactRouter.browserHistory.push('/');
-	                    } else if (data.code == 200) {
-	                        setTimeout(function () {
-	                            _this3.setState({ courses: data.courses, isloading: false });
-	                        }, 500);
-	                    }
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	          "div",
+	          {
+	            className: "genre-info-box",
+	            style: { backgroundColor: this.state.headerColor }
+	          },
+	          _react2.default.createElement(
+	            _reactBootstrap.Breadcrumb,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Breadcrumb.Item,
+	              {
+	                onClick: function onClick(e) {
+	                  e.preventDefault();
+	                  _reactRouter.browserHistory.push("/courses");
+	                }
+	              },
+	              _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "home" })
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Breadcrumb.Item,
+	              { active: true },
+	              "Search"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "span",
+	            { className: "genre-title" },
+	            'Search results for "' + (this.props.location.query.name || "") + '"'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          null,
+	          _react2.default.createElement(
+	            "form",
+	            {
+	              onSubmit: function onSubmit(e) {
+	                _this4.onSubmitFormSearch(e);
+	              },
+	              className: "form-inline",
+	              style: { marginBottom: "20px" }
+	            },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group form-group-lg" },
+	              _react2.default.createElement(
+	                "select",
+	                {
+	                  style: { fontWeight: "bold" },
+	                  className: "form-control",
+	                  value: this.props.location.query.level || "none",
+	                  onChange: function onChange(e) {
+	                    _this4.onChangeFilterLevel(e);
+	                  }
 	                },
-	                xhr: function xhr() {
-	                    var xhr = new window.XMLHttpRequest();
-	                    xhr.onprogress = function (evt) {
-	                        if (evt.lengthComputable) {
-	                            var percentComplete = Math.ceil(evt.loaded * 100.0 / evt.total);
-	                            _this3.setState({ progress: percentComplete });
-	                        }
-	                    };
-	                    return xhr;
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'onClickPrev',
-	        value: function onClickPrev(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page || query.page <= 1) {
-	                return;
-	            }
-	            var url = '/courses/search' + '?page=' + (query.page - 1) + (query.name ? '&name=' + query.name : '') + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onClickNext',
-	        value: function onClickNext(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/courses/search' + '?page=' + (parseInt(query.page) + 1) + (query.name ? '&name=' + query.name : '') + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onChangeFilterLevel',
-	        value: function onChangeFilterLevel(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/courses/search' + '?page=' + query.page + (query.name ? '&name=' + query.name : '') + (e.target.value == 'none' ? '' : '&level=' + e.target.value) + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onChangeFilterSort',
-	        value: function onChangeFilterSort(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/courses/search' + '?page=' + query.page + (query.name ? '&name=' + query.name : '') + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + '&sort=' + e.target.value;
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onChangeFilterPrice',
-	        value: function onChangeFilterPrice(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/courses/search' + '?page=' + query.page + (query.name ? '&name=' + query.name : '') + (query.level ? '&level=' + query.level : '') + (e.target.value == 'none' ? '' : '&free=' + e.target.value) + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onSubmitFormSearch',
-	        value: function onSubmitFormSearch(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/courses/search' + '?page=' + query.page + (this.state.coursename != '' ? '&name=' + this.state.coursename : '') + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'handleCourseName',
-	        value: function handleCourseName(e) {
-	            this.setState({ coursename: e.target.value });
-	            if (e.target.value == '') {
-	                var query = this.props.location.query;
-	                if (!query.page) {
-	                    query.page = 1;
-	                }
-	                var url = '/courses/search' + '?page=' + query.page + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
-	                _reactRouter.browserHistory.push(url);
-	            }
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this4 = this;
-
-	            return _react2.default.createElement(
-	                'div',
-	                null,
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'genre-info-box', style: { backgroundColor: this.state.headerColor } },
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Breadcrumb,
-	                        null,
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Breadcrumb.Item,
-	                            { onClick: function onClick(e) {
-	                                    e.preventDefault();_reactRouter.browserHistory.push('/courses');
-	                                } },
-	                            _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'home' })
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Breadcrumb.Item,
-	                            { active: true },
-	                            'Search'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'span',
-	                        { className: 'genre-title' },
-	                        'Search results for "' + (this.props.location.query.name || '') + '"'
-	                    )
+	                  "option",
+	                  { value: "none", style: { fontWeight: "bold" } },
+	                  "--Select Level--"
 	                ),
 	                _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    _react2.default.createElement(
-	                        'form',
-	                        { onSubmit: function onSubmit(e) {
-	                                _this4.onSubmitFormSearch(e);
-	                            }, className: 'form-inline', style: { marginBottom: '20px' } },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group form-group-lg' },
-	                            _react2.default.createElement(
-	                                'select',
-	                                { style: { fontWeight: 'bold' }, className: 'form-control',
-	                                    value: this.props.location.query.level || 'none', onChange: function onChange(e) {
-	                                        _this4.onChangeFilterLevel(e);
-	                                    } },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'none', style: { fontWeight: 'bold' } },
-	                                    '--Select Level--'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '1', style: { fontWeight: 'bold' } },
-	                                    'Beginner Level'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '2', style: { fontWeight: 'bold' } },
-	                                    'Intermediate Level'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '3', style: { fontWeight: 'bold' } },
-	                                    'Expert Level'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '0', style: { fontWeight: 'bold' } },
-	                                    'All Levels'
-	                                )
-	                            )
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group form-group-lg' },
-	                            _react2.default.createElement(
-	                                'select',
-	                                { style: { fontWeight: 'bold' }, className: 'form-control',
-	                                    value: this.props.location.query.free || 'none', onChange: function onChange(e) {
-	                                        _this4.onChangeFilterPrice(e);
-	                                    } },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'none', style: { fontWeight: 'bold' } },
-	                                    '--Price--'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'false', style: { fontWeight: 'bold' } },
-	                                    'Paid'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'true', style: { fontWeight: 'bold' } },
-	                                    'Free'
-	                                )
-	                            )
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group form-group-lg' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Sort by:'
-	                            ),
-	                            ' ',
-	                            _react2.default.createElement(
-	                                'select',
-	                                { style: { fontWeight: 'bold' }, className: 'form-control',
-	                                    value: this.props.location.query.sort || '1', onChange: function onChange(e) {
-	                                        _this4.onChangeFilterSort(e);
-	                                    } },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '1', style: { fontWeight: 'bold' } },
-	                                    'Popularity'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '2', style: { fontWeight: 'bold' } },
-	                                    'Highest Rated'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '3', style: { fontWeight: 'bold' } },
-	                                    'Newest'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '4', style: { fontWeight: 'bold' } },
-	                                    'Price: Low to high'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '5', style: { fontWeight: 'bold' } },
-	                                    'Price: High to low'
-	                                )
-	                            )
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group form-group-lg' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group input-group-lg' },
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control',
-	                                    value: this.state.coursename, placeholder: 'Search', onChange: function onChange(e) {
-	                                        _this4.handleCourseName(e);
-	                                    } }),
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'input-group-btn' },
-	                                    _react2.default.createElement(
-	                                        'button',
-	                                        { className: 'btn btn-primary', type: 'submit' },
-	                                        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'search' })
-	                                    )
-	                                )
-	                            )
-	                        )
-	                    ),
-	                    this.state.isloading ? _react2.default.createElement(_reactBootstrap.ProgressBar, { bsStyle: this.state.bsStyle, active: true, now: this.state.progress }) : _react2.default.createElement(
-	                        _reactBootstrap.Row,
-	                        null,
-	                        this.state.courses.map(function (course, index) {
-	                            return _react2.default.createElement(
-	                                _reactBootstrap.Col,
-	                                { md: 3, xs: 6, key: index },
-	                                _react2.default.createElement(_course2.default, { popoverPlacement: index % 2 == 0 ? 'right' : 'left', course: course })
-	                            );
-	                        })
-	                    ),
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Pager,
-	                        null,
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Pager.Item,
-	                            { disabled: !this.props.location.query.page || this.props.location.query.page == 1,
-	                                previous: true, onClick: function onClick(e) {
-	                                    _this4.onClickPrev(e);
-	                                } },
-	                            '\u2190 Previous Page'
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Pager.Item,
-	                            { next: true, onClick: function onClick(e) {
-	                                    _this4.onClickNext(e);
-	                                } },
-	                            'Next Page \u2192'
-	                        )
-	                    )
+	                  "option",
+	                  { value: "1", style: { fontWeight: "bold" } },
+	                  "Beginner Level"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "2", style: { fontWeight: "bold" } },
+	                  "Intermediate Level"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "3", style: { fontWeight: "bold" } },
+	                  "Expert Level"
 	                )
-	            );
-	        }
-	    }]);
+	              )
+	            ),
+	            " ",
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group form-group-lg" },
+	              _react2.default.createElement(
+	                "select",
+	                {
+	                  style: { fontWeight: "bold" },
+	                  className: "form-control",
+	                  value: this.props.location.query.free || "none",
+	                  onChange: function onChange(e) {
+	                    _this4.onChangeFilterPrice(e);
+	                  }
+	                },
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "none", style: { fontWeight: "bold" } },
+	                  "--Price--"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "false", style: { fontWeight: "bold" } },
+	                  "Paid"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "true", style: { fontWeight: "bold" } },
+	                  "Free"
+	                )
+	              )
+	            ),
+	            " ",
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group form-group-lg" },
+	              _react2.default.createElement(
+	                "label",
+	                null,
+	                "Sort by:"
+	              ),
+	              " ",
+	              _react2.default.createElement(
+	                "select",
+	                {
+	                  style: { fontWeight: "bold" },
+	                  className: "form-control",
+	                  value: this.props.location.query.sort || "1",
+	                  onChange: function onChange(e) {
+	                    _this4.onChangeFilterSort(e);
+	                  }
+	                },
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "1", style: { fontWeight: "bold" } },
+	                  "Popularity"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "2", style: { fontWeight: "bold" } },
+	                  "Highest Rated"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "3", style: { fontWeight: "bold" } },
+	                  "Newest"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "4", style: { fontWeight: "bold" } },
+	                  "Price: Low to high"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "5", style: { fontWeight: "bold" } },
+	                  "Price: High to low"
+	                )
+	              )
+	            ),
+	            " ",
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group form-group-lg" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group input-group-lg" },
+	                _react2.default.createElement("input", {
+	                  type: "text",
+	                  className: "form-control",
+	                  value: this.state.coursename,
+	                  placeholder: "Search",
+	                  onChange: function onChange(e) {
+	                    _this4.handleCourseName(e);
+	                  }
+	                }),
+	                _react2.default.createElement(
+	                  "span",
+	                  { className: "input-group-btn" },
+	                  _react2.default.createElement(
+	                    "button",
+	                    { className: "btn btn-primary", type: "submit" },
+	                    _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "search" })
+	                  )
+	                )
+	              )
+	            )
+	          ),
+	          this.state.isloading ? _react2.default.createElement(_reactBootstrap.ProgressBar, {
+	            bsStyle: this.state.bsStyle,
+	            active: true,
+	            now: this.state.progress
+	          }) : _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            this.state.courses.map(function (course, index) {
+	              return _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { md: 3, xs: 6, key: index },
+	                _react2.default.createElement(_course2.default, {
+	                  popoverPlacement: index % 2 == 0 ? "right" : "left",
+	                  course: course
+	                })
+	              );
+	            })
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Pager,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Pager.Item,
+	              {
+	                disabled: !this.props.location.query.page || this.props.location.query.page == 1,
+	                previous: true,
+	                onClick: function onClick(e) {
+	                  _this4.onClickPrev(e);
+	                }
+	              },
+	              "\u2190 Previous Page"
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Pager.Item,
+	              {
+	                next: true,
+	                onClick: function onClick(e) {
+	                  _this4.onClickNext(e);
+	                }
+	              },
+	              "Next Page \u2192"
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	    return CoursesSearch;
+	  return CoursesSearch;
 	}(_react2.default.Component);
 
 	exports.default = CoursesSearch;
@@ -112044,10 +112170,10 @@
 /* 1118 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -112077,411 +112203,449 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Learning = function (_React$Component) {
-	    _inherits(Learning, _React$Component);
+	  _inherits(Learning, _React$Component);
 
-	    function Learning(props) {
-	        _classCallCheck(this, Learning);
+	  function Learning(props) {
+	    _classCallCheck(this, Learning);
 
-	        var _this = _possibleConstructorReturn(this, (Learning.__proto__ || Object.getPrototypeOf(Learning)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Learning.__proto__ || Object.getPrototypeOf(Learning)).call(this, props));
 
-	        _this.state = {
-	            bsStyle: ['success', 'info', 'warning', 'danger'][Math.floor(Math.random() * 4)],
-	            coursename: _this.props.location.query.name || '',
-	            headerColor: ['lightseagreen', 'teal', 'forestgreen', 'green', 'sienna', 'peru', 'indigo'][Math.floor(Math.random() * 7)],
-	            courses: [],
-	            isloading: true,
-	            progress: 0
-	        };
-	        return _this;
+	    _this.state = {
+	      bsStyle: ["success", "info", "warning", "danger"][Math.floor(Math.random() * 4)],
+	      coursename: _this.props.location.query.name || "",
+	      headerColor: ["lightseagreen", "teal", "forestgreen", "green", "sienna", "peru", "indigo"][Math.floor(Math.random() * 7)],
+	      courses: [],
+	      isloading: true,
+	      progress: 0
+	    };
+	    return _this;
+	  }
+
+	  _createClass(Learning, [{
+	    key: "componentWillReceiveProps",
+	    value: function componentWillReceiveProps(nextProps) {
+	      var _this2 = this;
+
+	      if (this.props.location.query != nextProps.location.query) {
+	        this.setState({
+	          courses: [],
+	          coursename: nextProps.location.query.name || "",
+	          headerColor: ["lightseagreen", "teal", "forestgreen", "green", "sienna", "peru", "indigo"][Math.floor(Math.random() * 7)],
+	          bsStyle: ["success", "info", "warning", "danger"][Math.floor(Math.random() * 4)],
+	          progress: 0,
+	          isloading: true
+	        });
+	        $.ajax({
+	          method: "POST",
+	          // url: '/api/user/learning',
+	          url: "http://localhost:5000/users/learning",
+	          data: nextProps.location.query,
+	          success: function success(data, status) {
+	            if (data.code == 1001) {
+	              _this2.props.dispatch((0, _actions.setUser)({}));
+	              _this2.props.dispatch((0, _actions.setGetMyCourses)(false));
+	              return _reactRouter.browserHistory.push("/");
+	            } else if (data.code == 200) {
+	              setTimeout(function () {
+	                _this2.setState({ courses: data.courses, isloading: false });
+	              }, 500);
+	            }
+	          },
+	          xhr: function xhr() {
+	            var xhr = new window.XMLHttpRequest();
+	            xhr.onprogress = function (evt) {
+	              if (evt.lengthComputable) {
+	                var percentComplete = Math.ceil(evt.loaded * 100.0 / evt.total);
+	                _this2.setState({ progress: percentComplete });
+	              }
+	            };
+	            return xhr;
+	          }
+	        });
+	      }
 	    }
+	  }, {
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      var _this3 = this;
 
-	    _createClass(Learning, [{
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            var _this2 = this;
-
-	            if (this.props.location.query != nextProps.location.query) {
-	                this.setState({
-	                    courses: [],
-	                    coursename: nextProps.location.query.name || '',
-	                    headerColor: ['lightseagreen', 'teal', 'forestgreen', 'green', 'sienna', 'peru', 'indigo'][Math.floor(Math.random() * 7)],
-	                    bsStyle: ['success', 'info', 'warning', 'danger'][Math.floor(Math.random() * 4)],
-	                    progress: 0,
-	                    isloading: true
-	                });
-	                $.ajax({
-	                    method: "POST",
-	                    // url: '/api/user/learning',
-	                    url: 'http://localhost:5000/users/learning',
-	                    data: nextProps.location.query,
-	                    success: function success(data, status) {
-	                        if (data.code == 1001) {
-	                            _this2.props.dispatch((0, _actions.setUser)({}));
-	                            _this2.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                            return _reactRouter.browserHistory.push('/');
-	                        } else if (data.code == 200) {
-	                            setTimeout(function () {
-	                                _this2.setState({ courses: data.courses, isloading: false });
-	                            }, 500);
-	                        }
-	                    },
-	                    xhr: function xhr() {
-	                        var xhr = new window.XMLHttpRequest();
-	                        xhr.onprogress = function (evt) {
-	                            if (evt.lengthComputable) {
-	                                var percentComplete = Math.ceil(evt.loaded * 100.0 / evt.total);
-	                                _this2.setState({ progress: percentComplete });
-	                            }
-	                        };
-	                        return xhr;
-	                    }
-	                });
+	      $.ajax({
+	        method: "POST",
+	        // url: '/api/user/learning',
+	        url: "http://localhost:5000/users/learning",
+	        data: this.props.location.query,
+	        success: function success(data, status) {
+	          if (data.code == 1001) {
+	            _this3.props.dispatch((0, _actions.setUser)({}));
+	            _this3.props.dispatch((0, _actions.setGetMyCourses)(false));
+	            return _reactRouter.browserHistory.push("/");
+	          } else if (data.code == 200) {
+	            setTimeout(function () {
+	              _this3.setState({ courses: data.courses, isloading: false });
+	            }, 500);
+	          }
+	        },
+	        xhr: function xhr() {
+	          var xhr = new window.XMLHttpRequest();
+	          xhr.onprogress = function (evt) {
+	            if (evt.lengthComputable) {
+	              var percentComplete = Math.ceil(evt.loaded * 100.0 / evt.total);
+	              _this3.setState({ progress: percentComplete });
 	            }
+	          };
+	          return xhr;
 	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this3 = this;
+	      });
+	    }
+	  }, {
+	    key: "onClickPrev",
+	    value: function onClickPrev(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page || query.page <= 1) {
+	        return;
+	      }
+	      var url = "/mycourses/learning" + "?page=" + (query.page - 1) + (query.name ? "&name=" + query.name : "") + (query.level ? "&level=" + query.level : "") + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onClickNext",
+	    value: function onClickNext(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/mycourses/learning" + "?page=" + (parseInt(query.page) + 1) + (query.name ? "&name=" + query.name : "") + (query.level ? "&level=" + query.level : "") + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onChangeFilterLevel",
+	    value: function onChangeFilterLevel(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/mycourses/learning" + "?page=" + query.page + (query.name ? "&name=" + query.name : "") + (e.target.value == "none" ? "" : "&level=" + e.target.value) + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onChangeFilterSort",
+	    value: function onChangeFilterSort(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/mycourses/learning" + "?page=" + query.page + (query.name ? "&name=" + query.name : "") + (query.level ? "&level=" + query.level : "") + (query.free ? "&free=" + query.free : "") + "&sort=" + e.target.value;
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onChangeFilterPrice",
+	    value: function onChangeFilterPrice(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/mycourses/learning" + "?page=" + query.page + (query.name ? "&name=" + query.name : "") + (query.level ? "&level=" + query.level : "") + (e.target.value == "none" ? "" : "&free=" + e.target.value) + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onSubmitFormSearch",
+	    value: function onSubmitFormSearch(e) {
+	      console.log(e);
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/mycourses/learning" + "?page=" + query.page + (this.state.coursename != "" ? "&name=" + this.state.coursename : "") + (query.level ? "&level=" + query.level : "") + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "handleCourseName",
+	    value: function handleCourseName(e) {
+	      this.setState({ coursename: e.target.value });
+	      if (e.target.value == "") {
+	        var query = this.props.location.query;
+	        if (!query.page) {
+	          query.page = 1;
+	        }
+	        var url = "/mycourses/learning" + "?page=" + query.page + (query.level ? "&level=" + query.level : "") + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "");
+	        _reactRouter.browserHistory.push(url);
+	      }
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this4 = this;
 
-	            $.ajax({
-	                method: "POST",
-	                // url: '/api/user/learning',
-	                url: 'http://localhost:5000/users/learning',
-	                data: this.props.location.query,
-	                success: function success(data, status) {
-	                    if (data.code == 1001) {
-	                        _this3.props.dispatch((0, _actions.setUser)({}));
-	                        _this3.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                        return _reactRouter.browserHistory.push('/');
-	                    } else if (data.code == 200) {
-	                        setTimeout(function () {
-	                            _this3.setState({ courses: data.courses, isloading: false });
-	                        }, 500);
-	                    }
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	          "div",
+	          {
+	            className: "genre-info-box",
+	            style: { backgroundColor: this.state.headerColor }
+	          },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "container" },
+	            _react2.default.createElement(
+	              _reactBootstrap.Breadcrumb,
+	              null,
+	              _react2.default.createElement(
+	                _reactBootstrap.Breadcrumb.Item,
+	                {
+	                  onClick: function onClick(e) {
+	                    e.preventDefault();
+	                    _reactRouter.browserHistory.push("/courses");
+	                  }
 	                },
-	                xhr: function xhr() {
-	                    var xhr = new window.XMLHttpRequest();
-	                    xhr.onprogress = function (evt) {
-	                        if (evt.lengthComputable) {
-	                            var percentComplete = Math.ceil(evt.loaded * 100.0 / evt.total);
-	                            _this3.setState({ progress: percentComplete });
-	                        }
-	                    };
-	                    return xhr;
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'onClickPrev',
-	        value: function onClickPrev(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page || query.page <= 1) {
-	                return;
-	            }
-	            var url = '/mycourses/learning' + '?page=' + (query.page - 1) + (query.name ? '&name=' + query.name : '') + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onClickNext',
-	        value: function onClickNext(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/mycourses/learning' + '?page=' + (parseInt(query.page) + 1) + (query.name ? '&name=' + query.name : '') + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onChangeFilterLevel',
-	        value: function onChangeFilterLevel(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/mycourses/learning' + '?page=' + query.page + (query.name ? '&name=' + query.name : '') + (e.target.value == 'none' ? '' : '&level=' + e.target.value) + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onChangeFilterSort',
-	        value: function onChangeFilterSort(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/mycourses/learning' + '?page=' + query.page + (query.name ? '&name=' + query.name : '') + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + '&sort=' + e.target.value;
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onChangeFilterPrice',
-	        value: function onChangeFilterPrice(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/mycourses/learning' + '?page=' + query.page + (query.name ? '&name=' + query.name : '') + (query.level ? '&level=' + query.level : '') + (e.target.value == 'none' ? '' : '&free=' + e.target.value) + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onSubmitFormSearch',
-	        value: function onSubmitFormSearch(e) {
-	            console.log(e);
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/mycourses/learning' + '?page=' + query.page + (this.state.coursename != '' ? '&name=' + this.state.coursename : '') + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'handleCourseName',
-	        value: function handleCourseName(e) {
-	            this.setState({ coursename: e.target.value });
-	            if (e.target.value == '') {
-	                var query = this.props.location.query;
-	                if (!query.page) {
-	                    query.page = 1;
-	                }
-	                var url = '/mycourses/learning' + '?page=' + query.page + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
-	                _reactRouter.browserHistory.push(url);
-	            }
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this4 = this;
-
-	            return _react2.default.createElement(
-	                'div',
+	                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "home" })
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Breadcrumb.Item,
+	                { active: true },
+	                "Learning"
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "p",
+	              { className: "genre-title" },
+	              "Learning"
+	            ),
+	            _react2.default.createElement(
+	              "ul",
+	              { className: "mycourses-navbar" },
+	              _react2.default.createElement(
+	                "li",
 	                null,
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'genre-info-box', style: { backgroundColor: this.state.headerColor } },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'container' },
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Breadcrumb,
-	                            null,
-	                            _react2.default.createElement(
-	                                _reactBootstrap.Breadcrumb.Item,
-	                                { onClick: function onClick(e) {
-	                                        e.preventDefault();_reactRouter.browserHistory.push('/courses');
-	                                    } },
-	                                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'home' })
-	                            ),
-	                            _react2.default.createElement(
-	                                _reactBootstrap.Breadcrumb.Item,
-	                                { active: true },
-	                                'Learning'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'p',
-	                            { className: 'genre-title' },
-	                            'Learning'
-	                        ),
-	                        _react2.default.createElement(
-	                            'ul',
-	                            { className: 'mycourses-navbar' },
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { activeClassName: 'active',
-	                                        onlyActiveOnIndex: true, to: '/mycourses/learning' },
-	                                    'Learning'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: '/mycourses/wishlist' },
-	                                    'Wishlist'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: '/instructor' },
-	                                    'My Courses'
-	                                )
-	                            )
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'container' },
-	                    _react2.default.createElement(
-	                        'form',
-	                        { className: 'form-inline', style: { marginBottom: '20px' }, onSubmit: function onSubmit(e) {
-	                                _this4.onSubmitFormSearch(e);
-	                            } },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group form-group-lg' },
-	                            _react2.default.createElement(
-	                                'select',
-	                                { style: { fontWeight: 'bold' }, className: 'form-control',
-	                                    value: this.props.location.query.level || 'none', onChange: function onChange(e) {
-	                                        _this4.onChangeFilterLevel(e);
-	                                    } },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'none', style: { fontWeight: 'bold' } },
-	                                    '--Select Level--'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '1', style: { fontWeight: 'bold' } },
-	                                    'Beginner Level'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '2', style: { fontWeight: 'bold' } },
-	                                    'Intermediate Level'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '3', style: { fontWeight: 'bold' } },
-	                                    'Expert Level'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '0', style: { fontWeight: 'bold' } },
-	                                    'All Levels'
-	                                )
-	                            )
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group form-group-lg' },
-	                            _react2.default.createElement(
-	                                'select',
-	                                { style: { fontWeight: 'bold' }, className: 'form-control',
-	                                    value: this.props.location.query.free || 'none', onChange: function onChange(e) {
-	                                        _this4.onChangeFilterPrice(e);
-	                                    } },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'none', style: { fontWeight: 'bold' } },
-	                                    '--Price--'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'false', style: { fontWeight: 'bold' } },
-	                                    'Paid'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'true', style: { fontWeight: 'bold' } },
-	                                    'Free'
-	                                )
-	                            )
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group form-group-lg' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                { className: 'control-label' },
-	                                'Sort by:'
-	                            ),
-	                            ' ',
-	                            _react2.default.createElement(
-	                                'select',
-	                                { style: { fontWeight: 'bold' }, className: 'form-control',
-	                                    value: this.props.location.query.sort || '1', onChange: function onChange(e) {
-	                                        _this4.onChangeFilterSort(e);
-	                                    } },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '1', style: { fontWeight: 'bold' } },
-	                                    'Title: A-to-Z'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '2', style: { fontWeight: 'bold' } },
-	                                    'Title: Z-to-A'
-	                                )
-	                            )
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group form-group-lg' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group input-group-lg' },
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control',
-	                                    value: this.state.coursename, placeholder: 'Search', onChange: function onChange(e) {
-	                                        _this4.handleCourseName(e);
-	                                    } }),
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'input-group-btn' },
-	                                    _react2.default.createElement(
-	                                        'button',
-	                                        { className: 'btn btn-default', type: 'submit' },
-	                                        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'search' })
-	                                    )
-	                                )
-	                            )
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'container' },
-	                    this.state.isloading ? _react2.default.createElement(_reactBootstrap.ProgressBar, { bsStyle: this.state.bsStyle, active: true, now: this.state.progress }) : _react2.default.createElement(
-	                        _reactBootstrap.Row,
-	                        null,
-	                        this.state.courses.map(function (course, index) {
-	                            return _react2.default.createElement(
-	                                _reactBootstrap.Col,
-	                                { md: 3, xs: 6, key: index },
-	                                _react2.default.createElement(_course2.default, { popoverPlacement: index % 2 == 0 ? 'right' : 'left', course: course })
-	                            );
-	                        })
-	                    ),
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Pager,
-	                        null,
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Pager.Item,
-	                            { disabled: !this.props.location.query.page || this.props.location.query.page == 1,
-	                                previous: true, onClick: function onClick(e) {
-	                                    _this4.onClickPrev(e);
-	                                } },
-	                            '\u2190 Previous Page'
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Pager.Item,
-	                            { next: true, onClick: function onClick(e) {
-	                                    _this4.onClickNext(e);
-	                                } },
-	                            'Next Page \u2192'
-	                        )
-	                    )
+	                  _reactRouter.Link,
+	                  {
+	                    activeClassName: "active",
+	                    onlyActiveOnIndex: true,
+	                    to: "/mycourses/learning"
+	                  },
+	                  "Learning"
 	                )
-	            );
-	        }
-	    }]);
+	              ),
+	              _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: "/mycourses/wishlist" },
+	                  "Wishlist"
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: "/instructor" },
+	                  "My Courses"
+	                )
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "container" },
+	          _react2.default.createElement(
+	            "form",
+	            {
+	              className: "form-inline",
+	              style: { marginBottom: "20px" },
+	              onSubmit: function onSubmit(e) {
+	                _this4.onSubmitFormSearch(e);
+	              }
+	            },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group form-group-lg" },
+	              _react2.default.createElement(
+	                "select",
+	                {
+	                  style: { fontWeight: "bold" },
+	                  className: "form-control",
+	                  value: this.props.location.query.level || "none",
+	                  onChange: function onChange(e) {
+	                    _this4.onChangeFilterLevel(e);
+	                  }
+	                },
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "none", style: { fontWeight: "bold" } },
+	                  "--Select Level--"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "1", style: { fontWeight: "bold" } },
+	                  "Beginner Level"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "2", style: { fontWeight: "bold" } },
+	                  "Intermediate Level"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "3", style: { fontWeight: "bold" } },
+	                  "Expert Level"
+	                )
+	              )
+	            ),
+	            " ",
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group form-group-lg" },
+	              _react2.default.createElement(
+	                "select",
+	                {
+	                  style: { fontWeight: "bold" },
+	                  className: "form-control",
+	                  value: this.props.location.query.free || "none",
+	                  onChange: function onChange(e) {
+	                    _this4.onChangeFilterPrice(e);
+	                  }
+	                },
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "none", style: { fontWeight: "bold" } },
+	                  "--Price--"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "false", style: { fontWeight: "bold" } },
+	                  "Paid"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "true", style: { fontWeight: "bold" } },
+	                  "Free"
+	                )
+	              )
+	            ),
+	            " ",
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group form-group-lg" },
+	              _react2.default.createElement(
+	                "label",
+	                { className: "control-label" },
+	                "Sort by:"
+	              ),
+	              " ",
+	              _react2.default.createElement(
+	                "select",
+	                {
+	                  style: { fontWeight: "bold" },
+	                  className: "form-control",
+	                  value: this.props.location.query.sort || "1",
+	                  onChange: function onChange(e) {
+	                    _this4.onChangeFilterSort(e);
+	                  }
+	                },
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "1", style: { fontWeight: "bold" } },
+	                  "Title: A-to-Z"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "2", style: { fontWeight: "bold" } },
+	                  "Title: Z-to-A"
+	                )
+	              )
+	            ),
+	            " ",
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group form-group-lg" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group input-group-lg" },
+	                _react2.default.createElement("input", {
+	                  type: "text",
+	                  className: "form-control",
+	                  value: this.state.coursename,
+	                  placeholder: "Search",
+	                  onChange: function onChange(e) {
+	                    _this4.handleCourseName(e);
+	                  }
+	                }),
+	                _react2.default.createElement(
+	                  "span",
+	                  { className: "input-group-btn" },
+	                  _react2.default.createElement(
+	                    "button",
+	                    { className: "btn btn-default", type: "submit" },
+	                    _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "search" })
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "container" },
+	          this.state.isloading ? _react2.default.createElement(_reactBootstrap.ProgressBar, {
+	            bsStyle: this.state.bsStyle,
+	            active: true,
+	            now: this.state.progress
+	          }) : _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            this.state.courses.map(function (course, index) {
+	              return _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { md: 3, xs: 6, key: index },
+	                _react2.default.createElement(_course2.default, {
+	                  popoverPlacement: index % 2 == 0 ? "right" : "left",
+	                  course: course
+	                })
+	              );
+	            })
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Pager,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Pager.Item,
+	              {
+	                disabled: !this.props.location.query.page || this.props.location.query.page == 1,
+	                previous: true,
+	                onClick: function onClick(e) {
+	                  _this4.onClickPrev(e);
+	                }
+	              },
+	              "\u2190 Previous Page"
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Pager.Item,
+	              {
+	                next: true,
+	                onClick: function onClick(e) {
+	                  _this4.onClickNext(e);
+	                }
+	              },
+	              "Next Page \u2192"
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	    return Learning;
+	  return Learning;
 	}(_react2.default.Component);
 
 	Learning = (0, _reactRedux.connect)()(Learning);
@@ -112492,10 +112656,10 @@
 /* 1119 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -112525,409 +112689,447 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Wishlist = function (_React$Component) {
-	    _inherits(Wishlist, _React$Component);
+	  _inherits(Wishlist, _React$Component);
 
-	    function Wishlist(props) {
-	        _classCallCheck(this, Wishlist);
+	  function Wishlist(props) {
+	    _classCallCheck(this, Wishlist);
 
-	        var _this = _possibleConstructorReturn(this, (Wishlist.__proto__ || Object.getPrototypeOf(Wishlist)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Wishlist.__proto__ || Object.getPrototypeOf(Wishlist)).call(this, props));
 
-	        _this.state = {
-	            bsStyle: ['success', 'info', 'warning', 'danger'][Math.floor(Math.random() * 4)],
-	            coursename: _this.props.location.query.name || '',
-	            headerColor: ['lightseagreen', 'teal', 'forestgreen', 'green', 'sienna', 'peru', 'indigo'][Math.floor(Math.random() * 7)],
-	            courses: [],
-	            isloading: true,
-	            progress: 0
-	        };
-	        return _this;
+	    _this.state = {
+	      bsStyle: ["success", "info", "warning", "danger"][Math.floor(Math.random() * 4)],
+	      coursename: _this.props.location.query.name || "",
+	      headerColor: ["lightseagreen", "teal", "forestgreen", "green", "sienna", "peru", "indigo"][Math.floor(Math.random() * 7)],
+	      courses: [],
+	      isloading: true,
+	      progress: 0
+	    };
+	    return _this;
+	  }
+
+	  _createClass(Wishlist, [{
+	    key: "componentWillReceiveProps",
+	    value: function componentWillReceiveProps(nextProps) {
+	      var _this2 = this;
+
+	      if (this.props.location.query != nextProps.location.query) {
+	        this.setState({
+	          courses: [],
+	          coursename: nextProps.location.query.name || "",
+	          headerColor: ["lightseagreen", "teal", "forestgreen", "green", "sienna", "peru", "indigo"][Math.floor(Math.random() * 7)],
+	          bsStyle: ["success", "info", "warning", "danger"][Math.floor(Math.random() * 4)],
+	          progress: 0,
+	          isloading: true
+	        });
+	        $.ajax({
+	          method: "POST",
+	          // url: '/api/user/wishlist',
+	          url: "http://localhost:5000/users/wishlist",
+	          data: nextProps.location.query,
+	          success: function success(data, status) {
+	            if (data.code == 1001) {
+	              _this2.props.dispatch((0, _actions.setUser)({}));
+	              _this2.props.dispatch((0, _actions.setGetMyCourses)(false));
+	              return _reactRouter.browserHistory.push("/");
+	            } else if (data.code == 200) {
+	              setTimeout(function () {
+	                _this2.setState({ courses: data.courses, isloading: false });
+	              }, 500);
+	            }
+	          },
+	          xhr: function xhr() {
+	            var xhr = new window.XMLHttpRequest();
+	            xhr.onprogress = function (evt) {
+	              if (evt.lengthComputable) {
+	                var percentComplete = Math.ceil(evt.loaded * 100.0 / evt.total);
+	                _this2.setState({ progress: percentComplete });
+	              }
+	            };
+	            return xhr;
+	          }
+	        });
+	      }
 	    }
+	  }, {
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      var _this3 = this;
 
-	    _createClass(Wishlist, [{
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            var _this2 = this;
-
-	            if (this.props.location.query != nextProps.location.query) {
-	                this.setState({
-	                    courses: [],
-	                    coursename: nextProps.location.query.name || '',
-	                    headerColor: ['lightseagreen', 'teal', 'forestgreen', 'green', 'sienna', 'peru', 'indigo'][Math.floor(Math.random() * 7)],
-	                    bsStyle: ['success', 'info', 'warning', 'danger'][Math.floor(Math.random() * 4)],
-	                    progress: 0,
-	                    isloading: true
-	                });
-	                $.ajax({
-	                    method: "POST",
-	                    // url: '/api/user/wishlist',
-	                    url: 'http://localhost:5000/users/wishlist',
-	                    data: nextProps.location.query,
-	                    success: function success(data, status) {
-	                        if (data.code == 1001) {
-	                            _this2.props.dispatch((0, _actions.setUser)({}));
-	                            _this2.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                            return _reactRouter.browserHistory.push('/');
-	                        } else if (data.code == 200) {
-	                            setTimeout(function () {
-	                                _this2.setState({ courses: data.courses, isloading: false });
-	                            }, 500);
-	                        }
-	                    },
-	                    xhr: function xhr() {
-	                        var xhr = new window.XMLHttpRequest();
-	                        xhr.onprogress = function (evt) {
-	                            if (evt.lengthComputable) {
-	                                var percentComplete = Math.ceil(evt.loaded * 100.0 / evt.total);
-	                                _this2.setState({ progress: percentComplete });
-	                            }
-	                        };
-	                        return xhr;
-	                    }
-	                });
+	      $.ajax({
+	        method: "POST",
+	        url: "http://localhost:5000/users/wishlist",
+	        data: this.props.location.query,
+	        success: function success(data, status) {
+	          if (data.code == 1001) {
+	            _this3.props.dispatch((0, _actions.setUser)({}));
+	            _this3.props.dispatch((0, _actions.setGetMyCourses)(false));
+	            return _reactRouter.browserHistory.push("/");
+	          } else if (data.code == 200) {
+	            setTimeout(function () {
+	              _this3.setState({ courses: data.courses, isloading: false });
+	            }, 500);
+	          }
+	        },
+	        xhr: function xhr() {
+	          var xhr = new window.XMLHttpRequest();
+	          xhr.onprogress = function (evt) {
+	            if (evt.lengthComputable) {
+	              var percentComplete = Math.ceil(evt.loaded * 100.0 / evt.total);
+	              _this3.setState({ progress: percentComplete });
 	            }
+	          };
+	          return xhr;
 	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this3 = this;
+	      });
+	    }
+	  }, {
+	    key: "onClickPrev",
+	    value: function onClickPrev(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page || query.page <= 1) {
+	        return;
+	      }
+	      var url = "/mycourses/wishlist" + "?page=" + (query.page - 1) + (query.name ? "&name=" + query.name : "") + (query.level ? "&level=" + query.level : "") + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onClickNext",
+	    value: function onClickNext(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/mycourses/wishlist" + "?page=" + (parseInt(query.page) + 1) + (query.name ? "&name=" + query.name : "") + (query.level ? "&level=" + query.level : "") + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onChangeFilterLevel",
+	    value: function onChangeFilterLevel(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/mycourses/wishlist" + "?page=" + query.page + (query.name ? "&name=" + query.name : "") + (e.target.value == "none" ? "" : "&level=" + e.target.value) + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onChangeFilterSort",
+	    value: function onChangeFilterSort(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/mycourses/wishlist" + "?page=" + query.page + (query.name ? "&name=" + query.name : "") + (query.level ? "&level=" + query.level : "") + (query.free ? "&free=" + query.free : "") + "&sort=" + e.target.value;
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onChangeFilterPrice",
+	    value: function onChangeFilterPrice(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/mycourses/wishlist" + "?page=" + query.page + (query.name ? "&name=" + query.name : "") + (query.level ? "&level=" + query.level : "") + (e.target.value == "none" ? "" : "&free=" + e.target.value) + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "onSubmitFormSearch",
+	    value: function onSubmitFormSearch(e) {
+	      e.preventDefault();
+	      var query = this.props.location.query;
+	      if (!query.page) {
+	        query.page = 1;
+	      }
+	      var url = "/mycourses/wishlist" + "?page=" + query.page + (this.state.coursename != "" ? "&name=" + this.state.coursename : "") + (query.level ? "&level=" + query.level : "") + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "");
+	      _reactRouter.browserHistory.push(url);
+	    }
+	  }, {
+	    key: "handleCourseName",
+	    value: function handleCourseName(e) {
+	      this.setState({ coursename: e.target.value });
+	      if (e.target.value == "") {
+	        var query = this.props.location.query;
+	        if (!query.page) {
+	          query.page = 1;
+	        }
+	        var url = "/mycourses/wishlist" + "?page=" + query.page + (query.level ? "&level=" + query.level : "") + (query.free ? "&free=" + query.free : "") + (query.sort ? "&sort=" + query.sort : "");
+	        _reactRouter.browserHistory.push(url);
+	      }
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this4 = this;
 
-	            $.ajax({
-	                method: "POST",
-	                url: 'http://localhost:5000/users/wishlist',
-	                data: this.props.location.query,
-	                success: function success(data, status) {
-	                    if (data.code == 1001) {
-	                        _this3.props.dispatch((0, _actions.setUser)({}));
-	                        _this3.props.dispatch((0, _actions.setGetMyCourses)(false));
-	                        return _reactRouter.browserHistory.push('/');
-	                    } else if (data.code == 200) {
-	                        setTimeout(function () {
-	                            _this3.setState({ courses: data.courses, isloading: false });
-	                        }, 500);
-	                    }
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	          "div",
+	          {
+	            className: "genre-info-box",
+	            style: { backgroundColor: this.state.headerColor }
+	          },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "container" },
+	            _react2.default.createElement(
+	              _reactBootstrap.Breadcrumb,
+	              null,
+	              _react2.default.createElement(
+	                _reactBootstrap.Breadcrumb.Item,
+	                {
+	                  onClick: function onClick(e) {
+	                    e.preventDefault();
+	                    _reactRouter.browserHistory.push("/courses");
+	                  }
 	                },
-	                xhr: function xhr() {
-	                    var xhr = new window.XMLHttpRequest();
-	                    xhr.onprogress = function (evt) {
-	                        if (evt.lengthComputable) {
-	                            var percentComplete = Math.ceil(evt.loaded * 100.0 / evt.total);
-	                            _this3.setState({ progress: percentComplete });
-	                        }
-	                    };
-	                    return xhr;
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'onClickPrev',
-	        value: function onClickPrev(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page || query.page <= 1) {
-	                return;
-	            }
-	            var url = '/mycourses/wishlist' + '?page=' + (query.page - 1) + (query.name ? '&name=' + query.name : '') + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onClickNext',
-	        value: function onClickNext(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/mycourses/wishlist' + '?page=' + (parseInt(query.page) + 1) + (query.name ? '&name=' + query.name : '') + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onChangeFilterLevel',
-	        value: function onChangeFilterLevel(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/mycourses/wishlist' + '?page=' + query.page + (query.name ? '&name=' + query.name : '') + (e.target.value == 'none' ? '' : '&level=' + e.target.value) + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onChangeFilterSort',
-	        value: function onChangeFilterSort(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/mycourses/wishlist' + '?page=' + query.page + (query.name ? '&name=' + query.name : '') + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + '&sort=' + e.target.value;
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onChangeFilterPrice',
-	        value: function onChangeFilterPrice(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/mycourses/wishlist' + '?page=' + query.page + (query.name ? '&name=' + query.name : '') + (query.level ? '&level=' + query.level : '') + (e.target.value == 'none' ? '' : '&free=' + e.target.value) + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'onSubmitFormSearch',
-	        value: function onSubmitFormSearch(e) {
-	            e.preventDefault();
-	            var query = this.props.location.query;
-	            if (!query.page) {
-	                query.page = 1;
-	            }
-	            var url = '/mycourses/wishlist' + '?page=' + query.page + (this.state.coursename != '' ? '&name=' + this.state.coursename : '') + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
-	            _reactRouter.browserHistory.push(url);
-	        }
-	    }, {
-	        key: 'handleCourseName',
-	        value: function handleCourseName(e) {
-	            this.setState({ coursename: e.target.value });
-	            if (e.target.value == '') {
-	                var query = this.props.location.query;
-	                if (!query.page) {
-	                    query.page = 1;
-	                }
-	                var url = '/mycourses/wishlist' + '?page=' + query.page + (query.level ? '&level=' + query.level : '') + (query.free ? '&free=' + query.free : '') + (query.sort ? '&sort=' + query.sort : '');
-	                _reactRouter.browserHistory.push(url);
-	            }
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this4 = this;
-
-	            return _react2.default.createElement(
-	                'div',
+	                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "home" })
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Breadcrumb.Item,
+	                { active: true },
+	                "Wishlist"
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "p",
+	              { className: "genre-title" },
+	              "Wishlist"
+	            ),
+	            _react2.default.createElement(
+	              "ul",
+	              { className: "mycourses-navbar" },
+	              _react2.default.createElement(
+	                "li",
 	                null,
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'genre-info-box', style: { backgroundColor: this.state.headerColor } },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'container' },
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Breadcrumb,
-	                            null,
-	                            _react2.default.createElement(
-	                                _reactBootstrap.Breadcrumb.Item,
-	                                { onClick: function onClick(e) {
-	                                        e.preventDefault();_reactRouter.browserHistory.push('/courses');
-	                                    } },
-	                                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'home' })
-	                            ),
-	                            _react2.default.createElement(
-	                                _reactBootstrap.Breadcrumb.Item,
-	                                { active: true },
-	                                'Wishlist'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'p',
-	                            { className: 'genre-title' },
-	                            'Wishlist'
-	                        ),
-	                        _react2.default.createElement(
-	                            'ul',
-	                            { className: 'mycourses-navbar' },
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: '/mycourses/learning' },
-	                                    'Learning'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { activeClassName: 'active',
-	                                        onlyActiveOnIndex: true, to: '/mycourses/wishlist' },
-	                                    'Wishlist'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: '/instructor' },
-	                                    'My Courses'
-	                                )
-	                            )
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'container' },
-	                    _react2.default.createElement(
-	                        'form',
-	                        { className: 'form-inline', style: { marginBottom: '20px' }, onSubmit: function onSubmit(e) {
-	                                _this4.onSubmitFormSearch(e);
-	                            } },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group form-group-lg' },
-	                            _react2.default.createElement(
-	                                'select',
-	                                { style: { fontWeight: 'bold' }, className: 'form-control',
-	                                    value: this.props.location.query.level || 'none', onChange: function onChange(e) {
-	                                        _this4.onChangeFilterLevel(e);
-	                                    } },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'none', style: { fontWeight: 'bold' } },
-	                                    '--Select Level--'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '1', style: { fontWeight: 'bold' } },
-	                                    'Beginner Level'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '2', style: { fontWeight: 'bold' } },
-	                                    'Intermediate Level'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '3', style: { fontWeight: 'bold' } },
-	                                    'Expert Level'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '0', style: { fontWeight: 'bold' } },
-	                                    'All Levels'
-	                                )
-	                            )
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group form-group-lg' },
-	                            _react2.default.createElement(
-	                                'select',
-	                                { style: { fontWeight: 'bold' }, className: 'form-control',
-	                                    value: this.props.location.query.free || 'none', onChange: function onChange(e) {
-	                                        _this4.onChangeFilterPrice(e);
-	                                    } },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'none', style: { fontWeight: 'bold' } },
-	                                    '--Price--'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'false', style: { fontWeight: 'bold' } },
-	                                    'Paid'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: 'true', style: { fontWeight: 'bold' } },
-	                                    'Free'
-	                                )
-	                            )
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group form-group-lg' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                { className: 'control-label' },
-	                                'Sort by:'
-	                            ),
-	                            ' ',
-	                            _react2.default.createElement(
-	                                'select',
-	                                { style: { fontWeight: 'bold' }, className: 'form-control',
-	                                    value: this.props.location.query.sort || '1', onChange: function onChange(e) {
-	                                        _this4.onChangeFilterSort(e);
-	                                    } },
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '1', style: { fontWeight: 'bold' } },
-	                                    'Title: A-to-Z'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'option',
-	                                    { value: '2', style: { fontWeight: 'bold' } },
-	                                    'Title: Z-to-A'
-	                                )
-	                            )
-	                        ),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group form-group-lg' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group input-group-lg' },
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control',
-	                                    value: this.state.coursename, placeholder: 'Search', onChange: function onChange(e) {
-	                                        _this4.handleCourseName(e);
-	                                    } }),
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'input-group-btn' },
-	                                    _react2.default.createElement(
-	                                        'button',
-	                                        { className: 'btn btn-default', type: 'submit' },
-	                                        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'search' })
-	                                    )
-	                                )
-	                            )
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'container' },
-	                    this.state.isloading ? _react2.default.createElement(_reactBootstrap.ProgressBar, { bsStyle: this.state.bsStyle, active: true, now: this.state.progress }) : _react2.default.createElement(
-	                        _reactBootstrap.Row,
-	                        null,
-	                        this.state.courses.map(function (course, index) {
-	                            return _react2.default.createElement(
-	                                _reactBootstrap.Col,
-	                                { md: 3, xs: 6, key: index },
-	                                _react2.default.createElement(_course2.default, { popoverPlacement: index % 2 == 0 ? 'right' : 'left', course: course })
-	                            );
-	                        })
-	                    ),
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Pager,
-	                        null,
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Pager.Item,
-	                            { disabled: !this.props.location.query.page || this.props.location.query.page == 1,
-	                                previous: true, onClick: function onClick(e) {
-	                                    _this4.onClickPrev(e);
-	                                } },
-	                            '\u2190 Previous Page'
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Pager.Item,
-	                            { next: true, onClick: function onClick(e) {
-	                                    _this4.onClickNext(e);
-	                                } },
-	                            'Next Page \u2192'
-	                        )
-	                    )
+	                  _reactRouter.Link,
+	                  { to: "/mycourses/learning" },
+	                  "Learning"
 	                )
-	            );
-	        }
-	    }]);
+	              ),
+	              _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  {
+	                    activeClassName: "active",
+	                    onlyActiveOnIndex: true,
+	                    to: "/mycourses/wishlist"
+	                  },
+	                  "Wishlist"
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: "/instructor" },
+	                  "My Courses"
+	                )
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "container" },
+	          _react2.default.createElement(
+	            "form",
+	            {
+	              className: "form-inline",
+	              style: { marginBottom: "20px" },
+	              onSubmit: function onSubmit(e) {
+	                _this4.onSubmitFormSearch(e);
+	              }
+	            },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group form-group-lg" },
+	              _react2.default.createElement(
+	                "select",
+	                {
+	                  style: { fontWeight: "bold" },
+	                  className: "form-control",
+	                  value: this.props.location.query.level || "none",
+	                  onChange: function onChange(e) {
+	                    _this4.onChangeFilterLevel(e);
+	                  }
+	                },
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "none", style: { fontWeight: "bold" } },
+	                  "--Select Level--"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "1", style: { fontWeight: "bold" } },
+	                  "Beginner Level"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "2", style: { fontWeight: "bold" } },
+	                  "Intermediate Level"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "3", style: { fontWeight: "bold" } },
+	                  "Expert Level"
+	                )
+	              )
+	            ),
+	            " ",
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group form-group-lg" },
+	              _react2.default.createElement(
+	                "select",
+	                {
+	                  style: { fontWeight: "bold" },
+	                  className: "form-control",
+	                  value: this.props.location.query.free || "none",
+	                  onChange: function onChange(e) {
+	                    _this4.onChangeFilterPrice(e);
+	                  }
+	                },
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "none", style: { fontWeight: "bold" } },
+	                  "--Price--"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "false", style: { fontWeight: "bold" } },
+	                  "Paid"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "true", style: { fontWeight: "bold" } },
+	                  "Free"
+	                )
+	              )
+	            ),
+	            " ",
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group form-group-lg" },
+	              _react2.default.createElement(
+	                "label",
+	                { className: "control-label" },
+	                "Sort by:"
+	              ),
+	              " ",
+	              _react2.default.createElement(
+	                "select",
+	                {
+	                  style: { fontWeight: "bold" },
+	                  className: "form-control",
+	                  value: this.props.location.query.sort || "1",
+	                  onChange: function onChange(e) {
+	                    _this4.onChangeFilterSort(e);
+	                  }
+	                },
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "1", style: { fontWeight: "bold" } },
+	                  "Title: A-to-Z"
+	                ),
+	                _react2.default.createElement(
+	                  "option",
+	                  { value: "2", style: { fontWeight: "bold" } },
+	                  "Title: Z-to-A"
+	                )
+	              )
+	            ),
+	            " ",
+	            _react2.default.createElement(
+	              "div",
+	              { className: "form-group form-group-lg" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group input-group-lg" },
+	                _react2.default.createElement("input", {
+	                  type: "text",
+	                  className: "form-control",
+	                  value: this.state.coursename,
+	                  placeholder: "Search",
+	                  onChange: function onChange(e) {
+	                    _this4.handleCourseName(e);
+	                  }
+	                }),
+	                _react2.default.createElement(
+	                  "span",
+	                  { className: "input-group-btn" },
+	                  _react2.default.createElement(
+	                    "button",
+	                    { className: "btn btn-default", type: "submit" },
+	                    _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "search" })
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "container" },
+	          this.state.isloading ? _react2.default.createElement(_reactBootstrap.ProgressBar, {
+	            bsStyle: this.state.bsStyle,
+	            active: true,
+	            now: this.state.progress
+	          }) : _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            this.state.courses.map(function (course, index) {
+	              return _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { md: 3, xs: 6, key: index },
+	                _react2.default.createElement(_course2.default, {
+	                  popoverPlacement: index % 2 == 0 ? "right" : "left",
+	                  course: course
+	                })
+	              );
+	            })
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Pager,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Pager.Item,
+	              {
+	                disabled: !this.props.location.query.page || this.props.location.query.page == 1,
+	                previous: true,
+	                onClick: function onClick(e) {
+	                  _this4.onClickPrev(e);
+	                }
+	              },
+	              "\u2190 Previous Page"
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Pager.Item,
+	              {
+	                next: true,
+	                onClick: function onClick(e) {
+	                  _this4.onClickNext(e);
+	                }
+	              },
+	              "Next Page \u2192"
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	    return Wishlist;
+	  return Wishlist;
 	}(_react2.default.Component);
 
 	Wishlist = (0, _reactRedux.connect)()(Wishlist);

@@ -313,7 +313,7 @@ class ManageCourseDescription extends React.Component {
                 <option value={1}>Beginner Level</option>
                 <option value={2}>Intermediate Level</option>
                 <option value={3}>Expert Level</option>
-                <option value={0}>All Levels</option>
+                {/* <option value={0}>All Levels</option> */}
               </select>
             </div>
             <div className="col-xs-6 col-md-4">

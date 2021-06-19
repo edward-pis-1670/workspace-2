@@ -20,7 +20,8 @@ export const signup = (data, callback) => {
 };
 
 export const forgotPassword = (data, callback) => {
-  $.post("/authentication/forgotpassword", data, callback);
+  // $.post("/authentication/forgotpassword", data, callback);
+  $.post("http://localhost:5000/auth/forgot-password", data, callback);
 };
 
 export const logout = (callback) => {
