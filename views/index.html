@@ -1,65 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="google-signin-client_id"
+      content="502490467653-iha18nmcvejlpivflb741s6lgqlej0s9.apps.googleusercontent.com"
+    />
+    <meta name="google-signin-scope" content="profile email" />
 
-<head>
-	<meta charset="utf-8">
-	<!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title> Academy - Online Courses </title>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <title>Academy - Online Courses</title>
 
-	<!--Jquery-->
-	<script src="/javascripts/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
 
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="/bootstrap/js/bootstrap.min.js"></script>
-	<script src="/ckeditor/ckeditor.js"></script>
-	<!--<script src="/pdfjs/pdf.js"></script>
+    <!--Jquery-->
+    <script src="/javascripts/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/ckeditor/ckeditor.js"></script>
+    <!--<script src="/pdfjs/pdf.js"></script>
 	<script src="/pdfjs/pdf.worker.js"></script>-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/bootstrap-social.css" />
+    <link rel="stylesheet" href="/stylesheets/style_navbar_courses.css" />
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/stylesheets/style_navbar_bg.css" />
+  </head>
 
-	<!--Custom CSS-->
-	<link rel="stylesheet" href="/stylesheets/style.css">
-	<link rel="stylesheet" href="/stylesheets/bootstrap-social.css">
-	<link rel="stylesheet" href="/stylesheets/style_navbar_courses.css">
-	<link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="/stylesheets/style_navbar_bg.css">
+  <body>
+    <div id="app"></div>
+    <!--ReactJs-->
+    <script src="/javascripts/bundle.js"></script>
 
-</head>
+    <script>
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: "236793534545738",
+          cookie: true,
+          xfbml: true,
+          version: "v11.0",
+        });
 
-<body>
-	<div id="app"></div>
-	<!--ReactJs-->
-	<script src="/javascripts/bundle.js"></script>
+        FB.AppEvents.logPageView();
+      };
 
-	<script>
-		window.fbAsyncInit = function() {
-		  FB.init({
-			appId      : '236793534545738',
-			cookie     : true,
-			xfbml      : true,
-			version    : 'v11.0'
-		  });
-			
-		  FB.AppEvents.logPageView();   
-			
-		};
-	  
-		(function(d, s, id){
-		   var js, fjs = d.getElementsByTagName(s)[0];
-		   if (d.getElementById(id)) {return;}
-		   js = d.createElement(s); js.id = id;
-		   js.src = "https://connect.facebook.net/en_US/sdk.js";
-		   fjs.parentNode.insertBefore(js, fjs);
-		 }(document, 'script', 'facebook-jssdk'));
+      (function (d, s, id) {
+        var js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+          return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, "script", "facebook-jssdk");
+    </script>
+    <script>
+      function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        console.log("Full Name: " + profile.getName());
+        console.log("Given Name: " + profile.getGivenName());
+        console.log("Family Name: " + profile.getFamilyName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
 
-		 function statusChangeCallback (response) {
-			if(response.status == 'connected'){
-				console.log("Logged in and authenticated")
-			} else { console.log('Not authenticated')}
-		}
-	  </script>
-</body>
-
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+      }
+    </script>
+  </body>
 </html>

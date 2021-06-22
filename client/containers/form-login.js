@@ -4,6 +4,7 @@ import { setUser, showModal } from "../actions";
 import { connect } from "react-redux";
 import { browserHistory } from "react-router";
 import { login } from "../apis/auth";
+import GoogleLogin from "react-google-login";
 
 class FormLogin extends React.Component {
   constructor(props) {
@@ -59,6 +60,33 @@ class FormLogin extends React.Component {
       }
     );
   }
+  loginFb() {
+    FB.login((response) => {
+      if (response.status === "connected") {
+        axios
+          .post("http://localhost:5000/auth/facebook", {
+            accessToken: response.authResponse.accessToken,
+          })
+          .then((response) => {
+            const data = response.data;
+            if (data.code == 200) {
+              localStorage.setItem("token", data.token);
+              this.props.dispatch(showModal(0));
+              this.props.dispatch(setUser(data.user));
+              browserHistory.push("/courses");
+            } else {
+              this.setState({ message: data.message, isSubmitting: false });
+              let alertlogin = $(".alert:first");
+              alertlogin.show(500, function () {
+                setTimeout(function () {
+                  alertlogin.hide(500);
+                }, 3000);
+              });
+            }
+          });
+      }
+    });
+  }
   render() {
     return (
       <Modal
@@ -87,19 +115,17 @@ class FormLogin extends React.Component {
             <h4 className="text-center">Login with social accounts</h4>
             <div className="form-group">
               <a
-                href="http://localhost:5000/auth/facebook"
+                onClick={() => this.loginFb()}
                 className="btn btn-block btn-social btn-lg btn-facebook"
               >
                 <i className="fa fa-facebook"></i>Log in with Facebook
               </a>
-            </div>
-            <div className="form-group">
-              <a
-                href="http://localhost:5000/auth/google"
-                className="btn btn-block btn-social btn-lg btn-google"
-              >
-                <i className="fa fa-google"></i>Log in with Google+
-              </a>
+
+              <div
+                className="g-signin2"
+                data-onsuccess="onSignIn"
+                data-theme="dark"
+              ></div>
             </div>
           </div>
           <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">

@@ -6,6 +6,7 @@
     "start": "nodemon ./bin/www --history-api-fallback"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
@@ -27,6 +28,7 @@
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.5",
     "react-dom": "^15.3.2",
+    "react-google-login": "^5.2.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.8.1",
     "redux": "^3.6.0",

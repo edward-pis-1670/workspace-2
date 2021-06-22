@@ -35,7 +35,7 @@ class Navbar extends React.Component {
   }
   onClickLogout() {
     logout((data, status) => {
-      localStorage.removeItem("token")
+      localStorage.removeItem("token");
       if (data.code == 200) {
         this.props.dispatch(setUser({}));
         this.props.dispatch(setGetMyCourses(false));
@@ -65,15 +65,19 @@ class Navbar extends React.Component {
   }
   markAllAsRead() {
     // $.get("/api/user/mark-all-read-noti",
-    $.get("http://localhost:5000/users/mark-read-all-notification",
-     (data, status) => {});
+    $.get(
+      "http://localhost:5000/users/mark-read-all-notification",
+      (data, status) => {}
+    );
     this.props.dispatch(markAllAsRead());
   }
   markAsRead(e, noti) {
     e.preventDefault();
     if (!noti.seen) {
       // $.post("/api/user/mark-read-noti", { id: noti._id });
-      $.post("http://localhost:5000/users/mark-read-notification", { id: noti._id });
+      $.post("http://localhost:5000/users/mark-read-notification", {
+        id: noti._id,
+      });
       this.props.dispatch(markRead(noti._id));
     }
   }
