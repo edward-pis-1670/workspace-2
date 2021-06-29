@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { setUser, setGetMyCourses, setCoursePrice } from "../actions";
 import { browserHistory } from "react-router";
+import { API_URL } from "../apis";
 var _ = require("lodash");
 
 class ManageCoursePrice extends React.Component {
@@ -22,7 +23,7 @@ class ManageCoursePrice extends React.Component {
     this.setState({ isSubmitting: true });
     $.post(
       // '/api/user/set-course-price',
-      "http://localhost:5000/users/set-price-course",
+      API_URL + "/users/set-price-course",
       {
         courseid: Number(this.props.params.id),
         cost: this.state.cost,

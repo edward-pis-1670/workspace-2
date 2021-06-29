@@ -19,6 +19,7 @@ import {
 import { Pager, Glyphicon, Modal } from "react-bootstrap";
 import { Link } from "react-router";
 import { connect } from "react-redux";
+import { API_URL } from "../apis";
 
 class AdminCredit extends Component {
   constructor(props) {
@@ -43,9 +44,8 @@ class AdminCredit extends Component {
     this.setState({ profitratioTemp: e.target.value });
   }
   componentDidMount() {
-    // $.post("/api/admin/get-payment", this.state.filter, (data, status) => {
     $.post(
-      "http://localhost:5000/admin/get-payment-by-admin",
+      API_URL + "/admin/get-payment-by-admin",
       this.state.filter,
       (data, status) => {
         if (data.code == 200) {
@@ -57,22 +57,24 @@ class AdminCredit extends Component {
         }
       }
     );
-    // $.get('/api/admin/get-config', (data, status) => {
-    $.get("http://localhost:5000/admin/get-config", (data, status) => {
-      if (data.code == 200) {
-        this.setState({
-          cardnumber: data.cardnumber,
-          cardnumberTemp: data.cardnumber,
-          profitratio: data.profitratio,
-          profitratioTemp: data.profitratio,
-          totalprofit: data.totalprofit,
-        });
-      } else if (data.code == 1001) {
-        this.props.dispatch(setUser({}));
-        this.props.dispatch(setGetMyCourses(false));
-        browserHistory.push("/courses");
+    $.get(
+      API_URL + "/admin/get-config",
+      (data, status) => {
+        if (data.code == 200) {
+          this.setState({
+            cardnumber: data.cardnumber,
+            cardnumberTemp: data.cardnumber,
+            profitratio: data.profitratio,
+            profitratioTemp: data.profitratio,
+            totalprofit: data.totalprofit,
+          });
+        } else if (data.code == 1001) {
+          this.props.dispatch(setUser({}));
+          this.props.dispatch(setGetMyCourses(false));
+          browserHistory.push("/courses");
+        }
       }
-    });
+    );
   }
   onClickPrev(e) {
     e.preventDefault();
@@ -81,7 +83,7 @@ class AdminCredit extends Component {
     this.setState({ filter: filter });
     // $.post("/api/admin/get-payment", filter, (data, status) => {
     $.post(
-      "http://localhost:5000/admin/get-payment-by-admin",
+      API_URL + "/admin/get-payment-by-admin",
       filter,
       (data, status) => {
         if (data.code == 200) {
@@ -100,7 +102,7 @@ class AdminCredit extends Component {
     filter.page = filter.page + 1;
     this.setState({ filter: filter });
     $.post(
-      "http://localhost:5000/admin/get-payment-by-admin",
+      API_URL + "/admin/get-payment-by-admin",
       filter,
       (data, status) => {
         if (data.code == 200) {
@@ -117,15 +119,13 @@ class AdminCredit extends Component {
     let payments = this.state.payments;
     payments = [...payments.slice(0, index), ...payments.slice(index + 1)];
     this.setState({ payments: payments });
-    // $.post("/api/admin/delete-payment", { _id: payment._id });
-    $.post("http://localhost:5000/admin/delete-payment-by-admin", {
+    $.post(API_URL + "/admin/delete-payment-by-admin", {
       _id: payment._id,
     });
   }
   setCardNumber(e) {
     $.post(
-      //   "/api/admin/set-cardnumber",
-      "http://localhost:5000/admin/set-cardnumber",
+      API_URL + "/admin/set-cardnumber",
       {
         cardnumber: this.state.cardnumberTemp,
       },
@@ -142,8 +142,7 @@ class AdminCredit extends Component {
   }
   setProfitRatio(e) {
     $.post(
-      //   "/api/admin/set-profitratio",
-      "http://localhost:5000/admin/set-profit-ratio",
+      API_URL + "/admin/set-profit-ratio",
       {
         profitratio: this.state.profitratioTemp,
       },

@@ -18,6 +18,7 @@ import {
   getReview,
   getCourseIntro,
 } from "../apis/courses";
+import { API_URL } from "../apis";
 
 class ModalPurchase extends React.Component {
   constructor(props) {
@@ -46,7 +47,7 @@ class ModalPurchase extends React.Component {
       this.setState({ isSubmitting: true });
       $.post(
         // "/api/user/take-a-course",
-        "http://localhost:5000/users/take-a-course",
+        API_URL + "/users/take-a-course",
         {
           courseid: courseid,
         },
@@ -174,7 +175,7 @@ class ViewCourse extends React.Component {
       return this.props.dispatch(showModal(1));
     }
     $.post(
-      "http://localhost:5000/users/change-wishlist",
+      API_URL + "/users/change-wishlist",
       {
         courseid: courseid,
       },

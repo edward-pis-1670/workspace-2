@@ -12,6 +12,7 @@ import {
 import { setUser, setGetMyCourses } from "../actions";
 import { connect } from "react-redux";
 import Course from "../components/course";
+import { API_URL } from "../apis";
 
 class Wishlist extends React.Component {
   constructor(props) {
@@ -58,7 +59,7 @@ class Wishlist extends React.Component {
       $.ajax({
         method: "POST",
         // url: '/api/user/wishlist',
-        url: "http://localhost:5000/users/wishlist",
+        url: API_URL + "/users/wishlist",
         data: nextProps.location.query,
         success: (data, status) => {
           if (data.code == 1001) {
@@ -87,7 +88,7 @@ class Wishlist extends React.Component {
   componentDidMount() {
     $.ajax({
       method: "POST",
-      url: "http://localhost:5000/users/wishlist",
+      url: API_URL + "/users/wishlist",
       data: this.props.location.query,
       success: (data, status) => {
         if (data.code == 1001) {

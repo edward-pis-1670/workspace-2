@@ -17,6 +17,7 @@ import {
 } from "../actions";
 import { connect } from "react-redux";
 import { Link, browserHistory } from "react-router";
+import { API_URL } from "../apis";
 var _ = require("lodash");
 
 class ModalCreateCourse extends React.Component {
@@ -103,7 +104,7 @@ class Instructor extends React.Component {
   componentDidMount() {
     if (!this.props.getMyCourses)
       // $.get('/api/user/get-all-mycourses', (courses) => {
-      $.get("http://localhost:5000/users/get-all-my-courses", (courses) => {
+      $.get(API_URL + "/users/get-all-my-courses", (courses) => {
         this.props.dispatch(getAllMyCourses(JSON.parse(courses)));
         this.props.dispatch(setGetMyCourses(true));
       });
@@ -116,7 +117,7 @@ class Instructor extends React.Component {
     this.refs.modalCreateCourse.setState({ isSubmitting: true });
     $.post(
       // 'api/user/createcourse',
-      "http://localhost:5000/users/create-course",
+      API_URL + "/users/create-course",
       { coursename: this.refs.modalCreateCourse.state.coursename },
       (data, status) => {
         if (data.code == 1001) {

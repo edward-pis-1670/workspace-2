@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { Link } from "react-router";
 import { setUser, setCourse, setGetMyCourses, publishCourse } from "../actions";
+import { API_URL } from "../apis";
 var _ = require("lodash");
 
 class ManageCourse extends React.Component {
@@ -10,7 +11,7 @@ class ManageCourse extends React.Component {
     if (!this.props.course) {
       // $.post('/api/user/get-course',
       $.post(
-        "http://localhost:5000/users/get-course",
+        API_URL + "/users/get-course",
         { courseid: Number(this.props.params.id) },
         (data, status) => {
           if (data.code == 200) {
@@ -24,7 +25,7 @@ class ManageCourse extends React.Component {
     if (this.props.params.id != nextProps.params.id) {
       // $.post('/api/user/get-course',
       $.post(
-        "http://localhost:5000/users/get-course",
+        API_URL + "/users/get-course",
         { courseid: Number(nextProps.params.id) },
         (data, status) => {
           if (data.code == 200) {
@@ -37,7 +38,7 @@ class ManageCourse extends React.Component {
   onClickPublish() {
     // $.post('/api/user/publish-course',
     $.post(
-      "http://localhost:5000/users/publish-course",
+      API_URL + "/users/publish-course",
       {
         courseid: Number(this.props.params.id),
       },

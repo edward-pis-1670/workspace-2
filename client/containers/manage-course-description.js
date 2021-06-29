@@ -11,6 +11,7 @@ import {
 import { browserHistory } from "react-router";
 var _ = require("lodash");
 import { getAllGenres } from "../apis/genres";
+import { API_URL } from "../apis";
 
 class ManageCourseDescription extends React.Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class ManageCourseDescription extends React.Component {
     if (!this.props.course_description) {
       // $.post('/api/user/get-course-description',
       $.post(
-        "http://localhost:5000/users/get-description-course",
+        API_URL + "/users/get-description-course",
         { courseid: Number(this.props.params.id) },
         (data, status) => {
           if (data.code == 200) {
@@ -98,7 +99,7 @@ class ManageCourseDescription extends React.Component {
     $.ajax({
       method: "POST",
       // url: "/api/user/upload-preview-video-course",
-      url: "http://localhost:5000/users/upload-previewvideo-lecture",
+      url: API_URL + "/users/upload-previewvideo-lecture",
       data: fd,
       processData: false,
       contentType: false,
@@ -147,7 +148,7 @@ class ManageCourseDescription extends React.Component {
     $.ajax({
       method: "POST",
       // url: '/api/user/set-course-description',
-      url: "http://localhost:5000/users/set-description-course",
+      url: API_URL + "/users/set-description-course",
       data: fd,
       processData: false,
       contentType: false,

@@ -13,6 +13,7 @@ import {
   setLecturePreview,
 } from "../actions";
 import { browserHistory } from "react-router";
+import { API_URL } from "../apis";
 var _ = require("lodash");
 
 class ModalAddLecture extends React.Component {
@@ -97,7 +98,7 @@ class ManageCourseLecture extends React.Component {
     if (!this.props.lectures) {
       // $.post('/api/user/get-course-lectures',
       $.post(
-        "http://localhost:5000/users/get-lectures-course",
+        API_URL + "/users/get-lectures-course",
         { courseid: Number(this.props.params.id) },
         (data, status) => {
           if (data.code == 200) {
@@ -112,7 +113,7 @@ class ManageCourseLecture extends React.Component {
     this.refs.modalAddLecture.setState({ isSubmitting: true });
     // $.post('/api/user/add-course-lecture',
     $.post(
-      "http://localhost:5000/users/add-video-lecture",
+      API_URL + "/users/add-video-lecture",
       {
         courseid: Number(this.props.params.id),
         name: this.refs.modalAddLecture.state.lecturename,
@@ -150,7 +151,7 @@ class ManageCourseLecture extends React.Component {
     e.preventDefault();
     $.post(
       // "/api/user/delete-course-lecture",
-      "http://localhost:5000/users/delete-video-lectures",
+      API_URL + "/users/delete-video-lectures",
       {
         courseid: Number(this.props.params.id),
         lectureid: Number(lectureid),
@@ -173,7 +174,7 @@ class ManageCourseLecture extends React.Component {
     e.preventDefault();
     $.post(
       // "/api/user/set-lecture-name",
-      "http://localhost:5000/users/set-name-lecture",
+      API_URL + "/users/set-name-lecture",
       {
         courseid: Number(this.props.params.id),
         lectureid: Number(lectureid),
@@ -211,7 +212,7 @@ class ManageCourseLecture extends React.Component {
     $.ajax({
       method: "POST",
       // url: "/api/user/-lecture",
-      url: "http://localhost:5000/users/upload-video-lecture",
+      url: API_URL + "/users/upload-video-lecture",
       data: fd,
       processData: false,
       contentType: false,
@@ -249,7 +250,7 @@ class ManageCourseLecture extends React.Component {
     e.preventDefault();
     $.post(
       // "/api/user/change-preview-lecture",
-      "http://localhost:5000/users/change-preview-lecture",
+      API_URL + "/users/change-preview-lecture",
       {
         courseid: Number(this.props.params.id),
         lectureid: Number(lectureid),

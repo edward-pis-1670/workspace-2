@@ -16,6 +16,7 @@ import { Link, browserHistory } from "react-router";
 import { logout } from "../apis/auth";
 
 import _ from "lodash";
+import { API_URL } from "../apis/index.js";
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class Navbar extends React.Component {
     };
   }
   getUserInfo() {
-    $.get("http://localhost:5000/users/me", (data, status) => {
+    $.get(API_URL + "/users/me", (data, status) => {
       if (data.code == 200) {
         this.props.dispatch(setUser(data.user));
       } else {
@@ -66,7 +67,7 @@ class Navbar extends React.Component {
   markAllAsRead() {
     // $.get("/api/user/mark-all-read-noti",
     $.get(
-      "http://localhost:5000/users/mark-read-all-notification",
+      API_URL + "/users/mark-read-all-notification",
       (data, status) => {}
     );
     this.props.dispatch(markAllAsRead());
@@ -75,7 +76,7 @@ class Navbar extends React.Component {
     e.preventDefault();
     if (!noti.seen) {
       // $.post("/api/user/mark-read-noti", { id: noti._id });
-      $.post("http://localhost:5000/users/mark-read-notification", {
+      $.post(API_URL + "/users/mark-read-notification", {
         id: noti._id,
       });
       this.props.dispatch(markRead(noti._id));

@@ -1,3 +1,5 @@
+import { API_URL } from ".";
+
 $.ajaxSetup({
   beforeSend: function (xhr, settings) {
     if (localStorage.getItem("token")) {
@@ -10,21 +12,17 @@ $.ajaxSetup({
 });
 
 export const login = (data, callback) => {
-  // $.post("/authentication/login", data, callback);
-  $.post("http://localhost:5000/auth/login", data, callback);
+  $.post(API_URL + "/auth/login", data, callback);
 };
 
 export const signup = (data, callback) => {
-  // $.post("/authentication/signup", data, callback);
-  $.post("http://localhost:5000/auth/register", data, callback);
+  $.post(API_URL + "/auth/register", data, callback);
 };
 
 export const forgotPassword = (data, callback) => {
-  // $.post("/authentication/forgotpassword", data, callback);
-  $.post("http://localhost:5000/auth/forgot-password", data, callback);
+  $.post(API_URL + "/auth/forgot-password", data, callback);
 };
 
 export const logout = (callback) => {
-  // $.get("/authentication/logout", callback);
-  $.get("http://localhost:5000/auth/logout", callback);
+  $.get(API_URL + "/auth/logout", callback);
 };

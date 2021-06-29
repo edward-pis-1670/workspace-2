@@ -19,6 +19,7 @@ import {
 import { Pager, Glyphicon, Modal } from "react-bootstrap";
 import { Link } from "react-router";
 import { connect } from "react-redux";
+import { API_URL } from "../apis";
 
 class ModalDepositFunds extends Component {
   constructor(props) {
@@ -48,7 +49,7 @@ class ModalDepositFunds extends Component {
   depositFunds(e) {
     $.post(
       //   "/api/user/deposit-funds",
-      "http://localhost:5000/users/deposit-funds",
+      API_URL + "/users/deposit-funds",
       {
         money: this.state.money,
       },
@@ -145,7 +146,7 @@ class ModalWithDraw extends Component {
   withDraw(e) {
     $.post(
       //   "/api/user/withdraw",
-      "http://localhost:5000/users/withdraw-money",
+      API_URL + "/users/withdraw-money",
       {
         money: this.state.money,
       },
@@ -246,7 +247,7 @@ class EditCredit extends Component {
     this.props.dispatch(depositFunds(money));
     // $.post("/api/user/get-payment", this.state.filter, (data, status) => {
     $.post(
-      "http://localhost:5000/users/get-payment-by-user",
+      API_URL + "/users/get-payment-by-user",
       this.state.filter,
       (data, status) => {
         if (data.code == 200) {
@@ -263,7 +264,7 @@ class EditCredit extends Component {
     this.props.dispatch(withDraw(money));
     // $.post("/api/user/get-payment", this.state.filter, (data, status) => {
     $.post(
-      "http://localhost:5000/users/get-payment-by-user",
+      API_URL + "/users/get-payment-by-user",
       this.state.filter,
       (data, status) => {
         if (data.code == 200) {
@@ -285,7 +286,7 @@ class EditCredit extends Component {
   componentDidMount() {
     // $.post("/api/user/get-payment", this.state.filter, (data, status) => {
     $.post(
-      "http://localhost:5000/users/get-payment-by-user",
+      API_URL + "/users/get-payment-by-user",
       this.state.filter,
       (data, status) => {
         if (data.code == 200) {
@@ -305,7 +306,7 @@ class EditCredit extends Component {
     this.setState({ filter: filter });
     // $.post("/api/user/get-payment", filter, (data, status) => {
     $.post(
-      "http://localhost:5000/users/get-payment-by-user",
+      API_URL + "/users/get-payment-by-user",
       filter,
       (data, status) => {
         if (data.code == 200) {
@@ -325,7 +326,7 @@ class EditCredit extends Component {
     this.setState({ filter: filter });
     // $.post("/api/user/get-payment", filter, (data, status) => {
     $.post(
-      "http://localhost:5000/users/get-payment-by-user",
+      API_URL + "/users/get-payment-by-user",
       filter,
       (data, status) => {
         if (data.code == 200) {
@@ -343,12 +344,14 @@ class EditCredit extends Component {
     payments = [...payments.slice(0, index), ...payments.slice(index + 1)];
     this.setState({ payments: payments });
     // $.post("/api/user/delete-payment", { _id: payment._id });
-    $.post("http://localhost:5000/users/delete-payment", { _id: payment._id });
+    $.post(API_URL + "/users/delete-payment", {
+      _id: payment._id,
+    });
   }
   setPaypalId(e) {
     $.post(
       //   "/api/user/set-paypalid",
-      "http://localhost:5000/users/set-paypalid",
+      API_URL + "/users/set-paypalid",
       {
         paypalid: this.state.paypalid,
       },

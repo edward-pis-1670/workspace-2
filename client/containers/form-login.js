@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { browserHistory } from "react-router";
 import { login } from "../apis/auth";
 import axios from "axios";
+import { API_URL } from "../apis";
 class FormLogin extends React.Component {
   constructor(props) {
     super(props);
@@ -97,7 +98,7 @@ class FormLogin extends React.Component {
       if (response.status === "connected") {
         console.log(response);
         axios
-          .post("http://localhost:5000/auth/facebook", {
+          .post(API_URL + "/auth/facebook", {
             accessToken: response.authResponse.accessToken,
           })
           .then((response) => {
@@ -130,7 +131,7 @@ class FormLogin extends React.Component {
         (authResult) => {
           console.log(authResult.mc.access_token);
           axios
-            .post("http://localhost:5000/auth/google", {
+            .post(API_URL + "/auth/google", {
               accessToken: authResult.mc.access_token,
             })
             .then((response) => {

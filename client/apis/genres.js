@@ -1,4 +1,5 @@
+import { API_URL } from ".";
+
 export const getAllGenres = (callback) => {
-  $.get("http://localhost:5000/genre/all", callback);
-  // $.get("/api/genres/all", callback);
+  $.get(API_URL + "/genre/all", callback);
 };

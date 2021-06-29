@@ -5,6 +5,7 @@ import { Header, Image, Table, Icon, Button, Modal } from "semantic-ui-react";
 import { connect } from "react-redux";
 import _ from "lodash";
 import { setUser, setGetMyCourses } from "../actions";
+import { API_URL } from "../apis";
 
 class ModalShowLectures extends Component {
   constructor(props) {
@@ -74,9 +75,8 @@ class AdminReviewCourse extends Component {
   }
   componentDidMount() {
     this.setState({ searchQuery: this.props.location.query.searchQuery || "" });
-    // $.post('/api/admin/get-review-courses',
     $.post(
-      "http://localhost:5000/admin/get-reviews-course",
+      API_URL + "/admin/get-reviews-course",
       this.props.location.query,
       (data, status) => {
         if (data.code == 200) {
@@ -94,9 +94,8 @@ class AdminReviewCourse extends Component {
       this.setState({
         searchQuery: nextProps.location.query.searchQuery || "",
       });
-      // $.post('/api/admin/get-review-courses',
       $.post(
-        "http://localhost:5000/admin/get-reviews-course",
+        API_URL + "/admin/get-reviews-course",
         nextProps.location.query,
         (data, status) => {
           if (data.code == 200) {
@@ -185,9 +184,8 @@ class AdminReviewCourse extends Component {
     }
   }
   acceptCourse(e, _id) {
-    // $.post('/api/admin/accept-course',
     $.post(
-      "http://localhost:5000/admin/accept-course",
+      API_URL + "/admin/accept-course",
       { _id: _id },
       (data, status) => {
         if (data.code == 200) {
@@ -205,9 +203,8 @@ class AdminReviewCourse extends Component {
     );
   }
   refuseCourse(e, _id) {
-    // $.post('/api/admin/refuse-course',
     $.post(
-      "http://localhost:5000/admin/refuse-course",
+      API_URL + "/admin/refuse-course",
       { _id: _id },
       (data, status) => {
         if (data.code == 200) {

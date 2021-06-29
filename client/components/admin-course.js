@@ -5,6 +5,7 @@ import { Header, Image, Table, Icon, Button, Modal } from "semantic-ui-react";
 import { connect } from "react-redux";
 import _ from "lodash";
 import { setUser, setGetMyCourses } from "../actions";
+import { API_URL } from "../apis";
 
 class ModalShowLectures extends Component {
   constructor(props) {
@@ -76,7 +77,7 @@ class AdminCourse extends Component {
     this.setState({ searchQuery: this.props.location.query.searchQuery || "" });
     // $.post('/api/admin/get-courses',
     $.post(
-      "http://localhost:5000/admin/get-courses",
+      API_URL + "/admin/get-courses",
       this.props.location.query,
       (data, status) => {
         if (data.code == 200) {
@@ -96,7 +97,7 @@ class AdminCourse extends Component {
       });
       // $.post('/api/admin/get-courses',
       $.post(
-        "http://localhost:5000/admin/get-courses",
+        API_URL + "/admin/get-courses",
         nextProps.location.query,
         (data, status) => {
           if (data.code == 200) {
@@ -187,7 +188,7 @@ class AdminCourse extends Component {
   deleteCourse(_id) {
     // $.post('/api/admin/delete-course',
     $.post(
-      "http://localhost:5000/admin/delete-course-by-admin",
+      API_URL + "/admin/delete-course-by-admin",
       { _id: _id },
       (data, status) => {
         if (data.code == 200) {

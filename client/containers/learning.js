@@ -12,6 +12,7 @@ import {
 import { setUser, setGetMyCourses } from "../actions";
 import { connect } from "react-redux";
 import Course from "../components/course";
+import { API_URL } from "../apis";
 
 class Learning extends React.Component {
   constructor(props) {
@@ -58,7 +59,7 @@ class Learning extends React.Component {
       $.ajax({
         method: "POST",
         // url: '/api/user/learning',
-        url: "http://localhost:5000/users/learning",
+        url: API_URL + "/users/learning",
         data: nextProps.location.query,
         success: (data, status) => {
           if (data.code == 1001) {
@@ -88,7 +89,7 @@ class Learning extends React.Component {
     $.ajax({
       method: "POST",
       // url: '/api/user/learning',
-      url: "http://localhost:5000/users/learning",
+      url: API_URL + "/users/learning",
       data: this.props.location.query,
       success: (data, status) => {
         if (data.code == 1001) {
