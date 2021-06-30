@@ -1,1 +1,1 @@
-export const API_URL = 'http://35.240.234.26'
+export const API_URL = 'https://fakeapi.caubechankiu.com'

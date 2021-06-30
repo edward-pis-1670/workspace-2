@@ -69399,7 +69399,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var API_URL = exports.API_URL = 'http://35.240.234.26';
+	var API_URL = exports.API_URL = 'https://fakeapi.caubechankiu.com';
 
 /***/ }),
 /* 562 */
