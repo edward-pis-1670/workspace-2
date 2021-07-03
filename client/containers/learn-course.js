@@ -321,11 +321,7 @@ class LearnCourse extends React.Component {
                       <div className="info-rate" key={index}>
                         <img
                           className="avatar-rate"
-                          src={
-                            "/api/resource/images?src=" +
-                            review.user.photo +
-                            "&w=50&h=50"
-                          }
+                          src={review.user.photo}
                         />
                         <div
                           style={{

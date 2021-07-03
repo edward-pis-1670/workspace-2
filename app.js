@@ -19,6 +19,7 @@ var resourceApi = require("./routes/apis/resources");
 var courseApi = require("./routes/apis/course");
 var coursesApi = require("./routes/apis/courses");
 var adminApi = require("./routes/apis/admin");
+const cors = require('cors')
 // var user = require('./routes/users');
 
 // var app = express();
@@ -27,7 +28,7 @@ var adminApi = require("./routes/apis/admin");
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "html");
 app.engine("html", require("ejs").renderFile);
-
+app.use(cors({origin:"*"}))
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

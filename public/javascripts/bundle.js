@@ -42317,7 +42317,7 @@
 	                          _reactBootstrap.Col,
 	                          { xs: 2 },
 	                          _react2.default.createElement("img", {
-	                            src: "/api/resource/images?src=" + noti.from.photo + "&w=50&h=50"
+	                            src: noti.from.photo
 	                          })
 	                        ),
 	                        _react2.default.createElement(
@@ -69400,6 +69400,7 @@
 	  value: true
 	});
 	var API_URL = exports.API_URL = 'https://fakeapi.caubechankiu.com';
+	// export const API_URL = 'http://localhost:5000'
 
 /***/ }),
 /* 562 */
@@ -112475,7 +112476,7 @@
 	                      { className: "info-rate", key: index },
 	                      _react2.default.createElement("img", {
 	                        className: "avatar-rate",
-	                        src: "/api/resource/images?src=" + review.user.photo + "&w=50&h=50"
+	                        src: review.user.photo
 	                      }),
 	                      _react2.default.createElement(
 	                        "div",

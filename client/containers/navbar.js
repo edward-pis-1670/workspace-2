@@ -178,11 +178,7 @@ class Navbar extends React.Component {
                         >
                           <Col xs={2}>
                             <img
-                              src={
-                                "/api/resource/images?src=" +
-                                noti.from.photo +
-                                "&w=50&h=50"
-                              }
+                              src={noti.from.photo}
                             />
                           </Col>
                           <Col xs={9}>
